@@ -1,7 +1,7 @@
 include: package:very_good_analysis/analysis_options.yaml
 #include: package:flutter_lints/flutter.yaml
 analyzer:
-  strong-mode:
+#  strong-mode:
   exclude:
     - lib/*.g.dart
     - lib/**/*.g.dart
@@ -44,7 +44,7 @@ dart_code_metrics:
     - no-equal-then-else
 linter:
   rules:
-    implicit-dynamic: false
+#    implicit-dynamic: false
     library_private_types_in_public_api: false
     lines_longer_than_80_chars: false
     omit_local_variable_types: false
