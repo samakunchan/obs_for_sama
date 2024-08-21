@@ -1,0 +1,28 @@
+name: obs_for_sama
+description: "A new Flutter project to manage OBS."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  flutter_dotenv: ^5.1.0
+  very_good_analysis: ^6.0.0
+  obs_websocket: ^5.1.0+9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
