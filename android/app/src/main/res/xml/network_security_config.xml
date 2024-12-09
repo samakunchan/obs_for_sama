@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Ajoutez ici les domaines spécifiques qui nécessitent du trafic HTTP -->
+        <domain includeSubdomains="true">192.168.0.177</domain>
+        <domain includeSubdomains="true">example.com</domain>
+        <domain includeSubdomains="true">api.myservice.com</domain>
+    </domain-config>
+</network-security-config>
