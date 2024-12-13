@@ -23,5 +23,5 @@ class OutlinedPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  bool shouldRepaint(OutlinedPainter oldDelegate) => color != oldDelegate.color;
 }

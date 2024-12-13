@@ -6,7 +6,7 @@ class HeaderMediumTextButton extends StatelessWidget {
   final Color color;
 
   @override
-  Text build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Text(
       text,
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
