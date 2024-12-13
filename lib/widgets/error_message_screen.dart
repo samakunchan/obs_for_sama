@@ -7,6 +7,7 @@ class ErrorMessageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      key: const ValueKey<String>('Error Message Screen'),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
