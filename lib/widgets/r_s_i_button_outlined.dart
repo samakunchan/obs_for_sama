@@ -9,7 +9,7 @@ class RSIButtonOutlined extends StatelessWidget {
     required this.onTap,
     this.child,
     this.text = 'My button',
-    this.edgeClipper = const RSIEdgeClipper(),
+    this.edgeClipper = RSIEdgeClipper.init,
     this.color = kTextColor,
     this.width = 180,
     this.height = 50,
@@ -43,11 +43,10 @@ class RSIButtonOutlined extends StatelessWidget {
               width: width,
               height: height,
               child: Center(
-                child: child ??
-                    HeaderMediumTextButton(
-                      text: text,
-                      color: color,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: child ?? HeaderMediumTextButton(text: text, color: color),
+                ),
               ),
             ),
           ),

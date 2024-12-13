@@ -81,13 +81,46 @@ final ThemeData kThemeData = ThemeData(
     titleMedium: ktitle2,
     bodyLarge: kbodyLarge,
   ),
-  dialogTheme: DialogTheme(
-    backgroundColor: kPrimaryColor,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
+          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed) || states.contains(WidgetState.focused)) {
+            return kButtonColor;
+          }
+          return kButtonColor;
+        },
+      ),
+      minimumSize: WidgetStateProperty.all<Size>(const Size(80, 50)),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
+      // overlayColor: WidgetStateProperty.resolveWith<Color?>(
+      //   (Set<WidgetState> states) {
+      //     if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed) || states.contains(WidgetState.focused)) {
+      //       return kHoverButtonColor;
+      //     }
+      //     return null;
+      //   },
+      // ),
+      textStyle: WidgetStateProperty.all<TextStyle>(
+        kheadlineMedium.copyWith(fontWeight: FontWeight.bold, letterSpacing: 1),
+      ),
+      splashFactory: NoSplash.splashFactory,
     ),
-    titleTextStyle: ktitle1,
+  ),
+  cardTheme: CardTheme(color: kPrimaryColor.withOpacity(.5)),
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.red,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    titleTextStyle: ktitle1.copyWith(color: kPrimaryColor),
     contentTextStyle: ktitle2,
+    insetPadding: const EdgeInsets.all(16),
   ),
   useMaterial3: true,
 );

@@ -8,7 +8,7 @@ class RSIButton extends StatelessWidget {
     required this.onTap,
     this.child,
     this.text = 'My button',
-    this.edgeClipper = const RSIEdgeClipper(),
+    this.edgeClipper = RSIEdgeClipper.init,
     this.color = kButtonColor,
     this.width = 180,
     this.height = 50,
