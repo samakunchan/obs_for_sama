@@ -160,8 +160,8 @@ class RSIClipper extends CustomClipper<Path> {
   }
 
   @override
-  // bool shouldReclip(RSIClipper oldClipper) => oldClipper.edgeClipper.toString() != edgeClipper.toString();
-  bool shouldReclip(RSIClipper oldClipper) => true;
+  bool shouldReclip(RSIClipper oldClipper) => oldClipper.edgeClipper.toString() != edgeClipper.toString();
+  // bool shouldReclip(RSIClipper oldClipper) => true;
 }
 
 // ..moveTo(0, 25) // F2
