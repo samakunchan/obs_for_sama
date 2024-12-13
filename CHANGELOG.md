@@ -1,3 +1,23 @@
+## 🚀 0.3.0 - 13/12/2024
+### Added
+
+- Added state manager getX.
+- Added a new enums to manage static text in the app.
+- Added controllers GetX (server, cache, scenes, sources, sound) to manage datas.
+- Added action buttons default and action buttons mobile.
+- Addes a short Readme.
+
+### Changed
+
+- Update path for integration test.
+- Added back Text button theme.
+- Refacto structures of projects.
+- Updated main view to contain a mobile version.
+
+### Fixed
+
+- No fix.
+
 ## 🚀 0.2.0 - 09/12/2024
 ### Added
 
