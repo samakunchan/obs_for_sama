@@ -5,9 +5,6 @@ void main() {
   runApp(const MyApp());
 }
 
-/// Améliorer le clipper
-/// Documenter et mettre des keys un peu partout.
-
 /// Mettre l'architecture MVVM. Chercher un exemple.
 /// Définir la stratégie des routes.
 /// Faire un page settings au lieu d'un pop up.
