@@ -9,6 +9,7 @@ import 'package:obs_for_sama/widgets/o_b_s_reload_button.dart';
 import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget.dart';
 import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget_cupertino.dart';
 import 'package:obs_for_sama/widgets/o_b_s_toogle_sound_button.dart';
+import 'package:obs_for_sama/widgets/o_b_s_toogle_stream_button.dart';
 import 'package:obs_for_sama/widgets/r_s_i_button_outlined.dart';
 
 class OBSActionButtonsMobile extends StatelessWidget {
@@ -92,24 +93,7 @@ class OBSActionButtonsMobile extends StatelessWidget {
                           children: [
                             /// OBS SETTINGS
                             Expanded(
-                              child: controller.isStreamStarted.value
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: RSIButtonOutlined(
-                                        color: Colors.red,
-                                        onTap: controller.stopStreaming,
-                                        edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                                        text: AppText.stop.label,
-                                      ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: RSIButtonOutlined(
-                                        onTap: controller.startStreaming,
-                                        edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                                        text: AppText.start.label,
-                                      ),
-                                    ),
+                              child: OBSToogleStreamButton(controller: controller),
                             ),
                           ],
                         ),
