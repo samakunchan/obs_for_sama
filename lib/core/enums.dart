@@ -14,7 +14,10 @@ enum AppText {
   obsServerForm(label: 'SERVER PARAMETERS'),
   connectToOBS(label: 'CONNECT OBS'),
   start(label: 'START STREAM'),
+  isStarting(label: 'STARTING'),
   stop(label: 'STOP STREAM'),
+  isStopping(label: 'STOPPING'),
+  undefined(label: 'UNDEFINED'),
   scenes(label: 'SCENES'),
   sources(label: 'SOURCES'),
   ;
@@ -22,4 +25,11 @@ enum AppText {
   const AppText({required this.label});
 
   final String label;
+}
+
+enum StatusStream {
+  isStarting,
+  isStopping,
+  started,
+  stopped,
 }

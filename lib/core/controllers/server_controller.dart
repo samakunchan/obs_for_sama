@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/controllers/cache_controller.dart';
@@ -18,7 +20,7 @@ class ServerController extends GetxController {
   final TextEditingController textEditingControllerPassword = TextEditingController();
   final RxString obsStatusMessage = 'Loading...'.obs;
   final RxBool isOBSSynchronized = false.obs;
-  final RxBool isStreamStarted = false.obs;
+  final Rx<StatusStream> isStreamStarted = StatusStream.stopped.obs;
 
   @override
   void onClose() {
@@ -35,14 +37,15 @@ class ServerController extends GetxController {
       await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
       await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
       await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
-      isConnected(isConnected: true);
+
+      await connectToOBS();
       Get.back<void>();
     }
   }
 
   String showStatusMessage({required String message}) => obsStatusMessage.value = message;
-  bool isConnected({required bool isConnected}) => isOBSSynchronized.value = isConnected;
-  bool isStreamOnline({required bool isOnline}) => isStreamStarted.value = isOnline;
+  bool isOBSConnected({required bool isConnected}) => isOBSSynchronized.value = isConnected;
+  StatusStream isStreamOnline({required StatusStream status}) => isStreamStarted.value = status;
 
   Future<void> connectToOBS() async {
     final SoundController soundController = Get.put(SoundController());
@@ -68,6 +71,23 @@ class ServerController extends GetxController {
           if (event.eventType == 'InputMuteStateChanged') {
             soundController.isSoundMuted.value = event.eventData!['inputMuted'] as bool;
           }
+
+          if (event.eventType == 'StreamStateChanged') {
+            StatusStream statusStream = StatusStream.stopped;
+            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTING') {
+              statusStream = StatusStream.isStarting;
+            }
+            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTED') {
+              statusStream = StatusStream.started;
+            }
+            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPING') {
+              statusStream = StatusStream.isStopping;
+            }
+            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPED') {
+              statusStream = StatusStream.stopped;
+            }
+            isStreamOnline(status: statusStream);
+          }
         },
       );
 
@@ -76,14 +96,14 @@ class ServerController extends GetxController {
       if (defaultProfile != null && defaultProfile.currentProfileName.isNotEmpty) {
         // print('OBS est actif.');
         await reload();
-        isConnected(isConnected: true);
+        isOBSConnected(isConnected: true);
       }
       // print('Terminer');
     } catch (e) {
       // print('Pas bon.');
       // print(e);
       showStatusMessage(message: 'OBS Disconnected...');
-      isConnected(isConnected: false);
+      isOBSConnected(isConnected: false);
     }
   }
 
@@ -91,11 +111,14 @@ class ServerController extends GetxController {
     await obsWebSocket?.stream.status.then(_showStreamStatus);
   }
 
+  Future<void> _showStreamStatus(StreamStatusResponse response) async {
+    final StatusStream statusStream = response.outputActive ? StatusStream.started : StatusStream.stopped;
+    isStreamOnline(status: statusStream);
+  }
+
   Future<void> startStreaming() async {
     try {
-      await obsWebSocket?.stream.start().then((value) async {
-        isStreamStarted.value = true;
-      });
+      await obsWebSocket?.stream.start();
     } catch (e) {
       showStatusMessage(message: 'Erreur lors du démarrage du streaming : $e');
     }
@@ -103,9 +126,7 @@ class ServerController extends GetxController {
 
   Future<void> stopStreaming() async {
     try {
-      await obsWebSocket?.stream.stop().then((_) async {
-        isStreamStarted.value = false;
-      });
+      await obsWebSocket?.stream.stop();
     } catch (e) {
       showStatusMessage(message: 'Erreur lors de l‘arrêt du streaming : $e');
     }
@@ -130,16 +151,13 @@ class ServerController extends GetxController {
     // await serverController.obsWebSocket?.listen(EventSubscription.scenes.code);
   }
 
-  Future<void> _showStreamStatus(StreamStatusResponse response) async {
-    isStreamOnline(isOnline: response.outputActive);
-  }
-
   Future<void> _getLocalDataForSettings() async {
     final cacheController = Get.put(CacheController());
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
     final String? localIp = cache.getString(ip);
     final String? localPort = cache.getString(port);
     final String? localPassword = cache.getString(password);
+
     if (localIp != null && localPort != null && localPassword != null) {
       // print('Détection des données locales.');
       textEditingControllerIp.text = localIp;
@@ -148,7 +166,7 @@ class ServerController extends GetxController {
     } else {
       // print('Les données locales n‘ont pas été trouvés');
       showStatusMessage(message: 'OBS Disconnected...');
-      isConnected(isConnected: false);
+      isOBSConnected(isConnected: false);
     }
   }
 }

@@ -1,3 +1,20 @@
+## 🚀 0.3.1 - 17/12/2024
+### Added
+
+- Added a new button to toogle the start/stop stream.
+- Added the new button to the default and action button.
+
+### Changed
+
+- Added event to listen the stream status (start/loading/stop).
+- Added StatusStream and replace old version with boolean.
+- Remove `.then()` for `startStreaming()` and `stopStreaming()`.
+- Rename `isConnected()` method to `isOBSConnected()`
+
+### Fixed
+
+- Fixed issue about the refresh of start button and stop button when it pressed.
+
 ## 🚀 0.3.0 - 13/12/2024
 ### Added
 
@@ -5,7 +22,7 @@
 - Added a new enums to manage static text in the app.
 - Added controllers GetX (server, cache, scenes, sources, sound) to manage datas.
 - Added action buttons default and action buttons mobile.
-- Addes a short Readme.
+- Added a short Readme.
 
 ### Changed
 
