@@ -1,3 +1,20 @@
+## 🚀 0.4.0 - 23/12/2024
+### Added
+
+- Added failures classes to manage errors.
+- Added snackbar to display errors to screen.
+
+### Changed
+
+- Changed app name inside gradle.
+- Updated java version, ndkVersion, gradle version adn gradle distribution.
+- Updated Readme to remember the previous change.
+- Update `ServerController` to managa failures.
+
+### Fixed
+
+- No fixes.
+
 ## 🚀 0.3.1 - 17/12/2024
 ### Added
 
