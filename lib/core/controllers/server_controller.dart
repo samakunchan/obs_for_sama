@@ -7,6 +7,7 @@ import 'package:obs_for_sama/core/controllers/scenes_controller.dart';
 import 'package:obs_for_sama/core/controllers/sound_controller.dart';
 import 'package:obs_for_sama/core/controllers/sources_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
+import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ class ServerController extends GetxController {
   final RxString obsStatusMessage = 'Loading...'.obs;
   final RxBool isOBSSynchronized = false.obs;
   final Rx<StatusStream> isStreamStarted = StatusStream.stopped.obs;
+  late final Rx<Failure> failure = Failure().obs;
 
   @override
   void onClose() {
@@ -30,7 +32,7 @@ class ServerController extends GetxController {
     super.onClose();
   }
 
-  Future<void> submit() async {
+  Future<void> submit({ValueChanged<Failure>? onFailure}) async {
     if (settingsFormKey.currentState!.validate()) {
       final cacheController = Get.put(CacheController());
       final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
@@ -39,7 +41,20 @@ class ServerController extends GetxController {
       await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
 
       await connectToOBS();
-      Get.back<void>();
+      if (failure.value is! NoFailure) {
+        // print('On lance la failure : ${failure.value}');
+        onFailure!(failure.value);
+        // print('je reset le failure');
+        resetError();
+        // await cache.remove(SettingsEnum.ip.label);
+        // await cache.remove(SettingsEnum.port.label);
+        // await cache.remove(SettingsEnum.password.label);
+        // await cache.clear();
+        // print('je clear le cache normalement');
+      } else {
+        // print('On lance pas la failure');
+        Get.back<void>();
+      }
     }
   }
 
@@ -47,49 +62,54 @@ class ServerController extends GetxController {
   bool isOBSConnected({required bool isConnected}) => isOBSSynchronized.value = isConnected;
   StatusStream isStreamOnline({required StatusStream status}) => isStreamStarted.value = status;
 
-  Future<void> connectToOBS() async {
+  Future<ObsWebSocket> init() async {
+    return ObsWebSocket.connect(
+      'ws://${textEditingControllerIp.text}:${textEditingControllerPort.text}',
+      password: textEditingControllerPassword.text,
+      fallbackEventHandler: fallBackEvent,
+    );
+  }
+
+  Future<void> fallBackEvent(Event event) async {
     final SoundController soundController = Get.put(SoundController());
     final ScenesController scenesController = Get.put(ScenesController());
+    // print('type: ${event.eventType} data: ${event.eventData}');
+    if (event.eventType == 'CurrentProgramSceneChanged') {
+      await obsWebSocket?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
+      final String currentScene = await obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scene';
+      scenesController.currentSceneName.value = currentScene;
 
+      final SourcesController sourcesController = Get.put(SourcesController());
+      await sourcesController.getListSourcesByCurrentScene();
+    }
+
+    if (event.eventType == 'InputMuteStateChanged') {
+      soundController.isSoundMuted.value = event.eventData!['inputMuted'] as bool;
+    }
+
+    if (event.eventType == 'StreamStateChanged') {
+      StatusStream statusStream = StatusStream.stopped;
+      if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTING') {
+        statusStream = StatusStream.isStarting;
+      }
+      if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTED') {
+        statusStream = StatusStream.started;
+      }
+      if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPING') {
+        statusStream = StatusStream.isStopping;
+      }
+      if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPED') {
+        statusStream = StatusStream.stopped;
+      }
+      isStreamOnline(status: statusStream);
+    }
+  }
+
+  Future<void> connectToOBS() async {
     try {
       // print('Je teste la connexion.');
       await _getLocalDataForSettings();
-      obsWebSocket = await ObsWebSocket.connect(
-        'ws://${textEditingControllerIp.text}:${textEditingControllerPort.text}',
-        password: textEditingControllerPassword.text,
-        fallbackEventHandler: (Event event) async {
-          // print('type: ${event.eventType} data: ${event.eventData}');
-          if (event.eventType == 'CurrentProgramSceneChanged') {
-            await obsWebSocket?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
-            final String currentScene = await obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scene';
-            scenesController.currentSceneName.value = currentScene;
-
-            final SourcesController sourcesController = Get.put(SourcesController());
-            await sourcesController.getListSourcesByCurrentScene();
-          }
-
-          if (event.eventType == 'InputMuteStateChanged') {
-            soundController.isSoundMuted.value = event.eventData!['inputMuted'] as bool;
-          }
-
-          if (event.eventType == 'StreamStateChanged') {
-            StatusStream statusStream = StatusStream.stopped;
-            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTING') {
-              statusStream = StatusStream.isStarting;
-            }
-            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTED') {
-              statusStream = StatusStream.started;
-            }
-            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPING') {
-              statusStream = StatusStream.isStopping;
-            }
-            if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPED') {
-              statusStream = StatusStream.stopped;
-            }
-            isStreamOnline(status: statusStream);
-          }
-        },
-      );
+      obsWebSocket = await init();
 
       /// Detection si OBS est actif
       final ProfileListResponse? defaultProfile = await obsWebSocket?.config.getProfileList();
@@ -102,6 +122,7 @@ class ServerController extends GetxController {
     } catch (e) {
       // print('Pas bon.');
       // print(e);
+      _manageError(error: e.toString());
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }
@@ -168,5 +189,49 @@ class ServerController extends GetxController {
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }
+  }
+
+  void _manageError({required String error}) {
+    // print(error);
+    failure.value = NoFailure();
+    if (error.contains('SocketException') && error.contains('Failed host lookup')) {
+      failure.value = HostFailure();
+    }
+    if (error.contains('SocketException: Connection refused')) {
+      failure.value = PortFailure();
+    }
+    if (error.contains('Exception: Authentication error with identified response')) {
+      failure.value = PasswordFailure();
+    }
+  }
+
+  void showErrorSnackBar({required Failure failure}) {
+    if (failure is! NoFailure) {
+      Icon icon = const Icon(Icons.add_alert);
+      String message = '';
+      if (failure is HostFailure) {
+        icon = const Icon(Icons.leak_remove, size: 50);
+        message = 'Erreur IP';
+      }
+      if (failure is PortFailure) {
+        icon = const Icon(Icons.developer_board_off, size: 50);
+        message = 'Erreur Port';
+      }
+      if (failure is PasswordFailure) {
+        icon = const Icon(Icons.key_off, size: 50);
+        message = 'Erreur Password';
+      }
+      Get.snackbar(
+        message,
+        '',
+        messageText: icon, //key_off, key_on, leak_remove, leak_add develo
+        backgroundColor: Colors.orangeAccent,
+        duration: const Duration(seconds: 4),
+      );
+    }
+  }
+
+  void resetError() {
+    failure.value = NoFailure();
   }
 }
