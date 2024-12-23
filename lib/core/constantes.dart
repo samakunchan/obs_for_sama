@@ -122,5 +122,15 @@ final ThemeData kThemeData = ThemeData(
     contentTextStyle: ktitle2,
     insetPadding: const EdgeInsets.all(16),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: kbodyLarge,
+    suffixIconColor: kButtonColor,
+    border: const OutlineInputBorder(
+      borderSide: BorderSide(color: kButtonColor, width: .2),
+    ),
+    focusedBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: kButtonColor, width: .2),
+    ),
+  ),
   useMaterial3: true,
 );
