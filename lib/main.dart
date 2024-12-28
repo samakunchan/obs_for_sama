@@ -7,4 +7,4 @@ void main() {
 
 /// Mettre l'architecture MVVM. Chercher un exemple.
 /// Définir la stratégie des routes.
-/// Faire un page settings au lieu d'un pop up.
+/// Finalement l'input mic/aux est écris à la main sur OBS. Il faudrait trouver la valeur dynamique.
