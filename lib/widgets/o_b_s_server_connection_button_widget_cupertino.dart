@@ -48,7 +48,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       CupertinoTextField(
-                        obscureText: true,
+                        // obscureText: true,
                         controller: controller.textEditingControllerIp,
                         placeholder: '192.XXX.XXX.XXX',
                       ),
@@ -66,7 +66,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       CupertinoTextField(
-                        obscureText: true,
+                        // obscureText: true,
                         controller: controller.textEditingControllerPort,
                         placeholder: '1234',
                       ),
@@ -84,7 +84,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       CupertinoTextField(
-                        obscureText: true,
+                        // obscureText: true,
                         controller: controller.textEditingControllerPassword,
                         placeholder: 'OBS Websocket Password',
                       ),
@@ -99,7 +99,10 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
       confirm: Padding(
         padding: const EdgeInsets.all(8),
         child: TextButton(
-          onPressed: controller.submit,
+          onPressed: () => controller.submit(
+            onSuccess: (_) {},
+            onFailure: (_) {},
+          ),
           child: const Icon(
             Icons.check,
             color: Colors.white,

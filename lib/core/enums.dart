@@ -10,6 +10,7 @@ enum SettingsEnum {
 
 enum AppText {
   mainTitle(label: 'OBS MANAGER'),
+  mainSettingsTitle(label: 'SETTINGS'),
   title(label: 'PLAY WITH OBS'),
   obsServerForm(label: 'SERVER PARAMETERS'),
   connectToOBS(label: 'CONNECT OBS'),
@@ -32,4 +33,15 @@ enum StatusStream {
   isStopping,
   started,
   stopped,
+}
+
+enum RouteName {
+  home(label: 'home', path: '/'),
+  settings(label: 'settings', path: '/settings'),
+  ;
+
+  const RouteName({required this.label, required this.path});
+
+  final String label;
+  final String path;
 }
