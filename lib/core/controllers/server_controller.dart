@@ -40,7 +40,7 @@ class ServerController extends GetxController {
     resetError();
 
     if (settingsFormKey.currentState!.validate()) {
-      final CacheController cacheController = Get.put(CacheController());
+      final CacheController cacheController = Get.find();
       final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
       await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
       await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
@@ -64,7 +64,7 @@ class ServerController extends GetxController {
     // print('Je lance le submit');
     resetError();
 
-    final cacheController = Get.put(CacheController());
+    final CacheController cacheController = Get.find();
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
     await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
     await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
@@ -97,8 +97,8 @@ class ServerController extends GetxController {
   }
 
   Future<void> fallBackEvent(Event event) async {
-    final SoundController soundController = Get.put(SoundController());
-    final ScenesController scenesController = Get.put(ScenesController());
+    final SoundController soundController = Get.find();
+    final ScenesController scenesController = Get.find();
     // print('type: ${event.eventType} data: ${event.eventData}');
     if (event.eventType == 'CurrentProgramSceneChanged') {
       await obsWebSocket?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
@@ -181,9 +181,9 @@ class ServerController extends GetxController {
   }
 
   Future<void> reload() async {
-    final SoundController soundController = Get.put(SoundController());
-    final ScenesController scenesController = Get.put(ScenesController());
-    final SourcesController sourcesController = Get.put(SourcesController());
+    final SoundController soundController = Get.find();
+    final ScenesController scenesController = Get.find();
+    final SourcesController sourcesController = Get.find();
 
     await soundController.detectSoundConfiguration();
     await showStreamStatus();
@@ -194,14 +194,20 @@ class ServerController extends GetxController {
 
   Future<void> listenAllStatesFromOBS() async {
     // print('On listen les states de OBS pour les scenes.');
-    final serverController = Get.put(ServerController());
-    await serverController.obsWebSocket?.listen(EventSubscription.all.code);
+    final ServerController serverController = Get.find();
+    try {
+      await serverController.obsWebSocket?.listen(EventSubscription.all.code);
+    } catch (e) {
+      // print(e);
+      showStatusMessage(message: 'OBS Disconnected...');
+      isOBSConnected(isConnected: false);
+    }
     // await serverController.obsWebSocket?.listen(EventSubscription.inputs.code);
     // await serverController.obsWebSocket?.listen(EventSubscription.scenes.code);
   }
 
   Future<void> _getLocalDataForSettings() async {
-    final cacheController = Get.put(CacheController());
+    final CacheController cacheController = Get.find();
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
     final String? localIp = cache.getString(ip);
     final String? localPort = cache.getString(port);
@@ -229,7 +235,7 @@ class ServerController extends GetxController {
       failure.value = OBSConnectionFailure();
     }
     if (error.contains('SocketException: Connection refused')) {
-      failure.value = PortFailure();
+      failure.value = OBSConnectionFailure();
     }
     if (error.contains('Exception: Authentication error with identified response')) {
       failure.value = PasswordFailure();
@@ -254,7 +260,7 @@ class ServerController extends GetxController {
       }
       if (failureInfo is OBSConnectionFailure) {
         icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Connection OBS Error';
+        message = 'Error connection server OBS';
       }
       Get.snackbar(
         message,

@@ -11,7 +11,7 @@ class OBSListScenes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScenesController controller = Get.put(ScenesController());
+    final ScenesController controller = Get.find();
 
     return Expanded(
       child: SingleChildScrollView(

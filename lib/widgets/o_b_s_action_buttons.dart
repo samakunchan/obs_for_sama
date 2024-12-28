@@ -38,18 +38,18 @@ class OBSActionButtons extends StatelessWidget {
                     AppText.title.label,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        OBSToogleStreamButton(controller: controller),
-                        const SizedBox(width: 200, child: Divider(height: 50)),
-                        const Padding(
+                        OBSToogleStreamButton(),
+                        SizedBox(width: 200, child: Divider(height: 50)),
+                        Padding(
                           padding: EdgeInsets.all(8),
                           child: OBSReloadButton(),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(8),
                           child: OBSToogleSoundButton(),
                         ),

@@ -23,9 +23,10 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   bool? isCorrectQRCode;
   bool? isAutoConnectToOBS;
   late ServerController controller;
+
   @override
   void initState() {
-    controller = Get.put(ServerController());
+    controller = Get.find();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -33,7 +34,6 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   @override
   void dispose() {
     _tabController.dispose();
-    // controller.dispose();
     super.dispose();
   }
 

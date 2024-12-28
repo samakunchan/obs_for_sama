@@ -12,7 +12,7 @@ class OBSListSources extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SourcesController controller = Get.put(SourcesController());
+    final SourcesController controller = Get.find();
 
     return Expanded(
       child: Column(
