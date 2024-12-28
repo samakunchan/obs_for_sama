@@ -1,3 +1,20 @@
+## 🚀 0.6.0 - 28/12/2024
+### Added
+
+- No add.
+
+### Changed
+
+- Added GetX routes instead of Flutter routes.
+- Binding DI to routes.
+- Added transition to the route to `SettingsPage`.
+- Updated layout to stateless classes.
+- Removed old instantiation of `ServerController`, and added the DI to widgets and controllers.
+
+### Fixed
+
+- No fixes.
+
 ## 🚀 0.5.1 - 28/12/2024
 ### Added
 

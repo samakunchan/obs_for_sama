@@ -11,19 +11,22 @@ import 'package:obs_websocket/obs_websocket.dart';
 /// - Change scene on press.
 class ScenesController extends GetxController {
   final RxList<Scene> scenes = List<Scene>.empty(growable: true).obs;
-  final RxString currentSceneName = 'Unknow scene name'.obs;
+  final RxString currentSceneName = 'Unknown scene name'.obs;
 
+  /// Event to change current scene<br>
+  /// required [Scene]
   Future<void> onChangeScene({required Scene scene}) async {
-    final ServerController controller = Get.put(ServerController());
-    final SourcesController sourcesController = Get.put(SourcesController());
+    final ServerController controller = Get.find();
+    final SourcesController sourcesController = Get.find();
     await controller.obsWebSocket?.scenes.setCurrentProgramScene(scene.sceneName);
     final String currentScene = await controller.obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scenes';
     currentSceneName.value = currentScene;
     await sourcesController.getListSourcesByCurrentScene();
   }
 
+  /// Get all scenes.
   Future<void> getListScenes() async {
-    final ServerController controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
     final SceneListResponse? response = await controller.obsWebSocket?.scenes.getSceneList();
     if (response != null) {
       scenes.value = response.scenes.reversed.toList();
@@ -31,8 +34,9 @@ class ScenesController extends GetxController {
     }
   }
 
+  /// Get current scene
   Future<void> getCurrentScene() async {
-    final serverController = Get.put(ServerController());
+    final ServerController serverController = Get.find();
     try {
       final String? response = await serverController.obsWebSocket?.scenes.getCurrentProgramScene();
       currentSceneName.value = response ?? 'Inconnue';

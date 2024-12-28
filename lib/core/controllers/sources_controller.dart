@@ -13,8 +13,8 @@ class SourcesController extends GetxController {
   final RxList<SceneItemDetail> sources = List<SceneItemDetail>.empty(growable: true).obs;
 
   Future<void> toogleActiveSource({required SceneItemDetail source}) async {
-    final ScenesController scenesController = Get.put(ScenesController());
-    final ServerController controller = Get.put(ServerController());
+    final ScenesController scenesController = Get.find();
+    final ServerController controller = Get.find();
 
     final SceneItemEnableStateChanged sceneItemEnableStateChanged = SceneItemEnableStateChanged(
       sceneName: scenesController.currentSceneName.value,
@@ -27,8 +27,8 @@ class SourcesController extends GetxController {
   }
 
   Future<void> getListSourcesByCurrentScene() async {
-    final ScenesController scenesController = Get.put(ScenesController());
-    final ServerController controller = Get.put(ServerController());
+    final ScenesController scenesController = Get.find();
+    final ServerController controller = Get.find();
 
     final currentScene = scenesController.currentSceneName.value;
     final List<SceneItemDetail> details = await controller.obsWebSocket?.sceneItems.getSceneItemList(currentScene) ?? [];
