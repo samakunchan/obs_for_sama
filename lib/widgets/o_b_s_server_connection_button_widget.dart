@@ -17,7 +17,15 @@ class _OBSServerConnectionButtonState extends State<OBSServerConnectionButton> {
 
     return RSIButtonOutlined(
       onTap: () async {
-        await Navigator.pushNamed(context, RouteName.settings.label);
+        await Get.to<SettingsPage>(
+          () => const SettingsPage(
+            key: ValueKey<String>('Settings page'),
+          ),
+          binding: ServerBinding(),
+          transition: Transition.rightToLeft,
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 500),
+        );
       },
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
       child: Icon(
