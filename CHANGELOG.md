@@ -6,7 +6,7 @@
 ### Changed
 
 - Added new method to detect the source name of the microphone in the `SoundController` .
-- Added the dectection to the connection/reload process.
+- Added the detection to the connection/reload process.
 
 ### Fixed
 
