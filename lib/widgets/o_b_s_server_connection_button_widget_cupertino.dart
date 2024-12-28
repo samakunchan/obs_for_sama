@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
+import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/widgets/r_s_i_button_outlined.dart';
 
@@ -11,11 +11,9 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ServerController controller = Get.find();
-
     return RSIButtonOutlined(
       onTap: () async {
-        await showDialogIos(context: context, controller: controller);
+        await showDialogIos(context: context);
       },
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
       child: Icon(
@@ -26,7 +24,8 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
     );
   }
 
-  Future<void> showDialogIos({required BuildContext context, required ServerController controller}) async {
+  Future<void> showDialogIos({required BuildContext context}) async {
+    final AuthObsFormController formController = Get.find();
     await Get.defaultDialog<dynamic>(
       titlePadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       title: AppText.obsServerForm.label,
@@ -34,7 +33,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
       content: Column(
         children: [
           Form(
-            key: controller.settingsFormKey,
+            key: formController.settingsFormKey,
             child: Column(
               children: [
                 Padding(
@@ -49,7 +48,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                       ),
                       CupertinoTextField(
                         // obscureText: true,
-                        controller: controller.textEditingControllerIp,
+                        controller: formController.textEditingControllerIp,
                         placeholder: '192.XXX.XXX.XXX',
                       ),
                     ],
@@ -67,7 +66,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                       ),
                       CupertinoTextField(
                         // obscureText: true,
-                        controller: controller.textEditingControllerPort,
+                        controller: formController.textEditingControllerPort,
                         placeholder: '1234',
                       ),
                     ],
@@ -85,7 +84,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
                       ),
                       CupertinoTextField(
                         // obscureText: true,
-                        controller: controller.textEditingControllerPassword,
+                        controller: formController.textEditingControllerPassword,
                         placeholder: 'OBS Websocket Password',
                       ),
                     ],
@@ -99,7 +98,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
       confirm: Padding(
         padding: const EdgeInsets.all(8),
         child: TextButton(
-          onPressed: () => controller.submit(
+          onPressed: () => formController.submit(
             onSuccess: (_) {},
             onFailure: (_) {},
           ),

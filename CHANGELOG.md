@@ -1,3 +1,19 @@
+## 🚀 0.7.0 - 28/12/2024
+### Added
+
+- No add.
+
+### Changed
+
+- Added a form controller.
+- Added an error controller.
+- Removing old code from server controller.
+- Updated widgets with new controllers
+
+### Fixed
+
+- No fixes.
+ 
 ## 🚀 0.6.0 - 28/12/2024
 ### Added
 

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:obs_for_sama/core/clippers.dart';
 import 'package:obs_for_sama/core/constantes.dart';
+import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
+import 'package:obs_for_sama/core/controllers/error_controller.dart';
 import 'package:obs_for_sama/core/controllers/server_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
@@ -23,10 +25,14 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   bool? isCorrectQRCode;
   bool? isAutoConnectToOBS;
   late ServerController controller;
+  late ErrorController errorController;
+  late AuthObsFormController formController;
 
   @override
   void initState() {
     controller = Get.find();
+    errorController = Get.find();
+    formController = Get.find();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -91,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                     children: [
                                       /// FORM
                                       Form(
-                                        key: controller.settingsFormKey,
+                                        key: formController.settingsFormKey,
                                         child: Padding(
                                           padding: const EdgeInsets.all(24),
                                           child: Column(
@@ -102,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                                 child: TextFormField(
                                                   cursorColor: kTextColorWhite,
                                                   // obscureText: true,
-                                                  controller: controller.textEditingControllerIp,
+                                                  controller: formController.textEditingControllerIp,
                                                   // placeholder: '192.XXX.XXX.XXX',
                                                   decoration: InputDecoration(
                                                     labelText: SettingsEnum.ip.label,
@@ -115,7 +121,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                                 child: TextFormField(
                                                   cursorColor: kTextColorWhite,
                                                   // obscureText: true,
-                                                  controller: controller.textEditingControllerPort,
+                                                  controller: formController.textEditingControllerPort,
                                                   // placeholder: '1234',
                                                   decoration: InputDecoration(
                                                     labelText: SettingsEnum.port.label,
@@ -128,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                                 child: TextFormField(
                                                   cursorColor: kTextColorWhite,
                                                   // obscureText: true,
-                                                  controller: controller.textEditingControllerPassword,
+                                                  controller: formController.textEditingControllerPassword,
                                                   // placeholder: 'OBS Websocket Password',
                                                   decoration: InputDecoration(
                                                     labelText: SettingsEnum.password.label,
@@ -157,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                                               setState(() {
                                                                 isSubmitting = true;
                                                               });
-                                                              controller.submit(
+                                                              formController.submit(
                                                                 onSuccess: (bool value) {
                                                                   Get.back<void>();
                                                                   setState(() {
@@ -165,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                                                   });
                                                                 },
                                                                 onFailure: (Failure failure) {
-                                                                  controller.showErrorSnackBar(failureInfo: failure);
+                                                                  errorController.showErrorSnackBar(failureInfo: failure);
                                                                   setState(() {
                                                                     isSubmitting = false;
                                                                   });
@@ -193,7 +199,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                         fit: StackFit.expand,
                                         children: [
                                           MobileScanner(
-                                            onDetect: (BarcodeCapture barcodes) => _handleBarcode(barcodes, controller),
+                                            onDetect: _handleBarcode,
                                           ),
                                           if (isCorrectQRCode != null && isCorrectQRCode == false)
                                             Padding(
@@ -279,7 +285,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
     );
   }
 
-  void _handleBarcode(BarcodeCapture barcodes, ServerController controller) {
+  void _handleBarcode(BarcodeCapture barcodes) {
     if (mounted) {
       // print('CODE BARRE : ${barcodes.barcodes.firstOrNull!.displayValue}');
       final String result = barcodes.barcodes.firstOrNull!.displayValue!;
@@ -297,10 +303,10 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
           isCorrectQRCode = true;
           isAutoConnectToOBS = true;
         });
-        controller.textEditingControllerIp.value = TextEditingValue(text: ip);
-        controller.textEditingControllerPort.value = TextEditingValue(text: port);
-        controller.textEditingControllerPassword.value = TextEditingValue(text: token);
-        controller.submitQrCode(
+        formController.textEditingControllerIp.value = TextEditingValue(text: ip);
+        formController.textEditingControllerPort.value = TextEditingValue(text: port);
+        formController.textEditingControllerPassword.value = TextEditingValue(text: token);
+        formController.submitQrCode(
           onSuccess: (_) {
             Get.back<void>();
             setState(() {
@@ -308,7 +314,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
             });
           },
           onFailure: (Failure failure) {
-            controller.showErrorSnackBar(failureInfo: failure);
+            errorController.showErrorSnackBar(failureInfo: failure);
             setState(() {
               isAutoConnectToOBS = false;
             });
