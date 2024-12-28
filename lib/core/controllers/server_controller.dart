@@ -40,7 +40,7 @@ class ServerController extends GetxController {
     resetError();
 
     if (settingsFormKey.currentState!.validate()) {
-      final cacheController = Get.put(CacheController());
+      final CacheController cacheController = Get.put(CacheController());
       final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
       await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
       await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
@@ -53,14 +53,8 @@ class ServerController extends GetxController {
         onFailure(failure.value);
         // print('je reset le failure');
         resetError();
-        // await cache.remove(SettingsEnum.ip.label);
-        // await cache.remove(SettingsEnum.port.label);
-        // await cache.remove(SettingsEnum.password.label);
-        // await cache.clear();
-        // print('je clear le cache normalement');
       } else {
         // print('On lance pas la failure');
-        // Get.back<void>();
         onSuccess(true);
       }
     }
@@ -68,6 +62,7 @@ class ServerController extends GetxController {
 
   Future<void> submitQrCode({ValueChanged<Failure>? onFailure, ValueChanged<bool>? onSuccess}) async {
     // print('Je lance le submit');
+    resetError();
 
     final cacheController = Get.put(CacheController());
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
@@ -82,6 +77,7 @@ class ServerController extends GetxController {
       // print('On lance la failure : ${failure.value}');
       onFailure!(failure.value);
       // print('je reset le failure');
+      resetError();
     } else {
       // print('On lance pas la failure');
       onSuccess!(true);
