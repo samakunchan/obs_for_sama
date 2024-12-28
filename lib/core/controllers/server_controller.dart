@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/cache_controller.dart';
+import 'package:obs_for_sama/core/controllers/error_controller.dart';
 import 'package:obs_for_sama/core/controllers/scenes_controller.dart';
 import 'package:obs_for_sama/core/controllers/sound_controller.dart';
 import 'package:obs_for_sama/core/controllers/sources_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
-import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,83 +16,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Controller to manage [ObsWebSocket] library and [FormState].
 class ServerController extends GetxController {
   late ObsWebSocket? obsWebSocket;
-  final GlobalKey<FormState> settingsFormKey = GlobalKey<FormState>();
-  final TextEditingController textEditingControllerIp = TextEditingController();
-  final TextEditingController textEditingControllerPort = TextEditingController();
-  final TextEditingController textEditingControllerPassword = TextEditingController();
   final RxString obsStatusMessage = 'Loading...'.obs;
   final RxBool isOBSSynchronized = false.obs;
   final Rx<StatusStream> isStreamStarted = StatusStream.stopped.obs;
-  late final Rx<Failure> failure = Failure().obs;
-
-  @override
-  void onClose() {
-    textEditingControllerIp.dispose();
-    textEditingControllerPort.dispose();
-    textEditingControllerPassword.dispose();
-    super.onClose();
-  }
-
-  Future<void> submit({
-    required ValueChanged<Failure> onFailure,
-    required ValueChanged<bool> onSuccess,
-  }) async {
-    // print('Je lance le submit');
-    resetError();
-
-    if (settingsFormKey.currentState!.validate()) {
-      final CacheController cacheController = Get.find();
-      final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
-      await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
-      await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
-      await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
-
-      // print('Le mot de passe est = ${textEditingControllerPassword.text}');
-      await connectToOBS();
-      if (failure.value is! NoFailure) {
-        // print('On lance la failure : ${failure.value}');
-        onFailure(failure.value);
-        // print('je reset le failure');
-        resetError();
-      } else {
-        // print('On lance pas la failure');
-        onSuccess(true);
-      }
-    }
-  }
-
-  Future<void> submitQrCode({ValueChanged<Failure>? onFailure, ValueChanged<bool>? onSuccess}) async {
-    // print('Je lance le submit');
-    resetError();
-
-    final CacheController cacheController = Get.find();
-    final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
-    await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
-    await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
-    await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
-
-    // print('Le mot de passe est = ${textEditingControllerPassword.text}');
-    await connectToOBS();
-    // print('NoFailure? ${failure.value is! NoFailure}. ${failure.value}');
-    if (failure.value is! NoFailure) {
-      // print('On lance la failure : ${failure.value}');
-      onFailure!(failure.value);
-      // print('je reset le failure');
-      resetError();
-    } else {
-      // print('On lance pas la failure');
-      onSuccess!(true);
-    }
-  }
 
   String showStatusMessage({required String message}) => obsStatusMessage.value = message;
   bool isOBSConnected({required bool isConnected}) => isOBSSynchronized.value = isConnected;
   StatusStream isStreamOnline({required StatusStream status}) => isStreamStarted.value = status;
 
   Future<ObsWebSocket> init() async {
+    final AuthObsFormController formController = Get.find();
+
     return ObsWebSocket.connect(
-      'ws://${textEditingControllerIp.text}:${textEditingControllerPort.text}',
-      password: textEditingControllerPassword.text,
+      'ws://${formController.textEditingControllerIp.text}:${formController.textEditingControllerPort.text}',
+      password: formController.textEditingControllerPassword.text,
       fallbackEventHandler: fallBackEvent,
     );
   }
@@ -132,7 +70,8 @@ class ServerController extends GetxController {
   }
 
   Future<void> connectToOBS() async {
-    resetError();
+    final ErrorController errorController = Get.find()..resetError();
+
     try {
       // print('Je teste la connexion.');
       await _getLocalDataForSettings();
@@ -149,7 +88,7 @@ class ServerController extends GetxController {
     } catch (e) {
       // print('Pas bon.');
       // print(e);
-      _manageError(error: e.toString());
+      errorController.manageError(error: e.toString());
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }
@@ -194,9 +133,8 @@ class ServerController extends GetxController {
 
   Future<void> listenAllStatesFromOBS() async {
     // print('On listen les states de OBS pour les scenes.');
-    final ServerController serverController = Get.find();
     try {
-      await serverController.obsWebSocket?.listen(EventSubscription.all.code);
+      await obsWebSocket?.listen(EventSubscription.all.code);
     } catch (e) {
       // print(e);
       showStatusMessage(message: 'OBS Disconnected...');
@@ -208,6 +146,7 @@ class ServerController extends GetxController {
 
   Future<void> _getLocalDataForSettings() async {
     final CacheController cacheController = Get.find();
+    final AuthObsFormController formController = Get.find();
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
     final String? localIp = cache.getString(ip);
     final String? localPort = cache.getString(port);
@@ -215,64 +154,13 @@ class ServerController extends GetxController {
 
     if (localIp != null && localPort != null && localPassword != null) {
       // print('Détection des données locales.');
-      textEditingControllerIp.text = localIp;
-      textEditingControllerPort.text = localPort;
-      textEditingControllerPassword.text = localPassword;
+      formController.textEditingControllerIp.text = localIp;
+      formController.textEditingControllerPort.text = localPort;
+      formController.textEditingControllerPassword.text = localPassword;
     } else {
       // print('Les données locales n‘ont pas été trouvés');
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }
-  }
-
-  void _manageError({required String error}) {
-    // print(error);
-    failure.value = NoFailure();
-    if (error.contains('SocketException') && error.contains('Failed host lookup')) {
-      failure.value = HostFailure();
-    }
-    if (error.contains('TimeoutException')) {
-      failure.value = OBSConnectionFailure();
-    }
-    if (error.contains('SocketException: Connection refused')) {
-      failure.value = OBSConnectionFailure();
-    }
-    if (error.contains('Exception: Authentication error with identified response')) {
-      failure.value = PasswordFailure();
-    }
-  }
-
-  void showErrorSnackBar({required Failure failureInfo}) {
-    if (failureInfo is! NoFailure) {
-      Icon icon = const Icon(Icons.add_alert);
-      String message = '';
-      if (failureInfo is HostFailure) {
-        icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Error IP';
-      }
-      if (failureInfo is PortFailure) {
-        icon = const Icon(Icons.developer_board_off, size: 50);
-        message = 'Error Port';
-      }
-      if (failureInfo is PasswordFailure) {
-        icon = const Icon(Icons.key_off, size: 50);
-        message = 'Error Password';
-      }
-      if (failureInfo is OBSConnectionFailure) {
-        icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Error connection server OBS';
-      }
-      Get.snackbar(
-        message,
-        '',
-        messageText: icon, //key_off, key_on, leak_remove, leak_add develo
-        backgroundColor: Colors.orangeAccent,
-        duration: const Duration(seconds: 4),
-      );
-    }
-  }
-
-  void resetError() {
-    failure.value = NoFailure();
   }
 }
