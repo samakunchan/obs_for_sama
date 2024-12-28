@@ -6,11 +6,11 @@ import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/widgets/r_s_i_button_outlined.dart';
 
 class OBSToogleStreamButton extends StatelessWidget {
-  const OBSToogleStreamButton({required this.controller, super.key});
-  final ServerController controller;
+  const OBSToogleStreamButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ServerController controller = Get.find();
     return Obx(
       () {
         if (controller.isStreamStarted.value == StatusStream.started) {

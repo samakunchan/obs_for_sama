@@ -9,7 +9,7 @@ class OBSToogleSoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SoundController controller = Get.put(SoundController());
+    final SoundController controller = Get.find();
     return Padding(
       padding: const EdgeInsets.all(8),
       child: RSIButtonOutlined(

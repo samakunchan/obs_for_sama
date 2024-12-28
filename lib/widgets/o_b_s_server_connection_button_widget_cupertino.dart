@@ -11,7 +11,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
 
     return RSIButtonOutlined(
       onTap: () async {

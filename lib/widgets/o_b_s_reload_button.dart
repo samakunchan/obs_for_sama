@@ -9,7 +9,7 @@ class OBSReloadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ServerController controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
     return RSIButtonOutlined(
       onTap: controller.reload,
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),

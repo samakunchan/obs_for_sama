@@ -15,26 +15,25 @@ class SoundController extends GetxController {
   String setInputName({required String name}) => inputName.value = name;
 
   Future<void> detectSoundConfiguration() async {
-    final controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
     final RequestResponse? res = await controller.obsWebSocket?.send('GetInputList');
     final List<Map<String, dynamic>> json = (res?.responseData!['inputs'] as List).map((v) => v as Map<String, dynamic>).toList();
-    print(json.map(Input.fromJson).toList());
-    final List<Input> aaa = json.map(Input.fromJson).toList();
-    final String correctSoundName = aaa.where((Input v) => v.inputKind == 'coreaudio_input_capture').first.inputName;
-    // final Inputs input = Inputs.fromJson(res?.responseData as Map<String, dynamic>);
-    print(correctSoundName);
+
+    final List<Input> listInputs = json.map(Input.fromJson).toList();
+    final String correctSoundName = listInputs.where((Input v) => v.inputKind == 'coreaudio_input_capture').first.inputName;
+
     setInputName(name: correctSoundName);
   }
 
   Future<void> getStatusSound() async {
-    final controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
     final Inputs? inputs = controller.obsWebSocket?.inputs;
     final bool? isReallyMuted = await inputs?.getMute(inputName.value);
     isMuted(isMuted: isReallyMuted ?? false);
   }
 
   Future<void> toogleMuteSound() async {
-    final controller = Get.put(ServerController());
+    final ServerController controller = Get.find();
     final Inputs? inputs = controller.obsWebSocket?.inputs;
     await inputs?.toggleMute(inputName.value);
     final bool? isReallyMuted = await inputs?.getMute(inputName.value);
