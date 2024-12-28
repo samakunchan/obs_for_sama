@@ -6,18 +6,28 @@ import 'package:obs_for_sama/widgets/o_b_s_action_buttons_mobile.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_scenes.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_sources.dart';
 
-class OBSLayoutMobile extends StatelessWidget {
+class OBSLayoutMobile extends StatefulWidget {
   const OBSLayoutMobile({super.key});
 
   @override
+  State<OBSLayoutMobile> createState() => _OBSLayoutMobileState();
+}
+
+class _OBSLayoutMobileState extends State<OBSLayoutMobile> {
+  late ServerController controller;
+  @override
+  void initState() {
+    controller = Get.put(ServerController());
+    initialization(controller: controller);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ServerController controller = Get.put(ServerController());
     final mediaQuery = MediaQuery.of(context);
     final safeAreaPadding = mediaQuery.padding;
     final screenHeight = mediaQuery.size.height;
     final availableHeight = screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
-
-    initialization(controller: controller);
 
     return SafeArea(
       child: SizedBox(
