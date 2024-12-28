@@ -1,3 +1,17 @@
+## 🚀 0.5.1 - 28/12/2024
+### Added
+
+- No add.
+
+### Changed
+
+- Added new method to detect the source name of the microphone in the `SoundController` .
+- Added the dectection to the connection/reload process.
+
+### Fixed
+
+- No fixes.
+ 
 ## 🚀 0.5.0 - 28/12/2024
 ### Added
 
