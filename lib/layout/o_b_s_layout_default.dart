@@ -6,14 +6,30 @@ import 'package:obs_for_sama/widgets/o_b_s_action_buttons.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_scenes.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_sources.dart';
 
-class OBSLayoutDefault extends StatelessWidget {
+class OBSLayoutDefault extends StatefulWidget {
   const OBSLayoutDefault({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final ServerController controller = Get.put(ServerController());
-    initialization(controller: controller);
+  State<OBSLayoutDefault> createState() => _OBSLayoutDefaultState();
+}
 
+class _OBSLayoutDefaultState extends State<OBSLayoutDefault> {
+  late ServerController controller;
+  @override
+  void initState() {
+    controller = Get.put(ServerController());
+    initialization(controller: controller);
+    super.initState();
+  }
+
+  // @override
+  // void dispose() {
+  //   controller.dispose();
+  //   super.dispose();
+  // }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),

@@ -125,12 +125,19 @@ final ThemeData kThemeData = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: kbodyLarge,
     suffixIconColor: kButtonColor,
+    prefixIconColor: kButtonColor,
     border: const OutlineInputBorder(
       borderSide: BorderSide(color: kButtonColor, width: .2),
     ),
     focusedBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: kButtonColor, width: .2),
     ),
+  ),
+  tabBarTheme: TabBarTheme(
+    dividerColor: kPrimaryColor,
+    labelColor: kButtonColor,
+    indicatorColor: kButtonColor,
+    labelStyle: kheadlineMedium,
   ),
   useMaterial3: true,
 );

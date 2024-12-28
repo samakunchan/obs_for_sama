@@ -1,3 +1,27 @@
+## 🚀 0.5.0 - 28/12/2024
+### Added
+
+- Added routes class for separate all pages.
+- import routes files to MyApp widget.
+- Added pages folder for all pages.
+- Added setting page to manage to connection to OBS
+- Installing packages for QR codes
+
+### Changed
+
+- Home property disabled.
+- Moved obs control page.
+- Deleted dialog popup and moved the form to the new setting page.
+- Updated "submit" method with require onFailure/onSuccess callback.
+- Added a submit method only for QR code.
+- Fixed issue for the 1st time verification of failure.
+- Added a new Exception to handle timeout
+- Transformed all layout in stateful widget for the moment.
+
+### Fixed
+
+- Fixed issues for ios configuration.
+
 ## 🚀 0.4.0 - 23/12/2024
 ### Added
 

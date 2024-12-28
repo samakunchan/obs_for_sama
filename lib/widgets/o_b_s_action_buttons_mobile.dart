@@ -42,23 +42,23 @@ class OBSActionButtonsMobile extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          /// CONNECT OBS
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.all(8),
+                          //         child: RSIButtonOutlined(
+                          //           onTap: controller.connectToOBS,
+                          //           edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
+                          //           text: AppText.connectToOBS.label,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           Row(
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: RSIButtonOutlined(
-                                    onTap: controller.connectToOBS,
-                                    edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                                    text: AppText.connectToOBS.label,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
+                              /// CONNECT OBS
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8),
@@ -67,12 +67,16 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                       : const OBSServerConnectionButtonWidgetCupertino(),
                                 ),
                               ),
+
+                              /// REFRESH
                               const Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.all(8),
                                   child: OBSReloadButton(),
                                 ),
                               ),
+
+                              /// SOUND
                               const Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.all(8),
