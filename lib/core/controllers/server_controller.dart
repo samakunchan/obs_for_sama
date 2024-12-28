@@ -32,7 +32,13 @@ class ServerController extends GetxController {
     super.onClose();
   }
 
-  Future<void> submit({ValueChanged<Failure>? onFailure}) async {
+  Future<void> submit({
+    required ValueChanged<Failure> onFailure,
+    required ValueChanged<bool> onSuccess,
+  }) async {
+    // print('Je lance le submit');
+    resetError();
+
     if (settingsFormKey.currentState!.validate()) {
       final cacheController = Get.put(CacheController());
       final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
@@ -40,10 +46,11 @@ class ServerController extends GetxController {
       await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
       await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
 
+      // print('Le mot de passe est = ${textEditingControllerPassword.text}');
       await connectToOBS();
       if (failure.value is! NoFailure) {
         // print('On lance la failure : ${failure.value}');
-        onFailure!(failure.value);
+        onFailure(failure.value);
         // print('je reset le failure');
         resetError();
         // await cache.remove(SettingsEnum.ip.label);
@@ -53,8 +60,31 @@ class ServerController extends GetxController {
         // print('je clear le cache normalement');
       } else {
         // print('On lance pas la failure');
-        Get.back<void>();
+        // Get.back<void>();
+        onSuccess(true);
       }
+    }
+  }
+
+  Future<void> submitQrCode({ValueChanged<Failure>? onFailure, ValueChanged<bool>? onSuccess}) async {
+    // print('Je lance le submit');
+
+    final cacheController = Get.put(CacheController());
+    final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
+    await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
+    await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
+    await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
+
+    // print('Le mot de passe est = ${textEditingControllerPassword.text}');
+    await connectToOBS();
+    // print('NoFailure? ${failure.value is! NoFailure}. ${failure.value}');
+    if (failure.value is! NoFailure) {
+      // print('On lance la failure : ${failure.value}');
+      onFailure!(failure.value);
+      // print('je reset le failure');
+    } else {
+      // print('On lance pas la failure');
+      onSuccess!(true);
     }
   }
 
@@ -106,6 +136,7 @@ class ServerController extends GetxController {
   }
 
   Future<void> connectToOBS() async {
+    resetError();
     try {
       // print('Je teste la connexion.');
       await _getLocalDataForSettings();
@@ -197,6 +228,9 @@ class ServerController extends GetxController {
     if (error.contains('SocketException') && error.contains('Failed host lookup')) {
       failure.value = HostFailure();
     }
+    if (error.contains('TimeoutException')) {
+      failure.value = OBSConnectionFailure();
+    }
     if (error.contains('SocketException: Connection refused')) {
       failure.value = PortFailure();
     }
@@ -205,21 +239,25 @@ class ServerController extends GetxController {
     }
   }
 
-  void showErrorSnackBar({required Failure failure}) {
-    if (failure is! NoFailure) {
+  void showErrorSnackBar({required Failure failureInfo}) {
+    if (failureInfo is! NoFailure) {
       Icon icon = const Icon(Icons.add_alert);
       String message = '';
-      if (failure is HostFailure) {
+      if (failureInfo is HostFailure) {
         icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Erreur IP';
+        message = 'Error IP';
       }
-      if (failure is PortFailure) {
+      if (failureInfo is PortFailure) {
         icon = const Icon(Icons.developer_board_off, size: 50);
-        message = 'Erreur Port';
+        message = 'Error Port';
       }
-      if (failure is PasswordFailure) {
+      if (failureInfo is PasswordFailure) {
         icon = const Icon(Icons.key_off, size: 50);
-        message = 'Erreur Password';
+        message = 'Error Password';
+      }
+      if (failureInfo is OBSConnectionFailure) {
+        icon = const Icon(Icons.leak_remove, size: 50);
+        message = 'Connection OBS Error';
       }
       Get.snackbar(
         message,
