@@ -185,6 +185,7 @@ class ServerController extends GetxController {
     final ScenesController scenesController = Get.put(ScenesController());
     final SourcesController sourcesController = Get.put(SourcesController());
 
+    await soundController.detectSoundConfiguration();
     await showStreamStatus();
     await soundController.getStatusSound();
     await scenesController.getListScenes();
