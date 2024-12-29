@@ -1,3 +1,21 @@
+## 🚀 0.8.0 - 29/12/2024
+### Added
+
+- Added font awesome package.
+
+### Changed
+
+- Deleted submit qr code method because its a duplication.
+- Added setting layout mobile widget.
+- Added widget for QR code page.
+- Added widget for regular form page.
+- Refacto OBS setting page.
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.7.0 - 28/12/2024
 ### Added
 
@@ -13,7 +31,8 @@
 ### Fixed
 
 - No fixes.
- 
+
+
 ## 🚀 0.6.0 - 28/12/2024
 ### Added
 
@@ -31,6 +50,7 @@
 
 - No fixes.
 
+
 ## 🚀 0.5.1 - 28/12/2024
 ### Added
 
@@ -44,7 +64,8 @@
 ### Fixed
 
 - No fixes.
- 
+
+
 ## 🚀 0.5.0 - 28/12/2024
 ### Added
 
@@ -69,6 +90,7 @@
 
 - Fixed issues for ios configuration.
 
+
 ## 🚀 0.4.0 - 23/12/2024
 ### Added
 
@@ -86,6 +108,7 @@
 
 - No fixes.
 
+
 ## 🚀 0.3.1 - 17/12/2024
 ### Added
 
@@ -102,6 +125,7 @@
 ### Fixed
 
 - Fixed issue about the refresh of start button and stop button when it pressed.
+
 
 ## 🚀 0.3.0 - 13/12/2024
 ### Added
@@ -123,6 +147,7 @@
 
 - No fix.
 
+
 ## 🚀 0.2.0 - 09/12/2024
 ### Added
 
@@ -143,6 +168,7 @@
 ### Fixed
 
 - No fix.
+
 
 ## 🚀 0.1.0 - 21/08/2024
 ### Added
