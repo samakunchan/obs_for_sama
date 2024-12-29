@@ -19,6 +19,7 @@ dependencies:
   get: ^4.6.6
   mobile_scanner: ^6.0.2
   image_picker: ^1.1.2
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
