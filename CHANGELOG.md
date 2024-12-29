@@ -1,3 +1,19 @@
+## 🚀 0.9.0 - 29/12/2024
+### Added
+
+- No add.
+
+### Changed
+
+- Added animation for home route to disable the default animation.
+- Rename file `r_s_i_outlined_body.dart`.
+- Added all features for IPad.
+
+### Fixed
+
+- No fixes.
+
+ 
 ## 🚀 0.8.0 - 29/12/2024
 ### Added
 

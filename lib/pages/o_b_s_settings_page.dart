@@ -4,6 +4,7 @@ import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/error_controller.dart';
 import 'package:obs_for_sama/core/controllers/server_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
+import 'package:obs_for_sama/layout/setting_layout_default.dart';
 import 'package:obs_for_sama/layout/setting_layout_mobile.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -64,15 +65,8 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                 switch (orientation) {
                   case Orientation.portrait:
                   case Orientation.landscape:
-                    return SafeArea(
-                      child: Center(
-                        child: TextButton(
-                          onPressed: () {
-                            Get.back<void>();
-                          },
-                          child: const Text('Retour'),
-                        ),
-                      ),
+                    return const SettingLayoutDefault(
+                      key: ValueKey('Page Settings default View'),
                     );
                 }
               },

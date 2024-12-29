@@ -8,7 +8,7 @@ import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/error_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
-import 'package:obs_for_sama/widgets/r_s_i_body.dart';
+import 'package:obs_for_sama/widgets/r_s_i_outlined_body.dart';
 
 class FormRegular extends StatelessWidget {
   const FormRegular({super.key});
