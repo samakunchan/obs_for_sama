@@ -1,7 +1,21 @@
+## 🔨 0.9.1 - 29/12/2024
+### Added
+
+- No addition.
+
+### Changed
+
+- No Changes.
+
+### Fixed
+
+- Added forbidden file : `SettingLayoutDefault` widget.
+
+
 ## 🚀 0.9.0 - 29/12/2024
 ### Added
 
-- No add.
+- No addition.
 
 ### Changed
 
@@ -67,7 +81,7 @@
 - No fixes.
 
 
-## 🚀 0.5.1 - 28/12/2024
+## 🔨 0.5.1 - 28/12/2024
 ### Added
 
 - No add.
@@ -125,7 +139,7 @@
 - No fixes.
 
 
-## 🚀 0.3.1 - 17/12/2024
+## 🔨 0.3.1 - 17/12/2024
 ### Added
 
 - Added a new button to toogle the start/stop stream.
