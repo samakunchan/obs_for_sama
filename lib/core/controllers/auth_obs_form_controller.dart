@@ -12,6 +12,12 @@ class AuthObsFormController extends GetxController {
   final TextEditingController textEditingControllerIp = TextEditingController();
   final TextEditingController textEditingControllerPort = TextEditingController();
   final TextEditingController textEditingControllerPassword = TextEditingController();
+
+  late RxBool isSubmitting = false.obs;
+  late RxBool isLookingForQRCode = true.obs;
+  RxBool? isCorrectQRCode;
+  RxBool? isAutoConnectToOBS;
+
   @override
   void onClose() {
     textEditingControllerIp.dispose();
@@ -26,32 +32,6 @@ class AuthObsFormController extends GetxController {
   }) async {
     // print('Je lance le submit');
     final ErrorController errorController = Get.find()..resetError();
-
-    if (settingsFormKey.currentState!.validate()) {
-      final CacheController cacheController = Get.find();
-      final ServerController controller = Get.find();
-      final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
-      await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
-      await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
-      await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
-
-      // print('Le mot de passe est = ${textEditingControllerPassword.text}');
-      await controller.connectToOBS();
-      if (errorController.failure.value is! NoFailure) {
-        // print('On lance la failure : ${failure.value}');
-        onFailure(errorController.failure.value);
-        // print('je reset le failure');
-        errorController.resetError();
-      } else {
-        // print('On lance pas la failure');
-        onSuccess(true);
-      }
-    }
-  }
-
-  Future<void> submitQrCode({ValueChanged<Failure>? onFailure, ValueChanged<bool>? onSuccess}) async {
-    // print('Je lance le submit');
-    final ErrorController errorController = Get.find()..resetError();
     final CacheController cacheController = Get.find();
     final ServerController controller = Get.find();
     final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
@@ -61,11 +41,18 @@ class AuthObsFormController extends GetxController {
 
     await controller.connectToOBS();
     if (errorController.failure.value is! NoFailure) {
-      onFailure!(errorController.failure.value);
+      onFailure(errorController.failure.value);
       errorController.resetError();
     } else {
       // print('On lance pas la failure');
-      onSuccess!(true);
+      onSuccess(true);
     }
+  }
+
+  Future<void> clearTextFields() async {
+    isSubmitting.value = false;
+    textEditingControllerPassword.clear();
+    textEditingControllerIp.clear();
+    textEditingControllerPort.clear();
   }
 }
