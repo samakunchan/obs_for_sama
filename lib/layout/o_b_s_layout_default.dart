@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/controllers/server_controller.dart';
@@ -5,6 +7,8 @@ import 'package:obs_for_sama/widgets/error_message_screen.dart';
 import 'package:obs_for_sama/widgets/o_b_s_action_buttons.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_scenes.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_sources.dart';
+import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget.dart';
+import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget_cupertino.dart';
 
 class OBSLayoutDefault extends StatelessWidget {
   const OBSLayoutDefault({super.key});
@@ -22,13 +26,12 @@ class OBSLayoutDefault extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// ACTIONS BOUTONS
-              OBSActionButtons(
-                key: const ValueKey<String>('Actions Buttons'),
-                controller: controller,
+              const OBSActionButtons(
+                key: ValueKey<String>('Actions Buttons'),
               ),
 
               /// DIVIDER
-              const VerticalDivider(),
+              // const VerticalDivider(),
               if (controller.isOBSSynchronized.value)
                 const Expanded(
                   flex: 5,
@@ -51,8 +54,24 @@ class OBSLayoutDefault extends StatelessWidget {
 
               /// ERROR MESSAGE
               else
-                ErrorMessageScreen(
-                  message: controller.obsStatusMessage.value,
+                Expanded(
+                  child: Column(
+                    children: [
+                      ErrorMessageScreen(
+                        message: controller.obsStatusMessage.value,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Platform.isAndroid
+                            ? const OBSServerConnectionButton(
+                                key: ValueKey<String>('Android Button connection'),
+                              )
+                            : const OBSServerConnectionButtonWidgetCupertino(
+                                key: ValueKey<String>('IOS Button connection'),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
             ],
           );
