@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
             key: ValueKey<String>('Main page'),
           ),
           binding: ServerBinding(),
+          transition: Transition.fade,
         ),
         GetPage(
           name: '/settings',

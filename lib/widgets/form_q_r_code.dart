@@ -6,7 +6,7 @@ import 'package:obs_for_sama/core/constantes.dart';
 import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/error_controller.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
-import 'package:obs_for_sama/widgets/r_s_i_body.dart';
+import 'package:obs_for_sama/widgets/r_s_i_outlined_body.dart';
 
 class FormQRCode extends StatefulWidget {
   const FormQRCode({super.key});
@@ -19,6 +19,8 @@ class _FormQRCodeState extends State<FormQRCode> {
   @override
   Widget build(BuildContext context) {
     final AuthObsFormController formController = Get.find();
+    formController.isLookingForQRCode.value = true;
+    formController.isCorrectQRCode?.value = true;
 
     return RSIOutlinedBody(
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
@@ -57,10 +59,7 @@ class _FormQRCodeState extends State<FormQRCode> {
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Got it',
-                  style: ktitle1,
-                ),
+                Text('Got it', style: ktitle1),
                 AnimatedSwitcher(
                   duration: const Duration(seconds: 1),
                   child: formController.isAutoConnectToOBS?.value != null
@@ -104,6 +103,7 @@ class _FormQRCodeState extends State<FormQRCode> {
         formController.textEditingControllerIp.value = TextEditingValue(text: ip);
         formController.textEditingControllerPort.value = TextEditingValue(text: port);
         formController.textEditingControllerPassword.value = TextEditingValue(text: token);
+
         formController.submit(
           onSuccess: (_) {
             Get.back<void>();

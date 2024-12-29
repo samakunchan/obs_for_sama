@@ -47,8 +47,12 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Platform.isAndroid
-                                        ? const OBSServerConnectionButton()
-                                        : const OBSServerConnectionButtonWidgetCupertino(),
+                                        ? const OBSServerConnectionButton(
+                                            key: ValueKey<String>('Android Button connection'),
+                                          )
+                                        : const OBSServerConnectionButtonWidgetCupertino(
+                                            key: ValueKey<String>('IOS Button connection'),
+                                          ),
                                   ),
                                 ),
 
