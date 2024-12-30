@@ -1,0 +1,14 @@
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+#  background_image: assets/splash-obs-manager.png
+  color: "#0A1D29"
+  image: assets/logo-obs-manager-x2.png
+  branding: assets/branding-obs-manager.png
+  branding_bottom_padding: 24
+
+  android_12:
+    color: "#0A1D29"
+    image: assets/logo-obs-manager-x2.png
+    branding: assets/branding-obs-manager.png

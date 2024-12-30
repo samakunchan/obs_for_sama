@@ -26,9 +26,10 @@ class OBSLayoutDefault extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// ACTIONS BOUTONS
-              const OBSActionButtons(
-                key: ValueKey<String>('Actions Buttons'),
-              ),
+              if (controller.isOBSSynchronized.value)
+                const OBSActionButtons(
+                  key: ValueKey<String>('Actions Buttons'),
+                ),
 
               /// DIVIDER
               // const VerticalDivider(),
