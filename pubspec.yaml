@@ -21,6 +21,7 @@ dependencies:
   image_picker: ^1.1.2
   font_awesome_flutter: ^10.8.0
   flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.2
 
 dev_dependencies:
   flutter_test:
@@ -31,5 +32,11 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+#  flavors:
+#    dev:
+#      app_name: "OBSManager(Debug)"
+#    prod:
+#      app_name: "OBS Manager"
 
 #  assets:
+
