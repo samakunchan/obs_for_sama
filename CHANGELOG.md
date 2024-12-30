@@ -1,4 +1,4 @@
-## 🔨 0.10.0 - 30/12/2024
+## 🚀 0.10.0 - 30/12/2024
 ### Added
 
 - Added `flutter_native_splash` package and configuration for ios/android.
