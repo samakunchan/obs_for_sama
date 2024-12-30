@@ -1,3 +1,19 @@
+## 🔨 0.10.0 - 30/12/2024
+### Added
+
+- Added `flutter_native_splash` package and configuration for ios/android.
+- Added `flutter_launcher_icons` package and configuration for ios/android.
+- Added assets splash screens and icon.
+
+### Changed
+
+- No Changes.
+
+### Fixed
+
+- No Fixes.
+
+
 ## 🔨 0.9.1 - 29/12/2024
 ### Added
 
