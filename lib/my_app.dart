@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
       key: const ValueKey<String>('Material GetX'),
       theme: kThemeData,
       initialRoute: '/home',
+      locale: const Locale('en', 'US'),
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        DefaultWidgetsLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+      ],
       getPages: [
         GetPage(
           name: '/home',
