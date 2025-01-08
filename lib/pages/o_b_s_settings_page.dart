@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
-import 'package:obs_for_sama/core/controllers/error_controller.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
-import 'package:obs_for_sama/layout/setting_layout_default.dart';
 import 'package:obs_for_sama/layout/setting_layout_mobile.dart';
+import 'package:obs_for_sama/mvvm/ui_layer/views/o_b_s_layout_settings_view.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -16,19 +12,9 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMixin {
   late final TabController _tabController;
-  late bool isSubmitting = false;
-  late bool isLookingForQRCode = true;
-  bool? isCorrectQRCode;
-  bool? isAutoConnectToOBS;
-  late ServerController controller;
-  late ErrorController errorController;
-  late AuthObsFormController formController;
 
   @override
   void initState() {
-    controller = Get.find();
-    errorController = Get.find();
-    formController = Get.find();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -65,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                 switch (orientation) {
                   case Orientation.portrait:
                   case Orientation.landscape:
-                    return const SettingLayoutDefault(
+                    return const SettingLayoutDefaultView(
                       key: ValueKey('Page Settings default View'),
                     );
                 }
