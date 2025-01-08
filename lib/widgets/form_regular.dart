@@ -39,7 +39,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerIp,
                           // placeholder: '192.XXX.XXX.XXX',
                           decoration: InputDecoration(
@@ -60,7 +60,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerPort,
                           // placeholder: '1234',
                           decoration: InputDecoration(
@@ -84,7 +84,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerPassword,
                           // placeholder: 'OBS Websocket Password',
                           decoration: InputDecoration(
