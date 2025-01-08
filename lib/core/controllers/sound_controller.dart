@@ -20,7 +20,8 @@ class SoundController extends GetxController {
     final List<Map<String, dynamic>> json = (res?.responseData!['inputs'] as List).map((v) => v as Map<String, dynamic>).toList();
 
     final List<Input> listInputs = json.map(Input.fromJson).toList();
-    final String correctSoundName = listInputs.where((Input v) => v.inputKind == 'coreaudio_input_capture').first.inputName;
+    final String correctSoundName =
+        listInputs.where((Input v) => v.inputKind == 'coreaudio_input_capture' || v.inputKind == 'wasapi_input_capture').first.inputName;
 
     setInputName(name: correctSoundName);
   }
