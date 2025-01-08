@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/error_controller.dart';
+import 'package:obs_for_sama/core/controllers/server_controller.dart';
 import 'package:obs_for_sama/mvvm/data_layer/repository/auth_repository.dart';
 import 'package:obs_for_sama/mvvm/data_layer/repository/cache_repository.dart';
 import 'package:obs_for_sama/mvvm/data_layer/repository/o_b_s_repository.dart';
@@ -32,6 +33,7 @@ class ServerBinding extends Bindings {
           )
           ..put<ErrorController>(ErrorController())
           ..put<AuthObsFormController>(AuthObsFormController())
+          ..put<ServerController>(ServerController())
         // ..put<SourcesController>(SourcesController())
         // ..put<ScenesController>(ScenesController())
         // ..put<SoundController>(SoundController())

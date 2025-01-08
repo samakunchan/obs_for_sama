@@ -2,17 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:obs_for_sama/core/controllers/server_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
-import 'package:obs_for_sama/mvvm/ui_layer/view_models/o_b_s_server_view_model.dart';
 import 'package:obs_for_sama/widgets/o_b_s_reload_button.dart';
 import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget.dart';
 import 'package:obs_for_sama/widgets/o_b_s_server_connection_button_widget_cupertino.dart';
+import 'package:obs_for_sama/widgets/o_b_s_toogle_sound_button.dart';
+import 'package:obs_for_sama/widgets/o_b_s_toogle_stream_button.dart';
 
-class OBSActionButtons extends GetView<OBSServerViewModel> {
+class OBSActionButtons extends StatelessWidget {
   const OBSActionButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ServerController controller = Get.find();
     final mediaQuery = MediaQuery.of(context);
     final safeAreaPadding = mediaQuery.padding;
     final screenHeight = mediaQuery.size.height;
@@ -40,18 +43,18 @@ class OBSActionButtons extends GetView<OBSServerViewModel> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // OBSToogleStreamButton(
-                          //   key: ValueKey<String>('Start and Stop Stream.'),
-                          // ),
+                          OBSToogleStreamButton(
+                            key: ValueKey<String>('Start and Stop Stream.'),
+                          ),
                           SizedBox(width: 200, child: Divider(height: 50)),
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: OBSReloadButton(),
                           ),
-                          // Padding(
-                          //   padding: EdgeInsets.all(8),
-                          //   child: OBSToogleSoundButton(),
-                          // ),
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: OBSToogleSoundButton(),
+                          ),
                         ],
                       ),
                     ),
