@@ -11,6 +11,7 @@ import 'package:obs_for_sama/core/controllers/obs/sources_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// # [ServerController]
 /// Controller to manage [ObsWebSocket] library and [FormState].
@@ -109,6 +110,7 @@ class ServerController extends GetxController {
   Future<void> startStreaming() async {
     try {
       await obsWebSocket?.stream.start();
+      await WakelockPlus.enable();
     } catch (e) {
       showStatusMessage(message: 'Erreur lors du démarrage du streaming : $e');
     }
@@ -117,6 +119,7 @@ class ServerController extends GetxController {
   Future<void> stopStreaming() async {
     try {
       await obsWebSocket?.stream.stop();
+      await WakelockPlus.disable();
     } catch (e) {
       showStatusMessage(message: 'Erreur lors de l‘arrêt du streaming : $e');
     }
