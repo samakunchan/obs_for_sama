@@ -1,3 +1,20 @@
+## 🚀 0.11.0 - 10/01/2025
+### Added
+
+- Architecture MVVM came, we saw and remove it. It's a waste of time with GetX.
+- Added dependencies for lock the screen while the stream is started
+- Added workflow to build automatically apk to github.
+
+### Changed
+
+- Change structures controller.
+- Added locale.
+- Added doc for splash screen in `main.dart` file.
+
+### Fixed
+
+- Fix sound issue for window. (Need to be aware with people who use Linux to stream).
+
 ## 🚀 0.10.0 - 30/12/2024
 ### Added
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-import 'package:obs_for_sama/core/controllers/sound_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/sound_controller.dart';
 import 'package:obs_for_sama/widgets/r_s_i_button_outlined.dart';
 
 class OBSToogleSoundButton extends StatelessWidget {
