@@ -59,6 +59,7 @@ class ServerController extends GetxController {
       }
       if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STARTED') {
         statusStream = StatusStream.started;
+        await WakelockPlus.enable();
       }
       if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPING') {
         statusStream = StatusStream.isStopping;
