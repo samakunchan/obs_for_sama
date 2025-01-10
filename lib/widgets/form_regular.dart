@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/clippers.dart';
 import 'package:obs_for_sama/core/constantes.dart';
-import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
-import 'package:obs_for_sama/core/controllers/error_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:obs_for_sama/widgets/r_s_i_outlined_body.dart';
@@ -39,7 +39,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerIp,
                           // placeholder: '192.XXX.XXX.XXX',
                           decoration: InputDecoration(
@@ -60,7 +60,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerPort,
                           // placeholder: '1234',
                           decoration: InputDecoration(
@@ -84,7 +84,7 @@ class FormRegular extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: TextFormField(
                           cursorColor: kTextColorWhite,
-                          // obscureText: true,
+                          obscureText: true,
                           controller: formController.textEditingControllerPassword,
                           // placeholder: 'OBS Websocket Password',
                           decoration: InputDecoration(

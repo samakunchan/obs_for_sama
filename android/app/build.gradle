@@ -57,6 +57,11 @@ android {
             resValue "string", "app_name", "OBSManager"
         }
     }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "obs-manager-${variant.versionName}.apk"
+        }
+    }
 }
 
 flutter {

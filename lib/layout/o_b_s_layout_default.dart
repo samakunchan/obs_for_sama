@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/server_controller.dart';
 import 'package:obs_for_sama/widgets/error_message_screen.dart';
 import 'package:obs_for_sama/widgets/o_b_s_action_buttons.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_scenes.dart';

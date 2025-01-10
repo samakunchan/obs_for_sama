@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/cache_controller.dart';
-import 'package:obs_for_sama/core/controllers/error_controller.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/cache_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/server_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-import 'package:obs_for_sama/core/controllers/scenes_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/scenes_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/widgets/r_s_i_button.dart';
 import 'package:obs_websocket/obs_websocket.dart';
