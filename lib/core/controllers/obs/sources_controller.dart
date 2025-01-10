@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/scenes_controller.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/scenes_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/server_controller.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 
 /// # [SourcesController]

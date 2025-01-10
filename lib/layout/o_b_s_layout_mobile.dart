@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/server_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/server_controller.dart';
 import 'package:obs_for_sama/widgets/error_message_screen.dart';
 import 'package:obs_for_sama/widgets/o_b_s_action_buttons_mobile.dart';
 import 'package:obs_for_sama/widgets/o_b_s_list_scenes.dart';
@@ -16,6 +16,7 @@ class OBSLayoutMobile extends StatelessWidget {
     final screenHeight = mediaQuery.size.height;
     final availableHeight = screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
     final ServerController controller = Get.find();
+
     initialization(controller: controller);
 
     return SafeArea(

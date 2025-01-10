@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
-import 'package:obs_for_sama/core/controllers/cache_controller.dart';
-import 'package:obs_for_sama/core/controllers/error_controller.dart';
-import 'package:obs_for_sama/core/controllers/scenes_controller.dart';
-import 'package:obs_for_sama/core/controllers/sound_controller.dart';
-import 'package:obs_for_sama/core/controllers/sources_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/cache_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/scenes_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/sound_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/sources_controller.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:shared_preferences/shared_preferences.dart';

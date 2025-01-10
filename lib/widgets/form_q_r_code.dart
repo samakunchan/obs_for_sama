@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:obs_for_sama/core/clippers.dart';
 import 'package:obs_for_sama/core/constantes.dart';
-import 'package:obs_for_sama/core/controllers/auth_obs_form_controller.dart';
-import 'package:obs_for_sama/core/controllers/error_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:obs_for_sama/widgets/r_s_i_outlined_body.dart';
 
