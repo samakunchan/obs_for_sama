@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+      - 'feat/**'
 
 name: 📎 [MERGE] Create an apk android file on merge to main branch.
 jobs:
@@ -34,14 +35,22 @@ jobs:
           architecture: x64
       - run: |
           git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
+          flutter --version
 
       - name: Flutter get packages
-        uses: actions/checkout@v4
-          flutter pub get
+        uses: subosito/flutter-action@v2
+        id: flutter-action
+        with:
+          architecture: x64
+      - run: flutter pub get
+
 
       - name: Flutter build apk android file.
-        uses: actions/checkout@v4
-          flutter build apk
+        uses: subosito/flutter-action@v2
+        id: flutter-action
+        with:
+          architecture: x64
+      - run: flutter build apk
 
       - name: Create a GitHub release
         uses: actions/upload-artifact@v3
