@@ -74,6 +74,9 @@ class ServerController extends GetxController {
 
     try {
       // print('Je teste la connexion.');
+      // if (obsWebSocket != null && !obsWebSocket.isBlank!) {
+      //   print(obsWebSocket.isBlank);
+      // }
       await _getLocalDataForSettings();
       obsWebSocket = await init();
 
@@ -140,8 +143,6 @@ class ServerController extends GetxController {
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }
-    // await serverController.obsWebSocket?.listen(EventSubscription.inputs.code);
-    // await serverController.obsWebSocket?.listen(EventSubscription.scenes.code);
   }
 
   Future<void> _getLocalDataForSettings() async {
