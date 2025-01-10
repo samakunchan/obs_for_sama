@@ -30,7 +30,7 @@ jobs:
 
       - name: Flutter install
         uses: subosito/flutter-action@v2
-        id: flutter-action
+        id: flutter-action-1
         with:
           architecture: x64
       - run: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: Flutter get packages
         uses: subosito/flutter-action@v2
-        id: flutter-action
+        id: flutter-action-2
         with:
           architecture: x64
       - run: flutter pub get
@@ -47,7 +47,7 @@ jobs:
 
       - name: Flutter build apk android file.
         uses: subosito/flutter-action@v2
-        id: flutter-action
+        id: flutter-action-3
         with:
           architecture: x64
       - run: flutter build apk
