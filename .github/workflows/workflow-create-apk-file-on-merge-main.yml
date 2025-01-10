@@ -62,5 +62,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-apk
-#          path: build/app/outputs/flutter-apk/obs-manager-${{ env.APP_VERSION }}.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/apk/release/obs-manager-${{ env.APP_VERSION }}.apk
