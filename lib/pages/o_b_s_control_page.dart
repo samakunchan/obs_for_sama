@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/layout/o_b_s_layout_default.dart';
@@ -26,18 +29,37 @@ class OBSControlPage extends StatelessWidget {
               },
             );
           } else {
-            return OrientationBuilder(
-              key: const ValueKey<String>('Orientation Default'),
-              builder: (BuildContext context, Orientation orientation) {
-                switch (orientation) {
-                  case Orientation.portrait:
-                  case Orientation.landscape:
-                    return const OBSLayoutDefault(
-                      key: ValueKey<String>('Page Default View'),
-                    );
-                }
-              },
-            );
+            if(Platform.isWindows) {
+              return WindowBorder(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1,
+                child: OrientationBuilder(
+                  key: const ValueKey<String>('Orientation Default'),
+                  builder: (BuildContext context, Orientation orientation) {
+                    switch (orientation) {
+                      case Orientation.portrait:
+                      case Orientation.landscape:
+                        return const OBSLayoutDefault(
+                          key: ValueKey<String>('Page Default View'),
+                        );
+                    }
+                  },
+                ),
+              );
+            } else {
+              return OrientationBuilder(
+                key: const ValueKey<String>('Orientation Default'),
+                builder: (BuildContext context, Orientation orientation) {
+                  switch (orientation) {
+                    case Orientation.portrait:
+                    case Orientation.landscape:
+                      return const OBSLayoutDefault(
+                        key: ValueKey<String>('Page Default View'),
+                      );
+                  }
+                },
+              );
+            }
           }
         },
       ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,6 +54,7 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
               // fit: StackFit.expand,
               children: [
                 /// QR CODE SCANNER
+                if(!Platform.isWindows)
                 Center(
                   child: SizedBox(
                     width: 300,
@@ -63,6 +65,13 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
                     ),
                   ),
                 ),
+                if(Platform.isWindows)
+                  Center(
+                    child: Text(
+                      'QR code is unsupported version for windows desktop.',
+                      style: ktitle2,
+                    ),
+                  ),
 
                 /// ERROR MESSAGE
                 if (formController.isCorrectQRCode?.value != null && formController.isCorrectQRCode?.value == false)
