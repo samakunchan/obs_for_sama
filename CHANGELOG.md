@@ -1,3 +1,20 @@
+## 🚀 0.12.0 - 13/01/2025
+### Added
+
+- Added windows desktop configuration.
+- Added icon windows.
+- Added windows installer in `/release` folder.
+
+### Changed
+
+- Disabled QR code for windows.
+- Refacto structure release folder.
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.11.1 - 13/01/2025
 ### Added
 
