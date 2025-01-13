@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -15,7 +17,28 @@ class FormQRCode extends StatefulWidget {
   State<FormQRCode> createState() => _FormQRCodeState();
 }
 
-class _FormQRCodeState extends State<FormQRCode> {
+class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
+  final MobileScannerController controller = MobileScannerController(
+    autoStart: false,
+    useNewCameraSelector: true,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    unawaited(controller.start());
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    unawaited(controller.stop());
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final AuthObsFormController formController = Get.find();
@@ -27,11 +50,21 @@ class _FormQRCodeState extends State<FormQRCode> {
       color: formController.isCorrectQRCode?.value != null && formController.isCorrectQRCode?.value == false ? Colors.red : kButtonColor,
       child: formController.isLookingForQRCode.value
           ? Stack(
-              fit: StackFit.expand,
+              // fit: StackFit.expand,
               children: [
-                MobileScanner(
-                  onDetect: _handleBarcode,
+                /// QR CODE SCANNER
+                Center(
+                  child: SizedBox(
+                    width: 300,
+                    height: 300,
+                    child: MobileScanner(
+                      controller: controller,
+                      onDetect: _handleBarcode,
+                    ),
+                  ),
                 ),
+
+                /// ERROR MESSAGE
                 if (formController.isCorrectQRCode?.value != null && formController.isCorrectQRCode?.value == false)
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -108,6 +141,9 @@ class _FormQRCodeState extends State<FormQRCode> {
           onSuccess: (_) {
             Get.back<void>();
             formController.isCorrectQRCode?.value = false;
+            controller.dispose();
+            unawaited(controller.stop());
+            WidgetsBinding.instance.removeObserver(this);
           },
           onFailure: (Failure failure) {
             errorController.showErrorSnackBar(failureInfo: failure);
