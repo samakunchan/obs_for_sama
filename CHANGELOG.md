@@ -1,3 +1,17 @@
+## 🚀 0.11.1 - 13/01/2025
+### Added
+
+- No Addition.
+
+### Changed
+
+- Added a controller to manage the `MobileScanner` widget.
+
+### Fixed
+
+- Disabled impeller in `/android/app/src/main/AndroidManifest.xml`.
+
+
 ## 🚀 0.11.0 - 10/01/2025
 ### Added
 
