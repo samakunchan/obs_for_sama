@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:obs_for_sama/core/controllers/lifecyle/life_cycle_controller.dart';
 import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/obs/cache_controller.dart';
 import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
@@ -18,6 +19,7 @@ class ServerBinding extends Bindings {
       ..put<ServerController>(ServerController())
       ..put<SourcesController>(SourcesController())
       ..put<ScenesController>(ScenesController())
-      ..put<SoundController>(SoundController());
+      ..put<SoundController>(SoundController())
+      ..put<LifeCycleController>(LifeCycleController());
   }
 }
