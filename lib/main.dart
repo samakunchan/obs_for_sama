@@ -25,7 +25,7 @@ void main() {
         ..minSize = minSize
         ..size = launcherSize
         ..alignment = Alignment.center
-        ..title = 'OBS Manager - v0.12.0'
+        ..title = 'OBS Manager - v0.13.0'
         ..show();
     });
   }
