@@ -1,3 +1,22 @@
+## 🚀 0.13.0 - 14/02/2025
+### Added
+
+- Added a size for windows desktop platform (Surface pro purpose ect...).
+- Added feature to keep screen active when the stream is started.
+- Added a lifecyle controller to controller app's state.
+- Added logout method applied to lifecycle.
+
+### Changed
+
+- Block scanner page for windows platform.
+- Rename scanner controller.
+- Added build runner and update ios/macos (i forgot why). 
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.12.0 - 13/01/2025
 ### Added
 
