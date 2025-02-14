@@ -3,7 +3,7 @@
 
 - Added a size for windows desktop platform (Surface pro purpose ect...).
 - Added feature to keep screen active when the stream is started.
-- Added a lifecyle controller to controller app's state.
+- Added a lifecycle controller to controller app's state.
 - Added logout method applied to lifecycle.
 
 ### Changed
