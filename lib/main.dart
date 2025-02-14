@@ -1,5 +1,7 @@
 // import 'dart:async';
 
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -13,15 +15,18 @@ void main() {
   // Timer(const Duration(seconds: 5), FlutterNativeSplash.remove);
   runApp(const MyApp());
 
-  doWhenWindowReady(() {
-    final win = appWindow;
-    const Size minSize = Size(800, 600);
-    const Size launcherSize = Size(1200, 800);
+  if (Platform.isWindows) {
+    doWhenWindowReady(() {
+      final win = appWindow;
+      const Size minSize = Size(800, 600);
+      const Size launcherSize = Size(1200, 800);
 
-    win..minSize = minSize
-    ..size = launcherSize
-    ..alignment = Alignment.center
-    ..title = 'OBS Manager - v0.12.0'
-    ..show();
-  });
+      win
+        ..minSize = minSize
+        ..size = launcherSize
+        ..alignment = Alignment.center
+        ..title = 'OBS Manager - v0.12.0'
+        ..show();
+    });
+  }
 }
