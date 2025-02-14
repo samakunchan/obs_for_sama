@@ -19,7 +19,7 @@ class FormQRCode extends StatefulWidget {
 }
 
 class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
-  final MobileScannerController controller = MobileScannerController(
+  final MobileScannerController scanner = MobileScannerController(
     autoStart: false,
     useNewCameraSelector: true,
   );
@@ -29,13 +29,13 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    unawaited(controller.start());
+    unawaited(scanner.start());
   }
 
   @override
   void dispose() {
-    controller.dispose();
-    unawaited(controller.stop());
+    scanner.dispose();
+    unawaited(scanner.stop());
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -54,18 +54,18 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
               // fit: StackFit.expand,
               children: [
                 /// QR CODE SCANNER
-                if(!Platform.isWindows)
-                Center(
-                  child: SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: MobileScanner(
-                      controller: controller,
-                      onDetect: _handleBarcode,
+                if (!Platform.isWindows)
+                  Center(
+                    child: SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: MobileScanner(
+                        controller: scanner,
+                        onDetect: _handleBarcode,
+                      ),
                     ),
                   ),
-                ),
-                if(Platform.isWindows)
+                if (Platform.isWindows)
                   Center(
                     child: Text(
                       'QR code is unsupported version for windows desktop.',
@@ -107,13 +107,8 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
                   child: formController.isAutoConnectToOBS?.value != null
                       ? Column(
                           children: [
-                            const CircularProgressIndicator(
-                              color: kTextColorWhite,
-                            ),
-                            Text(
-                              'Connectting to OBS...',
-                              style: ktitle2,
-                            ),
+                            const CircularProgressIndicator(color: kTextColorWhite),
+                            Text('Connectting to OBS...', style: ktitle2),
                           ],
                         )
                       : const SizedBox(),
@@ -150,8 +145,8 @@ class _FormQRCodeState extends State<FormQRCode> with WidgetsBindingObserver {
           onSuccess: (_) {
             Get.back<void>();
             formController.isCorrectQRCode?.value = false;
-            controller.dispose();
-            unawaited(controller.stop());
+            scanner.dispose();
+            unawaited(scanner.stop());
             WidgetsBinding.instance.removeObserver(this);
           },
           onFailure: (Failure failure) {
