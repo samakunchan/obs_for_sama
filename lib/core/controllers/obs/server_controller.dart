@@ -99,6 +99,10 @@ class ServerController extends GetxController {
     }
   }
 
+  Future<void> logoutToOBS() async {
+    await obsWebSocket?.close();
+  }
+
   Future<void> showStreamStatus() async {
     await obsWebSocket?.stream.status.then(_showStreamStatus);
   }
