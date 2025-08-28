@@ -5,10 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-import 'package:obs_for_sama/core/constantes.dart';
 import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
-import 'package:obs_for_sama/core/enums.dart';
+import 'package:obs_for_sama/core/core_theme_index.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
 import 'package:obs_for_sama/widgets/r_s_i_outlined_body.dart';
 

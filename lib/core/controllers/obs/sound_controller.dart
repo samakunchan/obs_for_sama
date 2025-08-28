@@ -36,7 +36,7 @@ class SoundController extends GetxController {
   Future<void> toogleMuteSound() async {
     final ServerController controller = Get.find();
     final Inputs? inputs = controller.obsWebSocket?.inputs;
-    await inputs?.toggleMute(inputName.value);
+    await inputs?.toggleMute(inputName: inputName.value);
     final bool? isReallyMuted = await inputs?.getMute(inputName.value);
     isMuted(isMuted: isReallyMuted ?? false);
   }

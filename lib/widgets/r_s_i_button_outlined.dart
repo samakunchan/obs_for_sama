@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-import 'package:obs_for_sama/core/constantes.dart';
-import 'package:obs_for_sama/core/painters.dart';
+import 'package:obs_for_sama/core/core_theme_index.dart';
 import 'package:obs_for_sama/widgets/header_medium_text_button.dart';
 
 class RSIButtonOutlined extends StatelessWidget {

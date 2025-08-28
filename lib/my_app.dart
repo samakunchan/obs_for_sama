@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/constantes.dart';
 import 'package:obs_for_sama/core/server_binding.dart';
+import 'package:obs_for_sama/core/themes/theme_data.dart';
 import 'package:obs_for_sama/pages/o_b_s_control_page.dart';
 import 'package:obs_for_sama/pages/o_b_s_settings_page.dart';
 

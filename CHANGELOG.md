@@ -1,3 +1,22 @@
+## 🚀 0.14.0 - 28/08/2025
+### Added
+
+- No addes.
+
+### Changed
+
+- Update flutter version.
+- Update podfile.
+- Update android. Replaced Java to Kotlin
+- Update obs_websocket.
+- Update app theme. 
+- Update paths for libraries.
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.13.0 - 14/02/2025
 ### Added
 
