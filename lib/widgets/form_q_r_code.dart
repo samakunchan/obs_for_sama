@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:obs_for_sama/core/clippers.dart';
-fimport 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
+import 'package:obs_for_sama/core/controllers/obs/auth_obs_form_controller.dart';
 import 'package:obs_for_sama/core/controllers/obs/error_controller.dart';
 import 'package:obs_for_sama/core/core_theme_index.dart';
 import 'package:obs_for_sama/core/failures/failures.dart';
