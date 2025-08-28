@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+
+load_splash_screen.sh
+load_icon_launcher.sh
+clean.sh
+cook.sh
+refresh.sh
+build-ios.sh
+privacy-policy.md
