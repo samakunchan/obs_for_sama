@@ -29,6 +29,7 @@ dependencies:
 
   # State manager
   get: ^4.6.6 # A remplacer
+  flutter_bloc: ^9.1.1
 
   # Pour windows (demande spécial)
   bitsdojo_window: ^0.1.6
