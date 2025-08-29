@@ -12,8 +12,8 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
   Widget build(BuildContext context) {
     return RSIButtonOutlined(
       onTap: () async {
-        await Get.to<SettingsPage>(
-          () => const SettingsPage(
+        await Get.to<OBSSettingsPage>(
+          () => const OBSSettingsPage(
             key: ValueKey<String>('Settings page'),
           ),
           binding: ServerBinding(),

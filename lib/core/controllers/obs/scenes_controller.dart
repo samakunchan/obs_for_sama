@@ -40,7 +40,7 @@ class ScenesController extends GetxController {
     try {
       final String? response = await serverController.obsWebSocket?.scenes.getCurrentProgramScene();
       currentSceneName.value = response ?? 'Inconnue';
-    } catch (e) {
+    } on Exception catch (e) {
       serverController.showStatusMessage(message: 'Erreur lors de la récupération de la scène : $e');
     }
   }

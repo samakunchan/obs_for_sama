@@ -6,7 +6,6 @@ class ErrorController extends GetxController {
   late final Rx<Failure> failure = Failure().obs;
 
   void manageError({required String error}) {
-    print(error);
     failure.value = NoFailure();
     if (error.contains('SocketException') && error.contains('Failed host lookup')) {
       failure.value = HostFailure();
@@ -23,7 +22,6 @@ class ErrorController extends GetxController {
   }
 
   void showErrorSnackBar({required Failure failureInfo}) {
-    print(failureInfo);
     if (failureInfo is! NoFailure) {
       Icon icon = const Icon(Icons.add_alert);
       String message = '';

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/settings',
-          page: () => const SettingsPage(
+          page: () => const OBSSettingsPage(
             key: ValueKey<String>('Settings page'),
           ),
           binding: ServerBinding(),

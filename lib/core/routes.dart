@@ -3,7 +3,7 @@ import 'package:obs_for_sama/pages/o_b_s_control_page.dart';
 import 'package:obs_for_sama/pages/o_b_s_settings_page.dart';
 
 class Routes {
-  Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
     final List<String> parametrizedName = settings.name?.split('?') ?? <String>[];
     final String name = (parametrizedName.isNotEmpty) ? parametrizedName[0] : (settings.name ?? '');
 
@@ -17,9 +17,9 @@ class Routes {
           transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
         );
       case 'settings':
-        return PageRouteBuilder<SettingsPage>(
+        return PageRouteBuilder<OBSSettingsPage>(
           settings: settings,
-          pageBuilder: (_, __, ___) => const SettingsPage(
+          pageBuilder: (_, __, ___) => const OBSSettingsPage(
             key: ValueKey<String>('Settings page'),
           ),
           transitionsBuilder: (_, a, __, c) {
@@ -35,7 +35,7 @@ class Routes {
           },
         );
       default:
-        return PageRouteBuilder<SettingsPage>(
+        return PageRouteBuilder<OBSSettingsPage>(
           settings: settings,
           pageBuilder: (_, __, ___) => const Scaffold(
             body: Center(

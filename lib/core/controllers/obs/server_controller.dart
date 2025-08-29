@@ -90,7 +90,7 @@ class ServerController extends GetxController {
         isOBSConnected(isConnected: true);
       }
       // print('Terminer');
-    } catch (e) {
+    } on Exception catch (e) {
       // print('Pas bon.');
       // print(e);
       errorController.manageError(error: e.toString());
@@ -116,7 +116,7 @@ class ServerController extends GetxController {
     try {
       await obsWebSocket?.stream.start();
       await WakelockPlus.enable();
-    } catch (e) {
+    } on Exception catch (e) {
       showStatusMessage(message: 'Erreur lors du démarrage du streaming : $e');
     }
   }
@@ -125,7 +125,7 @@ class ServerController extends GetxController {
     try {
       await obsWebSocket?.stream.stop();
       await WakelockPlus.disable();
-    } catch (e) {
+    } on Exception catch (e) {
       showStatusMessage(message: 'Erreur lors de l‘arrêt du streaming : $e');
     }
   }
@@ -145,8 +145,8 @@ class ServerController extends GetxController {
   Future<void> listenAllStatesFromOBS() async {
     // print('On listen les states de OBS pour les scenes.');
     try {
-      await obsWebSocket?.listen(EventSubscription.all.code);
-    } catch (e) {
+      await obsWebSocket?.subscribe(EventSubscription.all);
+    } on Exception catch (_) {
       // print(e);
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);

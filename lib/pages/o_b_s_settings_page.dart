@@ -3,14 +3,14 @@ import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/layout/setting_layout_default.dart';
 import 'package:obs_for_sama/layout/setting_layout_mobile.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class OBSSettingsPage extends StatefulWidget {
+  const OBSSettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<OBSSettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMixin {
+class _SettingsPageState extends State<OBSSettingsPage> with TickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
