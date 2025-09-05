@@ -23,7 +23,7 @@ class OBSSingleton {
     if (_obs == null) {
       // final ServerRepository serverRepository = ServerRepository();
       // final OBSModel obsModel = await serverRepository.getLocalDataForSettings();
-      final OBSModel obsModel = await CacheRepository.instance.obdModel;
+      final OBSModel obsModel = await CacheRepository.instance.obsModel;
       final bool isCacheDatasEmpty = obsModel.toJson().entries.every(
         (MapEntry<String, Object?> test) => test.value != null,
       );

@@ -6,14 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/services/server_service.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/repositories/sound_repository.dart';
-import 'package:obs_for_sama/project_app.dart';
-import 'package:obs_websocket/obs_websocket.dart';
 
 part 'sound_event.dart';
 part 'sound_state.dart';
 
 class SoundBloc extends Bloc<SoundEvent, SoundState> {
-  SoundBloc({required Future<OBSManagerModel> manager}) : _manager = manager, super(SoundInitial()) {
+  SoundBloc() : super(SoundInitial()) {
     on<SoundInitialized>(_onInitConfiguration);
     on<SoundConfigured>(_onDetectedSoundConfiguration);
     on<SoundToggled>(_onSoundToggled);
@@ -24,11 +22,9 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
       print('SoundInitialized - ${event.isSoundMuted}');
     }
     emit(SoundIsLoading());
-    final OBSManagerModel manager = await _manager;
-    final ObsWebSocket obsWebSocket = manager.obsWebSocket;
-    final String inputName = await SoundRepository.detectSoundConfiguration(obsWebSocket: obsWebSocket);
+    final String inputName = await SoundRepository.detectSoundConfiguration();
     final Either<String, bool?> response = await ServerService.baseRequest<bool?>(
-      getConcrete: () => SoundRepository.getStatusSound(inputName: inputName, obsWebSocket: obsWebSocket),
+      getConcrete: () => SoundRepository.getStatusSound(inputName: inputName),
     );
     switch (response) {
       case Left():
@@ -51,12 +47,10 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
       print('SoundConfigured - HELLOO');
     }
     emit(SoundIsLoading());
-    final OBSManagerModel manager = await _manager;
-    final ObsWebSocket obsWebSocket = manager.obsWebSocket;
-    final String inputName = await SoundRepository.detectSoundConfiguration(obsWebSocket: obsWebSocket);
+    final String inputName = await SoundRepository.detectSoundConfiguration();
     final Either<String, bool?> response = await ServerService.baseRequest<bool?>(
       getConcrete: () async {
-        return SoundRepository.getStatusSound(inputName: inputName, obsWebSocket: obsWebSocket);
+        return SoundRepository.getStatusSound(inputName: inputName);
       },
     );
     switch (response) {
@@ -80,12 +74,9 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
       print('SoundToggled - ${event.soundName}');
     }
     emit(SoundIsLoading());
-    final OBSManagerModel manager = await _manager;
-    final ObsWebSocket obsWebSocket = manager.obsWebSocket;
     final Either<String, bool> response = await ServerService.baseRequest<bool>(
       getConcrete: () => SoundRepository.toogleMuteSound(
         inputName: event.soundName,
-        obsWebSocket: obsWebSocket,
       ),
     );
     switch (response) {
@@ -103,6 +94,4 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
         );
     }
   }
-
-  final Future<OBSManagerModel> _manager;
 }

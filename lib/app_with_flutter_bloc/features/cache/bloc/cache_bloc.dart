@@ -20,7 +20,7 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
       print('CacheBloc - Inspection du cache');
     }
     emit(CacheIsLoading());
-    final OBSModel obsModel = await CacheRepository.instance.obdModel;
+    final OBSModel obsModel = await CacheRepository.instance.obsModel;
     final bool testCacheValue = obsModel.toJson().entries.every((MapEntry<String, Object?> test) => test.value != null);
     if (!testCacheValue) {
       emit(CacheHasError(message: AppMessagesEnum.cacheEmpty.key));

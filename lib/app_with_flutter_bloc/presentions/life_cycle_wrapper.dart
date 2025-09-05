@@ -34,25 +34,27 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
     }
     await subscription?.cancel();
 
-    subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
+    subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) async {
       if (!widget.context.mounted) return;
       if (kDebugMode) {
         print('RÉSULTAT DE LA CONNECTIVITÉ : $result');
       }
 
       // La logique de connexion au serveur se fait ici et uniquement ici.
-      if (result.contains(ConnectivityResult.wifi)) {
+      if (result.contains(ConnectivityResult.wifi) || result.contains(ConnectivityResult.ethernet)) {
         if (kDebugMode) {
           print('CONNEXION WI-FI DÉTECTÉE');
         }
         widget.context.read<ServerBloc>().add(ServerConnected());
+        widget.context.read<ErrorBloc>().add(ErrorReseted());
         return;
+      } else {
+        if (kDebugMode) {
+          print('AUCUNE CONNEXION WI-FI');
+        }
+        widget.context.read<ErrorBloc>().add(ErrorEmitted(message: AppMessagesEnum.wifiError.key));
       }
-
-      if (kDebugMode) {
-        print('AUCUNE CONNEXION WI-FI');
-      }
-      widget.context.read<ErrorBloc>().add(ErrorEmitted(message: AppMessagesEnum.wifiError.key));
+      return;
     });
   }
 
@@ -70,8 +72,6 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
         print('Retour de la mise en veille, on vérifie la connectivité.');
       }
       checkConnectivity();
-    } else {
-      // Logique pour la déconnexion ou autres états si nécessaire
     }
   }
 

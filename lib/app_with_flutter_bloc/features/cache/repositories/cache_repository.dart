@@ -55,16 +55,16 @@ class CacheRepository {
     _instance = null;
   }
 
-  Future<OBSModel> get obdModel async {
+  Future<OBSModel> get obsModel async {
     final SharedPreferencesWithCache cache = await prefsWithCache;
 
     final String? localIp = cache.getString(ip);
     final String? localPort = cache.getString(port);
     final String? localPassword = cache.getString(password);
     final OBSModel obsModel = OBSModel(
-      localIp: localIp,
-      localPort: localPort,
-      localPassword: localPassword,
+      localIp: '192.168.0.171',
+      localPort: '4456',
+      localPassword: 'xrVmLhX4q5SS6vtyOVmlU4Cgp4AIDtjOr5tJzBH',
     );
 
     return obsModel;

@@ -5,9 +5,12 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_blo
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_server_connection_button_material.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:obs_websocket/obs_websocket.dart';
 
 class OBSLayoutMobile extends StatelessWidget {
   const OBSLayoutMobile({super.key});
@@ -99,6 +102,7 @@ class OBSLayoutMobile extends StatelessWidget {
                     }
                     switch (state) {
                       case ServerIsConnected():
+                        _listenEvent(context);
                         return const Column(
                           children: [
                             VerticalDivider(),
@@ -155,5 +159,12 @@ class OBSLayoutMobile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _listenEvent(BuildContext context) async {
+    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
+    if (obsWebSocket != null) {
+      obsWebSocket.addFallbackListener((Event event) => ServerRepository().fallBackEvent(event, context));
+    }
   }
 }
