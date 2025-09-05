@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:obs_for_sama/core/core_theme_index.dart';
-import 'package:obs_for_sama/core/themes/theme_data.dart';
-import 'package:obs_for_sama/features/cache/bloc/cache_bloc.dart';
-import 'package:obs_for_sama/features/cache/models/o_b_s_model.dart';
-import 'package:obs_for_sama/features/cache/repositories/cache_repository.dart';
-import 'package:obs_for_sama/features/error/bloc/error_bloc.dart';
-import 'package:obs_for_sama/features/server/bloc/server_bloc.dart';
-import 'package:obs_for_sama/features/server/repositories/server_repository.dart';
-import 'package:obs_for_sama/features/sound/bloc/sound_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/core/routes.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/models/o_b_s_model.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/repositories/cache_repository.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
+import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -94,7 +94,9 @@ class YoloRepo {
 
   Future<OBSManagerModel> managerDatas() async {
     final OBSModel obsModel = await CacheRepository.instance.obdModel;
-    print(obsModel.toJson());
+    if (kDebugMode) {
+      print(obsModel.toJson());
+    }
 
     if (kDebugMode) {
       print('Lancement de ManagerDatas');
