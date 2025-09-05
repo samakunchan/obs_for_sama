@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/enums.dart';
 import 'package:obs_for_sama/layout/setting_layout_default.dart';
-import 'package:obs_for_sama/layout/setting_layout_mobile.dart';
+import 'package:obs_for_sama/presention_with_bloc/layouts/setting_layout_mobile_bloc.dart';
 
 class OBSSettingsPage extends StatefulWidget {
   const OBSSettingsPage({super.key});
@@ -38,7 +38,7 @@ class _SettingsPageState extends State<OBSSettingsPage> with TickerProviderState
                 switch (orientation) {
                   case Orientation.portrait:
                   case Orientation.landscape:
-                    return const SettingLayoutMobile(
+                    return const SettingLayoutMobileBloc(
                       key: ValueKey('Page Settings mobile View'),
                     );
                 }
