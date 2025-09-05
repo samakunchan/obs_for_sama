@@ -12,4 +12,8 @@ final ThemeData kThemeData = ThemeData(
   inputDecorationTheme: kInputDecorationTheme,
   tabBarTheme: kTabBarTheme,
   useMaterial3: true,
+  progressIndicatorTheme: const ProgressIndicatorThemeData(
+    color: kTextShadow,
+  ),
+  iconTheme: const IconThemeData(color: kTextShadow, size: 200),
 );
