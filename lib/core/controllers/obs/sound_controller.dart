@@ -11,26 +11,30 @@ import 'package:obs_websocket/request.dart';
 class SoundController extends GetxController {
   final RxBool isSoundMuted = false.obs;
   final RxString inputName = 'My microphone'.obs;
-  bool isMuted({required bool isMuted}) => isSoundMuted.value = isMuted;
-  String setInputName({required String name}) => inputName.value = name;
+  bool _isMuted({required bool isMuted}) => isSoundMuted.value = isMuted;
+  String _setInputName({required String name}) => inputName.value = name;
 
   Future<void> detectSoundConfiguration() async {
     final ServerController controller = Get.find();
     final RequestResponse? res = await controller.obsWebSocket?.send('GetInputList');
-    final List<Map<String, dynamic>> json = (res?.responseData!['inputs'] as List).map((v) => v as Map<String, dynamic>).toList();
+    final List<Map<String, dynamic>> json = (res?.responseData!['inputs'] as List)
+        .map((v) => v as Map<String, dynamic>)
+        .toList();
 
     final List<Input> listInputs = json.map(Input.fromJson).toList();
-    final String correctSoundName =
-        listInputs.where((Input v) => v.inputKind == 'coreaudio_input_capture' || v.inputKind == 'wasapi_input_capture').first.inputName;
+    final String correctSoundName = listInputs
+        .where((Input v) => v.inputKind == 'coreaudio_input_capture' || v.inputKind == 'wasapi_input_capture')
+        .first
+        .inputName;
 
-    setInputName(name: correctSoundName);
+    _setInputName(name: correctSoundName);
   }
 
   Future<void> getStatusSound() async {
     final ServerController controller = Get.find();
     final Inputs? inputs = controller.obsWebSocket?.inputs;
     final bool? isReallyMuted = await inputs?.getMute(inputName.value);
-    isMuted(isMuted: isReallyMuted ?? false);
+    _isMuted(isMuted: isReallyMuted ?? false);
   }
 
   Future<void> toogleMuteSound() async {
@@ -38,6 +42,6 @@ class SoundController extends GetxController {
     final Inputs? inputs = controller.obsWebSocket?.inputs;
     await inputs?.toggleMute(inputName: inputName.value);
     final bool? isReallyMuted = await inputs?.getMute(inputName.value);
-    isMuted(isMuted: isReallyMuted ?? false);
+    _isMuted(isMuted: isReallyMuted ?? false);
   }
 }

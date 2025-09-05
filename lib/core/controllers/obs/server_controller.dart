@@ -91,8 +91,6 @@ class ServerController extends GetxController {
       }
       // print('Terminer');
     } on Exception catch (e) {
-      // print('Pas bon.');
-      // print(e);
       errorController.manageError(error: e.toString());
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
@@ -147,7 +145,6 @@ class ServerController extends GetxController {
     try {
       await obsWebSocket?.subscribe(EventSubscription.all);
     } on Exception catch (_) {
-      // print(e);
       showStatusMessage(message: 'OBS Disconnected...');
       isOBSConnected(isConnected: false);
     }

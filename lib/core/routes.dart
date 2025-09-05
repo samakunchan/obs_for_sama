@@ -8,21 +8,21 @@ class Routes {
     final String name = (parametrizedName.isNotEmpty) ? parametrizedName[0] : (settings.name ?? '');
 
     switch (name) {
-      case 'home':
+      case '/':
         return PageRouteBuilder<OBSControlPage>(
           settings: settings,
-          pageBuilder: (_, __, ___) => const OBSControlPage(
+          pageBuilder: (_, _, _) => const OBSControlPage(
             key: ValueKey<String>('Main page'),
           ),
-          transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          transitionsBuilder: (_, a, _, c) => FadeTransition(opacity: a, child: c),
         );
-      case 'settings':
+      case '/settings':
         return PageRouteBuilder<OBSSettingsPage>(
           settings: settings,
-          pageBuilder: (_, __, ___) => const OBSSettingsPage(
+          pageBuilder: (_, _, _) => const OBSSettingsPage(
             key: ValueKey<String>('Settings page'),
           ),
-          transitionsBuilder: (_, a, __, c) {
+          transitionsBuilder: (_, a, _, c) {
             const begin = Offset(0, 1);
             const end = Offset.zero;
             final tween = Tween(begin: begin, end: end);
@@ -37,12 +37,12 @@ class Routes {
       default:
         return PageRouteBuilder<OBSSettingsPage>(
           settings: settings,
-          pageBuilder: (_, __, ___) => const Scaffold(
+          pageBuilder: (_, _, _) => const Scaffold(
             body: Center(
               child: Text('Page Not Found'),
             ),
           ),
-          transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          transitionsBuilder: (_, a, _, c) => FadeTransition(opacity: a, child: c),
         );
     }
   }
