@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:obs_for_sama/core/core_theme_index.dart';
+import 'package:obs_for_sama/core/index.dart';
 
 TextButtonThemeData kTextButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     backgroundColor: WidgetStateProperty.resolveWith<Color?>(
       (Set<WidgetState> states) {
-        if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed) || states.contains(WidgetState.focused)) {
+        if (states.contains(WidgetState.hovered) ||
+            states.contains(WidgetState.pressed) ||
+            states.contains(WidgetState.focused)) {
           return kButtonColor;
         }
         return kButtonColor;

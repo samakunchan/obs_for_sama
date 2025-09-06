@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:obs_for_sama/core/server_binding.dart';
+import 'package:obs_for_sama/app_with_get_x/core/server_binding.dart';
+import 'package:obs_for_sama/app_with_get_x/pages/o_b_s_control_page.dart';
+import 'package:obs_for_sama/app_with_get_x/pages/o_b_s_settings_page.dart';
 import 'package:obs_for_sama/core/themes/theme_data.dart';
-import 'package:obs_for_sama/pages/o_b_s_control_page.dart';
-import 'package:obs_for_sama/pages/o_b_s_settings_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/settings',
-          page: () => const SettingsPage(
+          page: () => const OBSSettingsPage(
             key: ValueKey<String>('Settings page'),
           ),
           binding: ServerBinding(),
