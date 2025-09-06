@@ -74,6 +74,9 @@ class OBSLayoutMobile extends StatelessWidget {
                   );
                 }
               }
+              if (kDebugMode) {
+                print('NO ERROR MESSAGE $state');
+              }
               return SizedBox(
                 height: availableHeight * .95,
                 child: Padding(

@@ -42,6 +42,7 @@ class _FormRegularState extends State<FormRegular> {
   @override
   Widget build(BuildContext context) {
     return CacheListener(
+      contextPage: context,
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: RSIOutlinedBody(
