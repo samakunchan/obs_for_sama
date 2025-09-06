@@ -12,7 +12,6 @@ class ServerListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ServerBloc, ServerState>(
       listener: (BuildContext context, ServerState state) {
-        print(state);
         switch (state) {
           case ServerHasError():
             if (kDebugMode) {

@@ -13,7 +13,6 @@ class CacheListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CacheBloc, CacheState>(
       listener: (BuildContext context, CacheState state) {
-        print(state);
         switch (state) {
           case CacheHasError():
             if (kDebugMode) {

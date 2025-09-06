@@ -97,7 +97,7 @@ class ServerRepository {
     }
   }
 
-  Future<void> fallBackEvent(Event event, BuildContext context) async {
+  Future<StatusStream?> fallBackEvent(Event event, BuildContext context) async {
     if (kDebugMode) {
       print('On est dans le fallback');
     }
@@ -129,7 +129,9 @@ class ServerRepository {
       if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPED') {
         statusStream = StatusStream.stopped;
       }
+      return statusStream;
       // isStreamOnline(status: statusStream);
     }
+    return null;
   }
 }

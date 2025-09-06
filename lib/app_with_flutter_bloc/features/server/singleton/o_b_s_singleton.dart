@@ -42,6 +42,8 @@ class OBSSingleton {
 
   void clearObsInstance() {
     _obs = null;
-    print('Instance ObsWebSocket réinitialisée.');
+    if (kDebugMode) {
+      print('Instance ObsWebSocket réinitialisée.');
+    }
   }
 }

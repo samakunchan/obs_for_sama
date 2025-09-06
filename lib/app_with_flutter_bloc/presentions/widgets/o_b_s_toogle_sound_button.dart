@@ -58,20 +58,16 @@ class OBSToogleSoundButton extends StatelessWidget {
               ),
             );
           default:
-            // TODO Faire un placeholder
             return Padding(
               padding: const EdgeInsets.all(8),
               child: RSIButtonOutlined(
                 onTap: () {},
+                color: kBodyTextColor,
                 edgeClipper: const RSIEdgeClipper(
                   edgeRightTop: true,
                   edgeLeftBottom: true,
                 ),
-                child: Icon(
-                  Icons.volume_off,
-                  size: 40,
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+                child: const SizedBox(),
               ),
             );
         }

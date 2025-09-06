@@ -175,10 +175,14 @@ class _FormRegularState extends State<FormRegular> {
                     edgeRightTop: true,
                     edgeLeftBottom: true,
                   ),
-                  color: Colors.grey,
-                  child: Text(
-                    'CLEAR_CACHE',
-                    style: ktitle2,
+                  color: kBodyTextColor,
+                  child: Row(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(FontAwesomeIcons.trash, size: 20, color: kBodyTextColor),
+                      Text('CLEAR_CACHE', style: ktitle2),
+                    ],
                   ),
                 ),
               ),

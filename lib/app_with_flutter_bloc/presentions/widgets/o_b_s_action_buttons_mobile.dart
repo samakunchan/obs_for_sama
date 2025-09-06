@@ -95,10 +95,10 @@ class OBSActionButtonsMobileBloc extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       /// OBS SETTINGS
-                      // Padding(
-                      //   padding: EdgeInsets.all(8),
-                      //   child: OBSServerConnectionButton(),
-                      // ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: GoToSettingPage(),
+                      ),
                     ],
                   );
               }

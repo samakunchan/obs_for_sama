@@ -15,5 +15,5 @@ final ThemeData kThemeData = ThemeData(
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: kTextShadow,
   ),
-  iconTheme: const IconThemeData(color: kTextShadow, size: 200),
+  iconTheme: const IconThemeData(color: kTextShadow, size: 20),
 );
