@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/listeners/cache_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/listeners/server_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
@@ -22,140 +23,123 @@ class OBSLayoutMobile extends StatelessWidget {
     final double screenHeight = mediaQuery.size.height;
     final double availableHeight = screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
 
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<ServerBloc, ServerState>(
-          listener: (BuildContext context, ServerState state) {
-            if (state is ServerHasError) {
-              if (kDebugMode) {
-                print('Serveur à une érreur : ${state.message}');
-              }
-              context.read<ErrorBloc>().add(ErrorEmitted(message: state.message));
-            }
-          },
-          child: BlocListener<CacheBloc, CacheState>(
-            listener: (BuildContext context, CacheState state) {
-              if (state is CacheHasError) {
-                context.read<ErrorBloc>().add(ErrorEmitted(message: state.message));
-              }
-            },
-          ),
-        ),
-      ],
-      child: SafeArea(
-        child: BlocBuilder<ErrorBloc, ErrorState>(
-          builder: (_, ErrorState state) {
-            if (state is ErrorMessageDisplayed) {
-              Widget errorIcon = const SizedBox();
-              if (kDebugMode) {
-                print(
-                  'MESSAGE ${state.message}',
-                );
-              }
-              if (state.message == AppMessagesEnum.wifiError.key) {
-                errorIcon = const Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
-                return Column(
-                  spacing: 10,
-                  children: [
-                    Expanded(
-                      child: Center(child: errorIcon),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
-                      child: Text(
-                        state.message,
-                        style: kbodyLarge.copyWith(color: kSecondaryColor),
+    return ServerListener(
+      child: CacheListener(
+        child: SafeArea(
+          child: BlocBuilder<ErrorBloc, ErrorState>(
+            builder: (_, ErrorState state) {
+              if (state is ErrorMessageDisplayed) {
+                Widget errorIcon = const SizedBox();
+                if (kDebugMode) {
+                  print(
+                    'MESSAGE ${state.message}',
+                  );
+                }
+                if (state.message == AppMessagesEnum.wifiError.key) {
+                  errorIcon = const Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                  return Column(
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        child: Center(child: errorIcon),
                       ),
-                    ),
-                  ],
-                );
-              }
-              if (state.message.contains(AppMessagesEnum.cacheEmpty.key)) {
-                errorIcon = const Icon(Icons.sd_card_alert_outlined);
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Center(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30),
                         child: Text(
-                          'OBS Disconnected...',
-                          style: kheadlineLarge,
-                          textAlign: TextAlign.center,
+                          state.message,
+                          style: kbodyLarge.copyWith(color: kSecondaryColor),
                         ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsetsGeometry.symmetric(vertical: 30),
-                      child: OBSServerConnectionButton(),
-                    ),
-                  ],
-                );
+                    ],
+                  );
+                }
+                if (state.message.contains(AppMessagesEnum.cacheEmpty.key)) {
+                  errorIcon = const Icon(Icons.sd_card_alert_outlined);
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'OBS Disconnected...',
+                            style: kheadlineLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsetsGeometry.symmetric(vertical: 30),
+                        child: GoToSettingPage(),
+                      ),
+                    ],
+                  );
+                }
               }
-            }
-            return SizedBox(
-              height: availableHeight * .95,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: BlocBuilder<ServerBloc, ServerState>(
-                  builder: (BuildContext context, ServerState state) {
-                    if (kDebugMode) {
-                      print('OBSLayoutMobileBloc - $state');
-                    }
-                    switch (state) {
-                      case ServerIsConnected():
-                        _listenEvent(context);
-                        return const Column(
-                          children: [
-                            VerticalDivider(),
-                            Expanded(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('On est sur la bonne voie'),
-                                  // /// SCENES
-                                  // OBSListScenes(
-                                  //   key: ValueKey<String>('List Of Scenes'),
-                                  // ),
-                                  // VerticalDivider(),
-                                  //
-                                  // /// SOURCES
-                                  // OBSListSources(
-                                  //   key: ValueKey<String>('List Of Sources'),
-                                  // ),
-                                ],
+              return SizedBox(
+                height: availableHeight * .95,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: BlocBuilder<ServerBloc, ServerState>(
+                    builder: (BuildContext context, ServerState state) {
+                      if (kDebugMode) {
+                        print('OBSLayoutMobileBloc - $state');
+                      }
+                      switch (state) {
+                        case ServerIsConnected():
+                          _listenEvent(context);
+                          return const Column(
+                            children: [
+                              VerticalDivider(),
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('On est sur la bonne voie'),
+                                    // /// SCENES
+                                    // OBSListScenes(
+                                    //   key: ValueKey<String>('List Of Scenes'),
+                                    // ),
+                                    // VerticalDivider(),
+                                    //
+                                    // /// SOURCES
+                                    // OBSListSources(
+                                    //   key: ValueKey<String>('List Of Sources'),
+                                    // ),
+                                  ],
+                                ),
                               ),
-                            ),
 
-                            /// ACTIONS BOUTONS
-                            OBSActionButtonsMobileBloc(
-                              key: ValueKey<String>('Page Mobile View'),
-                            ),
-                          ],
-                        );
-                      case ServerIsLoading():
-                        return const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Center(child: CircularProgressIndicator(padding: EdgeInsetsGeometry.all(20))),
-                            Text('Loading...', style: TextStyle(color: kTextShadow)),
-                          ],
-                        );
-                      // case ServerHasError():
-                      //   return Text(
-                      //     state.message,
-                      //     style: const TextStyle(color: Colors.white),
-                      //   );
-                      // return ErrorMessageScreen(message: state.message);
-                      default:
-                        return Center(
-                          child: Text(state.toString()),
-                        );
-                    }
-                  },
+                              /// ACTIONS BOUTONS
+                              OBSActionButtonsMobileBloc(
+                                key: ValueKey<String>('Page Mobile View'),
+                              ),
+                            ],
+                          );
+                        case ServerIsLoading():
+                          return const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 10,
+                            children: [
+                              Center(child: CircularProgressIndicator(padding: EdgeInsetsGeometry.all(20))),
+                              Text('Loading...', style: TextStyle(color: kTextShadow)),
+                            ],
+                          );
+                        // case ServerHasError():
+                        //   return Text(
+                        //     state.message,
+                        //     style: const TextStyle(color: Colors.white),
+                        //   );
+                        // return ErrorMessageScreen(message: state.message);
+                        default:
+                          return Center(
+                            child: Text(state.toString()),
+                          );
+                      }
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
