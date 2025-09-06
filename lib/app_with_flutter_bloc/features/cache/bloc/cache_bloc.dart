@@ -13,6 +13,7 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
   CacheBloc() : super(CacheInitial()) {
     on<CacheInspectionCredentials>(_onCacheInspectionCredentials);
     on<CacheWritten>(_onCacheWritten);
+    on<CacheCleared>(_onCacheCleared);
     add(const CacheInspectionCredentials());
   }
   Future<void> _onCacheInspectionCredentials(CacheInspectionCredentials event, Emitter<CacheState> emit) async {
@@ -32,5 +33,18 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
     }
   }
 
-  Future<void> _onCacheWritten(CacheWritten event, Emitter<CacheState> emit) async {}
+  Future<void> _onCacheWritten(CacheWritten event, Emitter<CacheState> emit) async {
+    emit(CacheIsLoading());
+    final bool isOK = await CacheRepository.instance.setToCache(cacheDTO: event.cacheDTO);
+    if (isOK) {
+      emit(CacheIsUpdated());
+    }
+  }
+
+  Future<void> _onCacheCleared(CacheCleared event, Emitter<CacheState> emit) async {
+    final bool isOK = await CacheRepository.instance.clearCache();
+    if (isOK) {
+      emit(CacheIsCleared());
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/dto/cache_d_t_o.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/models/o_b_s_model.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String ip = 'ip';
@@ -62,11 +64,29 @@ class CacheRepository {
     final String? localPort = cache.getString(port);
     final String? localPassword = cache.getString(password);
     final OBSModel obsModel = OBSModel(
-      localIp: '192.168.0.171',
-      localPort: '4456',
-      localPassword: 'xrVmLhX4q5SS6vtyOVmlU4Cgp4AIDtjOr5tJzBH',
+      localIp: localIp,
+      localPort: localPort,
+      localPassword: localPassword,
     );
 
     return obsModel;
+  }
+
+  Future<bool> setToCache({required CacheDTO cacheDTO}) async {
+    final SharedPreferencesWithCache cache = await prefsWithCache;
+
+    await cache.setString(ip, cacheDTO.localIp ?? '');
+    await cache.setString(port, cacheDTO.localPort ?? '');
+    await cache.setString(password, cacheDTO.localPassword ?? '');
+
+    return true;
+  }
+
+  Future<bool> clearCache() async {
+    final SharedPreferencesWithCache cache = await prefsWithCache;
+    await cache.clear();
+    _instance = null;
+    OBSSingleton().clearObsInstance();
+    return true;
   }
 }

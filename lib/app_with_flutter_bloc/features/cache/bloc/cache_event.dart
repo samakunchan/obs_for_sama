@@ -18,3 +18,8 @@ class CacheWritten extends CacheEvent {
   @override
   List<Object?> get props => [cacheDTO];
 }
+
+class CacheCleared extends CacheEvent {
+  @override
+  List<Object?> get props => [];
+}
