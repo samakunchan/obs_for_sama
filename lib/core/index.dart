@@ -1,6 +1,9 @@
 /// Core Items
 library;
 
+/// Extensions
+export 'extensions/validators_extension.dart';
+
 /// Failures
 export 'failures/failures.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:obs_for_sama/app_with_get_x/layout/setting_layout_default.dart';
-import 'package:obs_for_sama/app_with_get_x/layout/setting_layout_mobile.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/layouts/setting_layout_default.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/layouts/setting_layout_mobile.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class OBSSettingsPage extends StatefulWidget {

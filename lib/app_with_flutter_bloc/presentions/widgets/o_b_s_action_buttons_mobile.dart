@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_reload_button.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_server_connection_button_cupertino.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_server_connection_button_material.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_sound_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_stream_button.dart';
@@ -45,10 +44,10 @@ class OBSActionButtonsMobileBloc extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Platform.isAndroid
-                                        ? const OBSServerConnectionButton(
+                                        ? const GoToSettingPage(
                                             key: ValueKey<String>('Android Button connection'),
                                           )
-                                        : const OBSServerConnectionButtonWidgetCupertino(
+                                        : const GoToSettingPage(
                                             key: ValueKey<String>('IOS Button connection'),
                                           ),
                                   ),

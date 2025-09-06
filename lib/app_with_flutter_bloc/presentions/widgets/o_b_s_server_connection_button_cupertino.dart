@@ -12,7 +12,7 @@ class OBSServerConnectionButtonWidgetCupertino extends StatelessWidget {
       },
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
       child: Icon(
-        Icons.lock_open_outlined,
+        Icons.settings,
         size: 40,
         color: Theme.of(context).colorScheme.outline,
       ),

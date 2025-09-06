@@ -3,14 +3,14 @@ import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/form_q_r_
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/form_regular.dart';
 import 'package:obs_for_sama/core/index.dart';
 
-class SettingLayoutMobileBloc extends StatefulWidget {
-  const SettingLayoutMobileBloc({super.key});
+class SettingLayoutMobile extends StatefulWidget {
+  const SettingLayoutMobile({super.key});
 
   @override
-  State<SettingLayoutMobileBloc> createState() => _SettingLayoutDefaultState();
+  State<SettingLayoutMobile> createState() => _SettingLayoutDefaultState();
 }
 
-class _SettingLayoutDefaultState extends State<SettingLayoutMobileBloc> with TickerProviderStateMixin {
+class _SettingLayoutDefaultState extends State<SettingLayoutMobile> with TickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -35,13 +35,8 @@ class _SettingLayoutDefaultState extends State<SettingLayoutMobileBloc> with Tic
               key: const ValueKey<String>('Back button'),
               edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
               width: 80,
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
+              onTap: Navigator.of(context).pop,
+              child: const Icon(Icons.arrow_back, color: Colors.white, size: 25),
             ),
           ],
         ),

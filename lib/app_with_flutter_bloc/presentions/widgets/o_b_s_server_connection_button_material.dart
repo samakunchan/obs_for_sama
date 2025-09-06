@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/index.dart';
 
-class OBSServerConnectionButton extends StatelessWidget {
-  const OBSServerConnectionButton({super.key});
+class GoToSettingPage extends StatelessWidget {
+  const GoToSettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
