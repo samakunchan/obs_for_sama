@@ -1,7 +1,7 @@
 name: obs_for_sama
 description: "A new Flutter project to manage OBS."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 0.14.0
+version: 0.15.0
 
 environment:
   sdk: ^3.8.1
@@ -45,6 +45,8 @@ dependencies:
   flutter_native_splash: ^2.4.6
   flutter_launcher_icons: ^0.14.4
   dartz: ^0.10.1
+
+  # Connectivity (wifi, bluetooth ect...)
   connectivity_plus: ^6.1.5
 
 dev_dependencies:
