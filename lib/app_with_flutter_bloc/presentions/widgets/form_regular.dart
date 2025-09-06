@@ -7,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/dto/cache_d_t_o.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/listeners/cache_listener.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/models/o_b_s_model.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/repositories/cache_repository.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class FormRegular extends StatefulWidget {
@@ -20,18 +23,32 @@ class _FormRegularState extends State<FormRegular> {
   bool isSubmitting = false;
   final GlobalKey<FormState> settingsFormKey = GlobalKey<FormState>();
   final TextEditingController textEditingControllerIp = TextEditingController();
-  final TextEditingController textEditingControllerPassword = TextEditingController();
   final TextEditingController textEditingControllerPort = TextEditingController();
+  final TextEditingController textEditingControllerPassword = TextEditingController();
+
+  @override
+  void initState() {
+    getDatasFromCache();
+    super.initState();
+  }
+
+  Future<void> getDatasFromCache() async {
+    final OBSModel obsModel = await CacheRepository.instance.obsModel;
+    textEditingControllerIp.text = obsModel.localIp ?? '';
+    textEditingControllerPort.text = obsModel.localPort ?? '';
+    textEditingControllerPassword.text = obsModel.localPassword ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: RSIOutlinedBody(
-        edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-        child: SingleChildScrollView(
+    return CacheListener(
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: RSIOutlinedBody(
+          edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// FORM
               Form(
@@ -39,7 +56,7 @@ class _FormRegularState extends State<FormRegular> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       /// IP TEXTFIELD
                       Padding(
@@ -48,13 +65,12 @@ class _FormRegularState extends State<FormRegular> {
                           cursorColor: kTextColorWhite,
                           obscureText: !Platform.isWindows,
                           controller: textEditingControllerIp,
-                          // placeholder: '192.XXX.XXX.XXX',
                           decoration: InputDecoration(
                             labelText: SettingsEnum.ip.label,
                             prefixIcon: const Icon(Icons.leak_add),
                           ),
                           validator: (String? value) {
-                            if (value == null || value.isEmpty) {
+                            if (!value.isValidIP) {
                               return 'Please add obs websocket I.P.';
                             }
                             return null;
@@ -69,13 +85,12 @@ class _FormRegularState extends State<FormRegular> {
                           cursorColor: kTextColorWhite,
                           obscureText: !Platform.isWindows,
                           controller: textEditingControllerPort,
-                          // placeholder: '1234',
                           decoration: InputDecoration(
                             labelText: SettingsEnum.port.label,
                             prefixIcon: const Icon(Icons.developer_board),
                           ),
                           validator: (String? value) {
-                            if (value == null || value.isEmpty) {
+                            if (!value.isValidPort) {
                               return 'Please add obs websocket port.';
                             }
                             return null;
@@ -93,13 +108,12 @@ class _FormRegularState extends State<FormRegular> {
                           cursorColor: kTextColorWhite,
                           obscureText: !Platform.isWindows,
                           controller: textEditingControllerPassword,
-                          // placeholder: 'OBS Websocket Password',
                           decoration: InputDecoration(
                             labelText: SettingsEnum.password.label,
                             prefixIcon: const Icon(Icons.key),
                           ),
                           validator: (String? value) {
-                            if (value == null || value.isEmpty) {
+                            if (!value.isValidPassword) {
                               return 'Please add obs websocket password.';
                             }
                             return null;
@@ -151,6 +165,23 @@ class _FormRegularState extends State<FormRegular> {
                   ),
                 ),
               ),
+
+              /// CACHE CLEAR
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: RSIButtonOutlined(
+                  onTap: clearTextFields,
+                  edgeClipper: const RSIEdgeClipper(
+                    edgeRightTop: true,
+                    edgeLeftBottom: true,
+                  ),
+                  color: Colors.grey,
+                  child: Text(
+                    'CLEAR_CACHE',
+                    style: ktitle2,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -162,6 +193,7 @@ class _FormRegularState extends State<FormRegular> {
     textEditingControllerPassword.clear();
     textEditingControllerIp.clear();
     textEditingControllerPort.clear();
+    context.read<CacheBloc>().add(CacheCleared());
   }
 
   Future<void> submit({
