@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:obs_for_sama/core/core_theme_index.dart';
+import 'package:obs_for_sama/core/index.dart';
 
 final ThemeData kThemeData = ThemeData(
   appBarTheme: kAppBarTheme,
@@ -12,4 +12,8 @@ final ThemeData kThemeData = ThemeData(
   inputDecorationTheme: kInputDecorationTheme,
   tabBarTheme: kTabBarTheme,
   useMaterial3: true,
+  progressIndicatorTheme: const ProgressIndicatorThemeData(
+    color: kTextShadow,
+  ),
+  iconTheme: const IconThemeData(color: kTextShadow, size: 20),
 );

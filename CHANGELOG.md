@@ -1,3 +1,36 @@
+## 🚀 0.16.0 - 06/09/2025
+### Added
+
+- Refacto stream status in two ways.
+- Added bloc, repository, service, exception for OBSStatusStream.
+
+### Changed
+
+- Update fallback event method and listened change for stream status.
+- Deleted `login_to_obs` because it is useful now.
+
+### Fixed
+
+- No fixes.
+
+
+## 🚀 0.15.0 - 06/09/2025
+### Added
+
+- Creation seperation with project build with GetX and Flutter bloc.
+- Added `flutter_bloc` package.
+- Added `connectivity_plus` package.
+
+### Changed
+
+- Update linter.
+- Refacto project with flutter_bloc (mobile only) : cache, detetection server, regular form.
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.14.0 - 28/08/2025
 ### Added
 
@@ -7,7 +40,7 @@
 
 - Update flutter version.
 - Update podfile.
-- Update android. Replaced Java to Kotlin
+- Update android. Replaced Java to Kotlin.
 - Update obs_websocket.
 - Update app theme. 
 - Update paths for libraries.

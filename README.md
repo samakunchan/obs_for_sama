@@ -8,9 +8,9 @@ The main idea is to permit any new streamer to get a simple kind of steamdeck on
 
 1. You need to get and install a plugin to OBS : https://github.com/obsproject/obs-websocket/releases <br>
 It gives you:
-- **Ip** server
-- **Port** server
-- **Password** server
+   - **Ip** server
+   - **Port** server
+   - **Password** server
 
 2. You need a **USB - C** connector to connect your device.
 NB: Some bugs happen if the connection is not complete or if your computer don't read your device.
@@ -60,3 +60,12 @@ Example:
 # For Java 1.8: JavaVersion.VERSION_1_8
 # For Java 17: JavaVersion.VERSION_17
 ```
+
+## Advice for refactoring
+
+1. Always begin by caches and settings page.
+2. Don't forgot to handle wifi connection.
+3. Next work on Errors and use Failure classes created for that. 
+4. Next work on Server connection without forms and with forms.
+5. Listen events from OBS (either directly or call event later).
+6. The rest is ok.
