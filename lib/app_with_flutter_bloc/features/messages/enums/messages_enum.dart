@@ -33,7 +33,13 @@ enum AppMessagesEnum {
   timeOutError(key: 'TIME_OUT_ERROR'),
 
   /// Valeur : REQUIRED_AUTHENTICATION
-  requiredAuth(key: 'REQUIRED_AUTHENTICATION');
+  requiredAuth(key: 'REQUIRED_AUTHENTICATION'),
+
+  /// Valeur : START_ERROR
+  startError(key: 'START_ERROR'),
+
+  /// Valeur : STOP_ERROR
+  stopError(key: 'STOP_ERROR');
 
   const AppMessagesEnum({
     required this.key,

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/exceptions/server_exception.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
@@ -60,28 +61,6 @@ class ServerRepository {
   //   return statusStream;
   // }
 
-  Future<void> startStreaming() async {
-    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
-    try {
-      await obsWebSocket?.stream.start();
-
-      // TODO(Sama): ajouter ça dans le retour de mise en veille
-      await WakelockPlus.enable();
-    } on Exception catch (e) {
-      throw ServerException('Erreur lors du démarrage du streaming : $e');
-    }
-  }
-
-  Future<void> stopStreaming() async {
-    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
-    try {
-      await obsWebSocket?.stream.stop();
-      await WakelockPlus.disable();
-    } on Exception catch (e) {
-      throw ServerException('Erreur lors de l‘arrêt du streaming : $e');
-    }
-  }
-
   Future<StatusStream> reload() async {
     final String inputName = await SoundRepository.detectSoundConfiguration();
     await SoundRepository.getStatusSound(inputName: inputName);
@@ -97,7 +76,7 @@ class ServerRepository {
     }
   }
 
-  Future<StatusStream?> fallBackEvent(Event event, BuildContext context) async {
+  Future<void> fallBackEvent(Event event, BuildContext context) async {
     if (kDebugMode) {
       print('On est dans le fallback');
     }
@@ -129,9 +108,8 @@ class ServerRepository {
       if (event.eventData!['outputState'].toString() == 'OBS_WEBSOCKET_OUTPUT_STOPPED') {
         statusStream = StatusStream.stopped;
       }
-      return statusStream;
-      // isStreamOnline(status: statusStream);
+      if (!context.mounted) return;
+      context.read<OBSStatusBloc>().add(OBSStatusStreamChanged(statusStream: statusStream));
     }
-    return null;
   }
 }
