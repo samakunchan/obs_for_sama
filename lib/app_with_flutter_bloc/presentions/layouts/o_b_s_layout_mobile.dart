@@ -8,8 +8,8 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_b
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/listeners/server_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_setting_page_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_server_connection_button_material.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 
@@ -68,7 +68,7 @@ class OBSLayoutMobile extends StatelessWidget {
                       ),
                       const Padding(
                         padding: EdgeInsetsGeometry.symmetric(vertical: 30),
-                        child: GoToSettingPage(),
+                        child: GoToSettingPageButton(),
                       ),
                     ],
                   );
@@ -112,7 +112,7 @@ class OBSLayoutMobile extends StatelessWidget {
                               ),
 
                               /// ACTIONS BOUTONS
-                              OBSActionButtonsMobileBloc(
+                              OBSActionButtonsMobile(
                                 key: ValueKey<String>('Page Mobile View'),
                               ),
                             ],
@@ -126,12 +126,7 @@ class OBSLayoutMobile extends StatelessWidget {
                               Text('Loading...', style: TextStyle(color: kTextShadow)),
                             ],
                           );
-                        // case ServerHasError():
-                        //   return Text(
-                        //     state.message,
-                        //     style: const TextStyle(color: Colors.white),
-                        //   );
-                        // return ErrorMessageScreen(message: state.message);
+
                         default:
                           return Center(
                             child: Text(state.toString()),

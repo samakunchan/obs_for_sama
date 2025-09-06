@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class OBSToogleStreamButton extends StatelessWidget {
@@ -9,29 +9,50 @@ class OBSToogleStreamButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO Faire un bloc pour le controle du stream, puisque [ServerBloc] sert à vérifier si le stream est en vie ou non.
-    // Donc remplacer le bloc ci-dessous.
-    return BlocBuilder<ServerBloc, ServerState>(
-      builder: (BuildContext context, ServerState state) {
+    return BlocBuilder<OBSStatusBloc, OBSStatusState>(
+      builder: (BuildContext context, OBSStatusState state) {
         if (kDebugMode) {
           print('OBSToogleStreamButton - $state');
         }
-        if (state is ServerIsLoading) {
-          return const CircularProgressIndicator(color: Colors.white);
-        }
-        if (state is ServerIsConnected) {
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: RSIButtonOutlined(
-              color: Colors.red,
-              onTap: () {},
-              edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-              text: AppText.stop.label,
-            ),
-          );
+        String message = AppText.start.label;
+        Color? color;
+        VoidCallback? onTapped;
+        switch (state) {
+          case OBSStatusIsStopping():
+            message = AppText.isStopping.label;
+            color = Colors.red;
+          case OBSStatusHasStarted():
+            message = AppText.stop.label;
+            color = Colors.red;
+            onTapped = () {
+              context.read<OBSStatusBloc>().add(OBSStatusStreamStopped());
+            };
+          case OBSStatusIsStarting():
+            message = AppText.isStarting.label;
+          case OBSStatusInitial():
+          case OBSStatusHasStopped():
+            message = AppText.start.label;
+            onTapped = () {
+              context.read<OBSStatusBloc>().add(OBSStatusStreamStarted());
+            };
         }
 
-        return const SizedBox();
+        return Padding(
+          padding: const EdgeInsets.all(8),
+          child: RSIButtonOutlined(
+            color: color ?? kTextColor,
+            onTap: () {
+              if (onTapped != null) {
+                if (kDebugMode) {
+                  print('Je tape');
+                }
+                onTapped();
+              }
+            },
+            edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
+            text: message,
+          ),
+        );
       },
     );
   }

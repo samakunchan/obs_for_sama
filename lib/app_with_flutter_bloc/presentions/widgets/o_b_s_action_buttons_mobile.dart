@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_setting_page_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_reload_button.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_server_connection_button_material.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_sound_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_stream_button.dart';
 import 'package:obs_for_sama/core/index.dart';
 
-class OBSActionButtonsMobileBloc extends StatelessWidget {
-  const OBSActionButtonsMobileBloc({super.key});
+class OBSActionButtonsMobile extends StatelessWidget {
+  const OBSActionButtonsMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,10 @@ class OBSActionButtonsMobileBloc extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Platform.isAndroid
-                                        ? const GoToSettingPage(
+                                        ? const GoToSettingPageButton(
                                             key: ValueKey<String>('Android Button connection'),
                                           )
-                                        : const GoToSettingPage(
+                                        : const GoToSettingPageButton(
                                             key: ValueKey<String>('IOS Button connection'),
                                           ),
                                   ),
@@ -97,7 +97,7 @@ class OBSActionButtonsMobileBloc extends StatelessWidget {
                       /// OBS SETTINGS
                       Padding(
                         padding: EdgeInsets.all(8),
-                        child: GoToSettingPage(),
+                        child: GoToSettingPageButton(),
                       ),
                     ],
                   );

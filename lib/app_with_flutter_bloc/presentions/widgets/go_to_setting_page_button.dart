@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/index.dart';
 
-class GoToSettingPage extends StatelessWidget {
-  const GoToSettingPage({super.key});
+class GoToSettingPageButton extends StatelessWidget {
+  const GoToSettingPageButton({super.key});
 
   @override
   Widget build(BuildContext context) {
