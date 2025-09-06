@@ -65,7 +65,7 @@ Example:
 
 1. Always begin by caches and settings page.
 2. Don't forgot to handle wifi connection.
-3.  Next work on Errors. 
+3. Next work on Errors and use Failure classes created for that. 
 4. Next work on Server connection without forms and with forms.
 5. Listen events from OBS (either directly or call event later).
 6. The rest is ok.
