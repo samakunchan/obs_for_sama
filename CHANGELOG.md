@@ -1,3 +1,19 @@
+## 🚀 0.16.0 - 06/09/2025
+### Added
+
+- Refacto stream status in two ways.
+- Added bloc, repository, service, exception for OBSStatusStream.
+
+### Changed
+
+- Update fallback event method and listened change for stream status.
+- Deleted `login_to_obs` because it is useful now.
+
+### Fixed
+
+- No fixes.
+
+
 ## 🚀 0.15.0 - 06/09/2025
 ### Added
 
