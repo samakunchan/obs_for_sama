@@ -13,15 +13,8 @@ import 'package:obs_websocket/obs_websocket.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class ServerRepository {
-  // ServerRepository();
-  // final ObsWebSocket? obsWebSocket;
   Future<StatusStream> connectToOBS() async {
     try {
-      // final List<ConnectivityResult> connectivityResult = await Connectivity().checkConnectivity();
-      // if (!connectivityResult.contains(ConnectivityResult.wifi)) {
-      //   throw SocketException(AppMessagesEnum.wifiError.key);
-      // }
-
       final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
       if (kDebugMode) {
         print('ETTAT $obsWebSocket');
@@ -29,9 +22,7 @@ class ServerRepository {
       if (obsWebSocket == null) {
         throw Exception(AppMessagesEnum.cacheEmpty.key);
       }
-      // obsWebSocket
-      //   ..removeFallbackListener(fallBackEvent)
-      //   ..addFallbackListener(fallBackEvent);
+
       if (kDebugMode) {
         print('ServerRepository - Lors de la connexion $obsWebSocket');
       }

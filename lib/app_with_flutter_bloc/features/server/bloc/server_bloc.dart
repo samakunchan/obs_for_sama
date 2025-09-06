@@ -16,10 +16,6 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     on<ServerConnected>(_onConnectToServer);
     on<ServerReloaded>(_onResetServer);
   }
-  // ServerBloc({required Future<OBSManagerModel> manager}) : _manager = manager, super(ServerInitial()) {
-  //   on<ServerConnected>(_onConnectToServer);
-  //   on<ServerReloaded>(_onResetServer);
-  // }
 
   Future<void> _onConnectToServer(ServerConnected event, Emitter<ServerState> emit) async {
     if (kDebugMode) {
