@@ -8,8 +8,11 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_b
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/listeners/server_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/title/bloc/title_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/title/selectors/title_selector.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_setting_page_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_list_scenes.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 
@@ -77,6 +80,16 @@ class OBSLayoutMobile extends StatelessWidget {
               if (kDebugMode) {
                 print('NO ERROR MESSAGE $state');
               }
+
+              /// Liste des pages
+              final List<Widget> pages = [
+                const OBSListScenes(
+                  key: ValueKey<String>('List Of Scenes'),
+                ),
+                const SizedBox(
+                  key: ValueKey<String>('Placeholder'),
+                ),
+              ];
               return SizedBox(
                 height: availableHeight * .95,
                 child: Padding(
@@ -88,32 +101,59 @@ class OBSLayoutMobile extends StatelessWidget {
                       }
                       switch (state) {
                         case ServerIsConnected():
+
+                          /// Important. Lance l'écoute des events.
                           _listenEvent(context);
-                          return const Column(
+
+                          return Stack(
                             children: [
-                              VerticalDivider(),
-                              Expanded(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('On est sur la bonne voie'),
-                                    // /// SCENES
-                                    // OBSListScenes(
-                                    //   key: ValueKey<String>('List Of Scenes'),
-                                    // ),
-                                    // VerticalDivider(),
-                                    //
-                                    // /// SOURCES
-                                    // OBSListSources(
-                                    //   key: ValueKey<String>('List Of Sources'),
-                                    // ),
-                                  ],
+                              PageView.custom(
+                                onPageChanged: (pageIndex) {
+                                  if (pageIndex == 0) {
+                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.scenes.label));
+                                  } else if (pageIndex == 1) {
+                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
+                                  } else {
+                                    context.read<TitleBloc>().add(const TitleChanged(title: 'OUT_OF_TITLE'));
+                                  }
+                                },
+                                childrenDelegate: SliverChildBuilderDelegate(
+                                  (_, int pageIndex) {
+                                    final Widget page = pages[pageIndex];
+
+                                    return page;
+                                  },
+                                  childCount: pages.length,
                                 ),
                               ),
 
                               /// ACTIONS BOUTONS
-                              OBSActionButtonsMobile(
-                                key: ValueKey<String>('Page Mobile View'),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  /// Titre
+                                  Row(
+                                    children: [
+                                      ColoredBox(
+                                        color: kPrimaryColor,
+                                        child: TitleSelector(
+                                          value: (String title) => Text(
+                                            title,
+                                            style: Theme.of(context).textTheme.headlineMedium,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Divider(height: 0),
+
+                                  const ColoredBox(
+                                    color: kPrimaryColor,
+                                    child: OBSActionButtonsMobile(
+                                      key: ValueKey<String>('Page Mobile View'),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           );

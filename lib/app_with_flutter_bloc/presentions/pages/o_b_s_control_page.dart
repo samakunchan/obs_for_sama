@@ -20,7 +20,6 @@ class OBSControlPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(centerTitle: true, title: Text(AppText.mainTitle.label)),
           drawer: RSIOutlinedBody(
-            color: kTextShadow,
             height: double.infinity,
             width: MediaQuery.of(context).size.width * .8,
             edgeClipper: const RSIEdgeClipper(
