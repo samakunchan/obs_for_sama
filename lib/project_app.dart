@@ -5,6 +5,8 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_blo
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/current_scene_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/o_b_s_scenes_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/current_source_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/o_b_s_sources_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
@@ -25,6 +27,8 @@ class ProjectApp extends StatelessWidget {
         BlocProvider<OBSStatusBloc>(create: (_) => OBSStatusBloc()),
         BlocProvider<OBSScenesBloc>(create: (_) => OBSScenesBloc()),
         BlocProvider<CurrentSceneBloc>(create: (_) => CurrentSceneBloc()),
+        BlocProvider<CurrentSourceBloc>(create: (_) => CurrentSourceBloc()),
+        BlocProvider<OBSSourcesBloc>(create: (_) => OBSSourcesBloc()),
         BlocProvider<TitleBloc>(create: (_) => TitleBloc()),
       ],
       child: MaterialApp(
