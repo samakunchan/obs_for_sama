@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/listeners/cache_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/selectors/current_scene_selector.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/listeners/server_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
@@ -13,6 +14,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/title/selectors/titl
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_setting_page_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_list_scenes.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_list_sources.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 
@@ -86,8 +88,11 @@ class OBSLayoutMobile extends StatelessWidget {
                 const OBSListScenes(
                   key: ValueKey<String>('List Of Scenes'),
                 ),
-                const SizedBox(
-                  key: ValueKey<String>('Placeholder'),
+                CurrentSceneSelector(
+                  value: (String sceneName) => OBSListSources(
+                    currentSceneName: sceneName,
+                    key: const ValueKey<String>('List Of Sources'),
+                  ),
                 ),
               ];
               return SizedBox(
@@ -107,23 +112,26 @@ class OBSLayoutMobile extends StatelessWidget {
 
                           return Stack(
                             children: [
-                              PageView.custom(
-                                onPageChanged: (pageIndex) {
-                                  if (pageIndex == 0) {
-                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.scenes.label));
-                                  } else if (pageIndex == 1) {
-                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
-                                  } else {
-                                    context.read<TitleBloc>().add(const TitleChanged(title: 'OUT_OF_TITLE'));
-                                  }
-                                },
-                                childrenDelegate: SliverChildBuilderDelegate(
-                                  (_, int pageIndex) {
-                                    final Widget page = pages[pageIndex];
-
-                                    return page;
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * .6,
+                                child: PageView.custom(
+                                  onPageChanged: (pageIndex) {
+                                    if (pageIndex == 0) {
+                                      context.read<TitleBloc>().add(TitleChanged(title: AppText.scenes.label));
+                                    } else if (pageIndex == 1) {
+                                      context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
+                                    } else {
+                                      context.read<TitleBloc>().add(const TitleChanged(title: 'OUT_OF_TITLE'));
+                                    }
                                   },
-                                  childCount: pages.length,
+                                  childrenDelegate: SliverChildBuilderDelegate(
+                                    (_, int pageIndex) {
+                                      final Widget page = pages[pageIndex];
+
+                                      return page;
+                                    },
+                                    childCount: pages.length,
+                                  ),
                                 ),
                               ),
 
