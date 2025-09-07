@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/core/routes.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/current_scene_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/o_b_s_scenes_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/title/bloc/title_bloc.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class ProjectApp extends StatelessWidget {
@@ -20,6 +23,9 @@ class ProjectApp extends StatelessWidget {
         BlocProvider<ServerBloc>(create: (_) => ServerBloc()..add(ServerConnected())),
         BlocProvider<SoundBloc>(create: (_) => SoundBloc()..add(SoundConfigured())),
         BlocProvider<OBSStatusBloc>(create: (_) => OBSStatusBloc()),
+        BlocProvider<OBSScenesBloc>(create: (_) => OBSScenesBloc()),
+        BlocProvider<CurrentSceneBloc>(create: (_) => CurrentSceneBloc()),
+        BlocProvider<TitleBloc>(create: (_) => TitleBloc()),
       ],
       child: MaterialApp(
         key: const ValueKey<String>('Material Flutter Bloc'),
