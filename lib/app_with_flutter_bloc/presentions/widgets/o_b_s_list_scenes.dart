@@ -44,7 +44,7 @@ class OBSListScenes extends StatelessWidget {
                               height: 150,
                               onTap: () {
                                 context.read<CurrentSceneBloc>().add(
-                                  CurrentSceneChanged(scene: scene),
+                                  CurrentSceneChanged(sceneName: scene.sceneName),
                                 );
                               },
                               color: currentScene == scene.sceneName

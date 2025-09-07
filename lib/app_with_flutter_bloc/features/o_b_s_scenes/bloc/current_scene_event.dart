@@ -10,9 +10,9 @@ final class CurrentSceneInit extends CurrentSceneEvent {
 }
 
 final class CurrentSceneChanged extends CurrentSceneEvent {
-  const CurrentSceneChanged({required this.scene});
-  final Scene scene;
+  const CurrentSceneChanged({required this.sceneName});
+  final String sceneName;
 
   @override
-  List<Object> get props => [scene];
+  List<Object> get props => [sceneName];
 }

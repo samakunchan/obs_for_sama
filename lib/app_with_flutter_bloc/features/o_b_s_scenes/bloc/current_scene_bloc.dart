@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/repositories/scenes_repository.dart';
-import 'package:obs_websocket/obs_websocket.dart';
 
 part 'current_scene_event.dart';
 part 'current_scene_state.dart';
@@ -29,10 +28,10 @@ class CurrentSceneBloc extends Bloc<CurrentSceneEvent, CurrentSceneState> {
 
   Future<void> _onCurrentSceneChanged(CurrentSceneChanged event, Emitter<CurrentSceneState> emit) async {
     if (kDebugMode) {
-      print('J‘effectue un changement de scene vers "${event.scene.sceneName.toUpperCase()}"');
+      print('J‘effectue un changement de scene vers "${event.sceneName.toUpperCase()}"');
     }
     emit(CurrentSceneIsLoading());
-    final String response = await ScenesRepository.onChangeScene(scene: event.scene);
+    final String response = await ScenesRepository.onChangeScene(sceneName: event.sceneName);
     emit(CurrentSceneWithValue(currentScene: response));
   }
 }

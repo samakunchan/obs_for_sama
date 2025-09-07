@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/repositories/sources_repository.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 
@@ -17,7 +17,7 @@ class CurrentSourceBloc extends Bloc<CurrentSourceEvent, CurrentSourceState> {
       print('J‘effectue un changement de source vers "${event.source.sourceName.toUpperCase()}"');
     }
     emit(CurrentSourceIsLoading());
-    final List<SceneItemDetail> response = await SourcesRepository.toogleActiveSource(
+    await SourcesRepository.toogleActiveSource(
       source: event.source,
       currentSceneName: event.sceneName,
     );

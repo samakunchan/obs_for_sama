@@ -22,15 +22,14 @@ class ScenesRepository {
 
   /// Event to change current scene<br>
   /// required [Scene]
-  static Future<String> onChangeScene({required Scene scene}) async {
+  static Future<String> onChangeScene({required String sceneName}) async {
     if (kDebugMode) {
       print('La scene est géré par le répository');
     }
     final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
-    await obsWebSocket?.scenes.setCurrentProgramScene(scene.sceneName);
+    await obsWebSocket?.scenes.setCurrentProgramScene(sceneName);
     final String currentScene = await obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scenes';
     return currentScene;
-    // await sourcesController.getListSourcesByCurrentScene();
   }
 
   static Future<String?> getCurrentScene() async {
