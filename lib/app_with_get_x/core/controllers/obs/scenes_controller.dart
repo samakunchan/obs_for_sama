@@ -33,15 +33,4 @@ class ScenesController extends GetxController {
       currentSceneName.value = response.currentProgramSceneName;
     }
   }
-
-  /// Get current scene
-  Future<void> getCurrentScene() async {
-    final ServerController serverController = Get.find();
-    try {
-      final String? response = await serverController.obsWebSocket?.scenes.getCurrentProgramScene();
-      currentSceneName.value = response ?? 'Inconnue';
-    } on Exception catch (e) {
-      serverController.showStatusMessage(message: 'Erreur lors de la récupération de la scène : $e');
-    }
-  }
 }

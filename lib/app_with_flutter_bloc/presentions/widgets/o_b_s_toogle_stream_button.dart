@@ -49,7 +49,12 @@ class OBSToogleStreamButton extends StatelessWidget {
                 onTapped();
               }
             },
-            edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
+            edgeClipper: const RSIEdgeClipper(
+              // edgeRightTop: true,
+              edgeLeftBottom: true,
+              edgeRightBottom: true,
+              // edgeLeftTop: true,
+            ),
             text: message,
           ),
         );

@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/current_scene_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/o_b_s_sources_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/exceptions/server_exception.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
@@ -81,15 +83,19 @@ class ServerRepository {
       print('On est dans le fallback');
     }
     if (event.eventType == 'CurrentProgramSceneChanged') {
-      // await _obs?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
-      // final String currentScene = await _obs?.scenes.getCurrentProgramScene() ?? 'no scene';
+      final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
+      await obsWebSocket?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
+      final String currentScene = await obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scene';
       // scenesController.currentSceneName.value = currentScene;
-
+      if (!context.mounted) return;
+      context.read<CurrentSceneBloc>().add(CurrentSceneChanged(sceneName: currentScene));
+      context.read<OBSSourcesBloc>().add(OBSSourcesFetched(sceneName: currentScene));
       // final SourcesController sourcesController = Get.put(SourcesController());
       // await sourcesController.getListSourcesByCurrentScene();
     }
 
     if (event.eventType == 'InputMuteStateChanged') {
+      if (!context.mounted) return;
       context.read<SoundBloc>().add(SoundInitialized(isSoundMuted: event.eventData!['inputMuted'] as bool));
     }
 
