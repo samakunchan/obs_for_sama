@@ -1,4 +1,4 @@
-## 🚀 0.17.0 - 07/09/2025
+## 🚀 0.17.0 - 07/09/2025 [REFACTORING MAIN FEATURES OK]
 ### Added
 
 - Added drawer with minimum configuration.
@@ -35,7 +35,7 @@
 - No fixes.
 
 
-## 🚀 0.15.0 - 06/09/2025
+## 🚀 0.15.0 - 06/09/2025 [START REFACTORING]
 ### Added
 
 - Creation seperation with project build with GetX and Flutter bloc.
@@ -52,7 +52,7 @@
 - No fixes.
 
 
-## 🚀 0.14.0 - 28/08/2025
+## 🚀 0.14.0 - 28/08/2025 [UPDATE FLUTTER]
 ### Added
 
 - No addes.
