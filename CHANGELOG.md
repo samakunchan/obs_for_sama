@@ -1,7 +1,28 @@
+## 🚀 0.17.0 - 07/09/2025
+### Added
+
+- Added drawer with minimum configuration.
+- Added a style for drawer.
+- Added new bloc to manage the switch between "Scenes" and "Sources".
+- Added scenes with flutter blocs.
+- Added bloc, models, repositories and selectors for "Scenes" and "Sources".
+
+### Changed
+
+- Removed settings button from main page.
+- Added settings menu in drawer.
+- Refactoring page mobile with page custom builder
+- Updated fallback events.
+
+### Fixed
+
+- No fixes
+
+
 ## 🚀 0.16.0 - 06/09/2025
 ### Added
 
-- Refacto stream status in two ways.
+- Refactoring stream status in two ways.
 - Added bloc, repository, service, exception for OBSStatusStream.
 
 ### Changed
