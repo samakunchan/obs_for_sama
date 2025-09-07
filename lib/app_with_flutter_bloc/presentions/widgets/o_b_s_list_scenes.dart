@@ -17,43 +17,45 @@ class OBSListScenes extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: ScenesSelector(
-              values: (List<Scene> scenes) => Wrap(
-                spacing: 20,
-                runSpacing: 10,
-                children: scenes.isEmpty
-                    ? List.generate(3, (int index) {
-                        return RSIButton(
-                          key: ValueKey<String>('Scene button n°-$index'),
-                          edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                          width: 150,
-                          height: 150,
-                          onTap: () {},
-                          color: Colors.grey.withValues(alpha: (index + 1) * .3),
-                          text: 'SCENE_NAME $index',
-                        );
-                      })
-                    : List.generate(scenes.length, (int index) {
-                        final Scene scene = scenes[index];
-
-                        return CurrentSceneSelector(
-                          value: (String currentScene) => RSIButton(
-                            key: ValueKey<String>('Scene button n°$index : ${scene.sceneName}'),
+              values: (List<Scene> scenes) {
+                return Wrap(
+                  spacing: 20,
+                  runSpacing: 10,
+                  children: scenes.isEmpty
+                      ? List.generate(3, (int index) {
+                          return RSIButton(
+                            key: ValueKey<String>('Scene button n°-$index'),
                             edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
                             width: 150,
                             height: 150,
-                            onTap: () {
-                              context.read<CurrentSceneBloc>().add(
-                                CurrentSceneChanged(scene: scene),
-                              );
-                            },
-                            color: currentScene == scene.sceneName
-                                ? Theme.of(context).colorScheme.tertiary
-                                : Theme.of(context).colorScheme.primaryContainer,
-                            text: scene.sceneName,
-                          ),
-                        );
-                      }),
-              ),
+                            onTap: () {},
+                            color: Colors.grey.withValues(alpha: (index + 1) * .3),
+                            text: 'SCENE_NAME $index',
+                          );
+                        })
+                      : List.generate(scenes.length, (int index) {
+                          final Scene scene = scenes[index];
+
+                          return CurrentSceneSelector(
+                            value: (String currentScene) => RSIButton(
+                              key: ValueKey<String>('Scene button n°$index : ${scene.sceneName}'),
+                              edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
+                              width: 150,
+                              height: 150,
+                              onTap: () {
+                                context.read<CurrentSceneBloc>().add(
+                                  CurrentSceneChanged(scene: scene),
+                                );
+                              },
+                              color: currentScene == scene.sceneName
+                                  ? Theme.of(context).colorScheme.tertiary
+                                  : Theme.of(context).colorScheme.primaryContainer,
+                              text: scene.sceneName,
+                            ),
+                          );
+                        }),
+                );
+              },
             ),
           ),
         ],
