@@ -71,5 +71,6 @@ flutter:
 #    prod:
 #      app_name: "OBS Manager"
 
-#  assets:
+  assets:
+    - assets/
 
