@@ -16,9 +16,5 @@ final ThemeData kThemeData = ThemeData(
     color: kTextShadow,
   ),
   iconTheme: const IconThemeData(color: kTextShadow, size: 20),
-  drawerTheme: DrawerThemeData(
-    backgroundColor: kPrimaryColor,
-    elevation: 20,
-    scrimColor: kSecondaryColor.withValues(alpha: .3),
-  ),
+  drawerTheme: const DrawerThemeData(backgroundColor: kPrimaryColor, elevation: 20),
 );
