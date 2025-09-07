@@ -39,49 +39,34 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
-                                    child: RSIButtonOutlined(
-                                      onTap: Scaffold.of(context).openDrawer,
-                                      edgeClipper: const RSIEdgeClipper(
-                                        edgeRightTop: true,
-                                        edgeLeftBottom: true,
-                                      ),
-                                      child: Icon(
-                                        Icons.menu,
-                                        size: 40,
-                                        color: Theme.of(context).colorScheme.outline,
+                                    child: SizedBox(
+                                      width: 30,
+                                      child: RSIButtonOutlined(
+                                        onTap: Scaffold.of(context).openDrawer,
+                                        edgeClipper: const RSIEdgeClipper(
+                                          edgeRightTop: true,
+                                          // edgeLeftBottom: true,
+                                          // edgeRightBottom: true,
+                                          edgeLeftTop: true,
+                                        ),
+                                        child: Icon(
+                                          Icons.menu,
+                                          size: 40,
+                                          color: Theme.of(context).colorScheme.outline,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                /// PAGE SETTING
-                                const Expanded(child: SizedBox()),
-                                // Expanded(
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8),
-                                //     child: Platform.isAndroid
-                                //         ? const GoToSettingPageButton(
-                                //             key: ValueKey<String>('Android Button connection'),
-                                //           )
-                                //         : const GoToSettingPageButton(
-                                //             key: ValueKey<String>('IOS Button connection'),
-                                //           ),
-                                //   ),
-                                // ),
-
-                                /// REFRESH
-                                // const Expanded(
-                                //   child: Padding(
-                                //     padding: EdgeInsets.all(8),
-                                //     child: OBSReloadButton(),
-                                //   ),
-                                // ),
-
                                 /// SOUND
                                 const Expanded(
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
-                                    child: OBSToogleSoundButton(),
+                                    child: SizedBox(
+                                      width: 30,
+                                      child: OBSToogleSoundButton(),
+                                    ),
                                   ),
                                 ),
                               ],

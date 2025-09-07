@@ -36,11 +36,21 @@ class RSIClipper extends CustomClipper<Path> {
         ..close();
     } else if (edgeClipper.edgeRightBottom && edgeClipper.edgeLeftTop) {
       return path
+        ..moveTo(0, 25)
         ..lineTo(25, 0)
         ..lineTo(size.width, 0)
         ..lineTo(size.width, 25)
         ..lineTo(size.width, size.height - 25)
         ..lineTo(size.width - 25, size.height)
+        ..lineTo(0, size.height)
+        ..close();
+    } else if (edgeClipper.edgeRightTop && edgeClipper.edgeLeftTop) {
+      return path
+        ..moveTo(0, 25)
+        ..lineTo(25, 0)
+        ..lineTo(size.width - 25, 0)
+        ..lineTo(size.width, size.height - 25)
+        ..lineTo(size.width, size.height)
         ..lineTo(0, size.height)
         ..close();
     } else if (edgeClipper.edgeRightBottom && edgeClipper.edgeLeftBottom) {
