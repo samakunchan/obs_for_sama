@@ -3,21 +3,21 @@ import 'package:get/get.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class ErrorController extends GetxController {
-  late final Rx<Failure> failure = Failure().obs;
+  late final Rx<Failure> failure = Failure('Failure').obs;
 
   void manageError({required String error}) {
-    failure.value = NoFailure();
+    failure.value = NoFailure('NoFailure');
     if (error.contains('SocketException') && error.contains('Failed host lookup')) {
-      failure.value = HostFailure();
+      failure.value = HostFailure('HostFailure');
     }
     if (error.contains('TimeoutException')) {
-      failure.value = OBSConnectionFailure();
+      failure.value = SocketFailure('SocketFailure');
     }
     if (error.contains('Connection refused')) {
-      failure.value = OBSConnectionFailure();
+      failure.value = SocketFailure('SocketFailure');
     }
     if (error.contains('Exception: Authentication error with identified response')) {
-      failure.value = PasswordFailure();
+      failure.value = PasswordFailure('PasswordFailure');
     }
   }
 
@@ -37,7 +37,7 @@ class ErrorController extends GetxController {
         icon = const Icon(Icons.key_off, size: 50);
         message = 'Error Password';
       }
-      if (failureInfo is OBSConnectionFailure) {
+      if (failureInfo is SocketFailure) {
         icon = const Icon(Icons.leak_remove, size: 50);
         message = 'Error connection server OBS';
       }
@@ -52,6 +52,6 @@ class ErrorController extends GetxController {
   }
 
   void resetError() {
-    failure.value = NoFailure();
+    failure.value = NoFailure('NoFailure');
   }
 }
