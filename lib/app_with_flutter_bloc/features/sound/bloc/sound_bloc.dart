@@ -4,8 +4,9 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/server/services/server_service.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/repositories/sound_repository.dart';
+import 'package:obs_for_sama/core/failures/failures.dart';
+import 'package:obs_for_sama/core/services/client_service.dart';
 
 part 'sound_event.dart';
 part 'sound_state.dart';
@@ -23,12 +24,12 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     }
     emit(SoundIsLoading());
     final String inputName = await SoundRepository.detectSoundConfiguration();
-    final Either<String, bool?> response = await ServerService.baseRequest<bool?>(
+    final Either<Failure, bool?> response = await ClientService.baseRequest<bool?>(
       getConcrete: () => SoundRepository.getStatusSound(inputName: inputName),
     );
     switch (response) {
       case Left():
-        emit(SoundHasError(message: response.value));
+        emit(SoundHasError(message: response.value.message));
       case Right():
         if (kDebugMode) {
           print('Sound Bloc - SoundInitialized - ${response.value}');
@@ -48,14 +49,14 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     }
     emit(SoundIsLoading());
     final String inputName = await SoundRepository.detectSoundConfiguration();
-    final Either<String, bool?> response = await ServerService.baseRequest<bool?>(
+    final Either<Failure, bool?> response = await ClientService.baseRequest<bool?>(
       getConcrete: () async {
         return SoundRepository.getStatusSound(inputName: inputName);
       },
     );
     switch (response) {
       case Left():
-        emit(SoundHasError(message: response.value));
+        emit(SoundHasError(message: response.value.message));
       case Right():
         if (kDebugMode) {
           print('Sound Bloc - ${response.value}');
@@ -74,14 +75,14 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
       print('SoundToggled - ${event.soundName}');
     }
     emit(SoundIsLoading());
-    final Either<String, bool> response = await ServerService.baseRequest<bool>(
+    final Either<Failure, bool> response = await ClientService.baseRequest<bool>(
       getConcrete: () => SoundRepository.toogleMuteSound(
         inputName: event.soundName,
       ),
     );
     switch (response) {
       case Left():
-        emit(SoundHasError(message: response.value));
+        emit(SoundHasError(message: response.value.message));
       case Right():
         if (kDebugMode) {
           print('Sound Bloc - ${response.value}');

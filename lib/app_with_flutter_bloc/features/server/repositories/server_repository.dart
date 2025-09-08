@@ -7,6 +7,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messa
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/current_scene_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/o_b_s_sources_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/repositories/o_b_s_status_repository.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/exceptions/server_exception.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
@@ -15,6 +16,8 @@ import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+/// # [ServerRepository]
+/// Controller to manage [ObsWebSocket] library and [FormState].
 class ServerRepository {
   Future<StatusStream> connectToOBS() async {
     try {
@@ -45,30 +48,24 @@ class ServerRepository {
     }
   }
 
+  /// Not use actually
+  /// Use to disconnect from OBS session.
   Future<void> logoutToOBS() async {
-    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
-    await obsWebSocket?.close();
+    try {
+      final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
+      await obsWebSocket?.close();
+    } on Exception {
+      throw ServerException('SERVER_CANNOT_DISCONNECTED');
+    }
   }
-
-  Future<StatusStream> showStreamStatus() async {
-    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
-    final StreamStatusResponse? response = await obsWebSocket?.stream.status;
-    if (response == null) return StatusStream.stopped;
-    return response.outputActive ? StatusStream.started : StatusStream.stopped;
-  }
-
-  // Future<StatusStream> _showStreamStatus(StreamStatusResponse response) async {
-  //   final StatusStream statusStream = response.outputActive ? StatusStream.started : StatusStream.stopped;
-  //   // isStreamOnline(status: statusStream);
-  //   return statusStream;
-  // }
 
   Future<StatusStream> reload() async {
     final String inputName = await SoundRepository.detectSoundConfiguration();
     await SoundRepository.getStatusSound(inputName: inputName);
-    return showStreamStatus();
+    return OBSStatusRepository.showStreamStatus();
   }
 
+  /// Subscription to listen all states.
   Future<void> listenAllStatesFromOBS() async {
     final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
     try {
@@ -78,6 +75,7 @@ class ServerRepository {
     }
   }
 
+  /// Method to listen all state from OBS Software and emit event to update the mobile app.
   Future<void> fallBackEvent(Event event, BuildContext context) async {
     if (kDebugMode) {
       print('On est dans le fallback');
@@ -86,12 +84,9 @@ class ServerRepository {
       final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
       await obsWebSocket?.scenes.setCurrentProgramScene(event.eventData!['sceneName'].toString());
       final String currentScene = await obsWebSocket?.scenes.getCurrentProgramScene() ?? 'no scene';
-      // scenesController.currentSceneName.value = currentScene;
       if (!context.mounted) return;
       context.read<CurrentSceneBloc>().add(CurrentSceneChanged(sceneName: currentScene));
       context.read<OBSSourcesBloc>().add(OBSSourcesFetched(sceneName: currentScene));
-      // final SourcesController sourcesController = Get.put(SourcesController());
-      // await sourcesController.getListSourcesByCurrentScene();
     }
 
     if (event.eventType == 'InputMuteStateChanged') {

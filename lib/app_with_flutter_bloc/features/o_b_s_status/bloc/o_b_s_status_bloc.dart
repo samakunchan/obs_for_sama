@@ -5,8 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/repositories/o_b_s_status_repository.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/services/o_b_s_status_service.dart';
 import 'package:obs_for_sama/app_with_get_x/core/core_theme_index.dart';
+import 'package:obs_for_sama/core/failures/failures.dart';
+import 'package:obs_for_sama/core/services/client_service.dart';
 
 part 'o_b_s_status_event.dart';
 part 'o_b_s_status_state.dart';
@@ -22,13 +23,13 @@ class OBSStatusBloc extends Bloc<OBSStatusEvent, OBSStatusState> {
     if (kDebugMode) {
       print('STREAM IS STARTING');
     }
-    final Either<String, bool> response = await OBSStatusService.baseRequest<bool>(
+    final Either<Failure, bool> response = await ClientService.baseRequest<bool>(
       getConcrete: OBSStatusRepository.startStreaming,
     );
 
     switch (response) {
       case Left():
-        emit(OBSStatusHasError(message: response.value));
+        emit(OBSStatusHasError(message: response.value.message));
       case Right():
       // Le fallback event fait le reste du travail et est écouté avec [OBSStatusStreamChanged].
     }
@@ -38,13 +39,13 @@ class OBSStatusBloc extends Bloc<OBSStatusEvent, OBSStatusState> {
     if (kDebugMode) {
       print('STREAM IS STOPPING');
     }
-    final Either<String, bool> response = await OBSStatusService.baseRequest<bool>(
+    final Either<Failure, bool> response = await ClientService.baseRequest<bool>(
       getConcrete: OBSStatusRepository.stopStreaming,
     );
 
     switch (response) {
       case Left():
-        emit(OBSStatusHasError(message: response.value));
+        emit(OBSStatusHasError(message: response.value.message));
       case Right():
       // Le fallback event fait le reste du travail et est écouté avec [OBSStatusStreamChanged].
     }

@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/server_repository.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/server/services/server_service.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:obs_for_sama/core/services/client_service.dart';
 
 part 'server_event.dart';
 part 'server_state.dart';
@@ -23,7 +23,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     }
     emit(ServerIsLoading());
 
-    final Either<String, StatusStream> response = await ServerService.baseRequest<StatusStream>(
+    final Either<Failure, StatusStream> response = await ClientService.baseRequest<StatusStream>(
       getConcrete: ServerRepository().connectToOBS,
     );
     switch (response) {
@@ -31,7 +31,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
         if (kDebugMode) {
           print('Server Bloc Error - ${response.value}');
         }
-        emit(ServerHasError(message: response.value));
+        emit(ServerHasError(message: response.value.message));
       case Right():
         if (kDebugMode) {
           print('Server Bloc - ${response.value}');
@@ -46,12 +46,12 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     }
     emit(ServerIsLoading());
 
-    final Either<String, StatusStream> response = await ServerService.baseRequest<StatusStream>(
+    final Either<Failure, StatusStream> response = await ClientService.baseRequest<StatusStream>(
       getConcrete: ServerRepository().reload,
     );
     switch (response) {
       case Left():
-        emit(ServerHasError(message: response.value));
+        emit(ServerHasError(message: response.value.message));
       case Right():
         if (kDebugMode) {
           print(response.value);
