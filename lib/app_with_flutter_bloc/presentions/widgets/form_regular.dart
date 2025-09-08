@@ -240,7 +240,7 @@ class _FormRegularState extends State<FormRegular> {
         icon = const Icon(Icons.key_off, size: 50);
         message = 'Error Password';
       }
-      if (failureInfo is OBSConnectionFailure) {
+      if (failureInfo is SocketFailure) {
         icon = const Icon(Icons.leak_remove, size: 50);
         message = 'Error connection server OBS';
       }

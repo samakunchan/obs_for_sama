@@ -41,7 +41,10 @@ class OBSLayoutMobile extends StatelessWidget {
                   );
                 }
                 if (state.message == AppMessagesEnum.wifiError.key) {
-                  errorIcon = const Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                  errorIcon = const Icon(
+                    Icons.signal_wifi_connected_no_internet_4_rounded,
+                    size: 120,
+                  );
                   return Column(
                     spacing: 10,
                     children: [
@@ -59,7 +62,10 @@ class OBSLayoutMobile extends StatelessWidget {
                   );
                 }
                 if (state.message.contains(AppMessagesEnum.cacheEmpty.key)) {
-                  errorIcon = const Icon(Icons.sd_card_alert_outlined);
+                  errorIcon = const Icon(
+                    Icons.sd_card_alert_outlined,
+                    size: 120,
+                  );
                   return Column(
                     children: [
                       Expanded(
@@ -121,7 +127,7 @@ class OBSLayoutMobile extends StatelessWidget {
                                     } else if (pageIndex == 1) {
                                       context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
                                     } else {
-                                      context.read<TitleBloc>().add(const TitleChanged(title: 'OUT_OF_TITLE'));
+                                      context.read<TitleBloc>().add(const TitleChanged(title: 'NO_TITLE'));
                                     }
                                   },
                                   childrenDelegate: SliverChildBuilderDelegate(
