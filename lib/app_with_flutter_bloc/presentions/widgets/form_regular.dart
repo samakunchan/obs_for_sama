@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/bloc/cache_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/dto/cache_d_t_o.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/listeners/cache_listener.dart';
@@ -199,58 +198,5 @@ class _FormRegularState extends State<FormRegular> {
     textEditingControllerIp.clear();
     textEditingControllerPort.clear();
     context.read<CacheBloc>().add(CacheCleared());
-  }
-
-  Future<void> submit({
-    required ValueChanged<Failure> onFailure,
-    required ValueChanged<bool> onSuccess,
-  }) async {
-    // print('Je lance le submit');
-    // final ErrorController errorController = Get.find()..resetError();
-    // final CacheController cacheController = Get.find();
-    // final ServerController controller = Get.find();
-    // final SharedPreferencesWithCache cache = await cacheController.prefsWithCache;
-    // await cache.setString(SettingsEnum.ip.label, textEditingControllerIp.text);
-    // await cache.setString(SettingsEnum.port.label, textEditingControllerPort.text);
-    // await cache.setString(SettingsEnum.password.label, textEditingControllerPassword.text);
-
-    // await controller.connectToOBS();
-    // if (errorController.failure.value is! NoFailure) {
-    //   onFailure(errorController.failure.value);
-    //   errorController.resetError();
-    // } else {
-    //   // print('On lance pas la failure');
-    //   onSuccess(true);
-    // }
-  }
-
-  void showErrorSnackBar({required Failure failureInfo}) {
-    if (failureInfo is! NoFailure) {
-      Icon icon = const Icon(Icons.add_alert);
-      String message = '';
-      if (failureInfo is HostFailure) {
-        icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Error IP';
-      }
-      if (failureInfo is PortFailure) {
-        icon = const Icon(Icons.developer_board_off, size: 50);
-        message = 'Error Port';
-      }
-      if (failureInfo is PasswordFailure) {
-        icon = const Icon(Icons.key_off, size: 50);
-        message = 'Error Password';
-      }
-      if (failureInfo is OBSConnectionFailure) {
-        icon = const Icon(Icons.leak_remove, size: 50);
-        message = 'Error connection server OBS';
-      }
-      Get.snackbar(
-        message,
-        '',
-        messageText: icon, //key_off, key_on, leak_remove, leak_add develo
-        backgroundColor: Colors.orangeAccent,
-        duration: const Duration(seconds: 4),
-      );
-    }
   }
 }

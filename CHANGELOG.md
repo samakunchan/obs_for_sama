@@ -1,4 +1,26 @@
-## 🚀 0.17.0 - 07/09/2025 [REFACTORING MAIN FEATURES OK]
+## 🚀 0.18.0 - 09/09/2025 [REFACTORING MAIN FEATURES MOBILE OK]
+### Added
+
+- Added obs drawer for convinient.
+- Added exceptions files for all Exceptions.
+- Added client service for all request to OBS.
+- Added `sizer` package.
+
+### Changed
+
+- Updated failure files for all Failures.
+- Update all blocs files in the same way.
+- Update all repositories files in the same way.
+- Refactoring QR code form with flutter bloc.
+- Update responsive design
+- Deleted deprecated file : exceptions and enums..
+
+### Fixed
+
+- No fixes
+
+
+## 🚀 0.17.0 - 07/09/2025
 ### Added
 
 - Added drawer with minimum configuration.

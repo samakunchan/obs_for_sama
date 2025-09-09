@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/listeners/cache_listener.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/error/bloc/error_bloc.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/selectors/current_scene_selector.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/listeners/server_listener.dart';
@@ -11,6 +10,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/server/repositories/
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/title/bloc/title_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/title/selectors/title_selector.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/animated_arrow.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_setting_page_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_action_buttons_mobile.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_list_scenes.dart';
@@ -23,10 +23,7 @@ class OBSLayoutMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
-    final EdgeInsets safeAreaPadding = mediaQuery.padding;
-    final double screenHeight = mediaQuery.size.height;
-    final double availableHeight = screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
+    final PageController pageController = PageController();
 
     return ServerListener(
       child: CacheListener(
@@ -34,6 +31,7 @@ class OBSLayoutMobile extends StatelessWidget {
           child: BlocBuilder<ErrorBloc, ErrorState>(
             builder: (_, ErrorState state) {
               if (state is ErrorMessageDisplayed) {
+                print('STATE ERROR $state - ${state.message}');
                 Widget errorIcon = const SizedBox();
                 if (kDebugMode) {
                   print(
@@ -41,7 +39,10 @@ class OBSLayoutMobile extends StatelessWidget {
                   );
                 }
                 if (state.message == AppMessagesEnum.wifiError.key) {
-                  errorIcon = const Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                  errorIcon = const Icon(
+                    Icons.signal_wifi_connected_no_internet_4_rounded,
+                    size: 120,
+                  );
                   return Column(
                     spacing: 10,
                     children: [
@@ -58,14 +59,14 @@ class OBSLayoutMobile extends StatelessWidget {
                     ],
                   );
                 }
-                if (state.message.contains(AppMessagesEnum.cacheEmpty.key)) {
-                  errorIcon = const Icon(Icons.sd_card_alert_outlined);
+                if (state.message.contains(AppMessagesEnum.cacheEmpty.key) ||
+                    state.message == AppMessagesEnum.connectionRefused.key) {
                   return Column(
                     children: [
                       Expanded(
                         child: Center(
                           child: Text(
-                            'OBS Disconnected...',
+                            'OBS \nDisconnected...',
                             style: kheadlineLarge,
                             textAlign: TextAlign.center,
                           ),
@@ -95,93 +96,137 @@ class OBSLayoutMobile extends StatelessWidget {
                   ),
                 ),
               ];
-              return SizedBox(
-                height: availableHeight * .95,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: BlocBuilder<ServerBloc, ServerState>(
-                    builder: (BuildContext context, ServerState state) {
-                      if (kDebugMode) {
-                        print('OBSLayoutMobileBloc - $state');
-                      }
-                      switch (state) {
-                        case ServerIsConnected():
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: BlocBuilder<ServerBloc, ServerState>(
+                  builder: (BuildContext context, ServerState state) {
+                    if (kDebugMode) {
+                      print('OBSLayoutMobileBloc - $state');
+                    }
+                    switch (state) {
+                      case ServerIsConnected():
 
-                          /// Important. Lance l'écoute des events.
-                          _listenEvent(context);
+                        /// Important. Lance l'écoute des events.
+                        _listenEvent(context);
 
-                          return Stack(
-                            children: [
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height * .6,
-                                child: PageView.custom(
-                                  onPageChanged: (pageIndex) {
-                                    if (pageIndex == 0) {
-                                      context.read<TitleBloc>().add(TitleChanged(title: AppText.scenes.label));
-                                    } else if (pageIndex == 1) {
-                                      context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
-                                    } else {
-                                      context.read<TitleBloc>().add(const TitleChanged(title: 'OUT_OF_TITLE'));
-                                    }
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * .6,
+                              child: PageView.custom(
+                                controller: pageController,
+                                onPageChanged: (pageIndex) {
+                                  if (pageIndex == 0) {
+                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.scenes.label));
+                                  } else if (pageIndex == 1) {
+                                    context.read<TitleBloc>().add(TitleChanged(title: AppText.sources.label));
+                                  } else {
+                                    context.read<TitleBloc>().add(const TitleChanged(title: 'NO_TITLE'));
+                                  }
+                                },
+                                childrenDelegate: SliverChildBuilderDelegate(
+                                  (_, int pageIndex) {
+                                    final Widget page = pages[pageIndex];
+
+                                    return page;
                                   },
-                                  childrenDelegate: SliverChildBuilderDelegate(
-                                    (_, int pageIndex) {
-                                      final Widget page = pages[pageIndex];
-
-                                      return page;
-                                    },
-                                    childCount: pages.length,
-                                  ),
+                                  childCount: pages.length,
                                 ),
                               ),
+                            ),
 
-                              /// ACTIONS BOUTONS
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  /// Titre
-                                  Row(
-                                    children: [
-                                      ColoredBox(
+                            /// ACTIONS BOUTONS
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                /// Titre
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
                                         color: kPrimaryColor,
-                                        child: TitleSelector(
-                                          value: (String title) => Text(
-                                            title,
-                                            style: Theme.of(context).textTheme.headlineMedium,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: Offset(5, -5),
+                                            color: kButtonColor,
+                                            blurRadius: 30,
                                           ),
+                                        ],
+                                      ),
+                                      child: TitleSelector(
+                                        value: (String title) => Text(
+                                          title,
+                                          style: Theme.of(context).textTheme.headlineMedium,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  const Divider(height: 0),
-
-                                  const ColoredBox(
-                                    color: kPrimaryColor,
-                                    child: OBSActionButtonsMobile(
-                                      key: ValueKey<String>('Page Mobile View'),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        case ServerIsLoading():
-                          return const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 10,
-                            children: [
-                              Center(child: CircularProgressIndicator(padding: EdgeInsetsGeometry.all(20))),
-                              Text('Loading...', style: TextStyle(color: kTextShadow)),
-                            ],
-                          );
+                                  ],
+                                ),
+                                const Divider(height: 0),
 
-                        default:
-                          return Center(
-                            child: Text(state.toString()),
-                          );
-                      }
-                    },
-                  ),
+                                const ColoredBox(
+                                  color: kPrimaryColor,
+                                  child: OBSActionButtonsMobile(
+                                    key: ValueKey<String>('Page Mobile View'),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            /// Arrow
+                            TitleSelector(
+                              value: (String title) {
+                                if (title == AppText.scenes.label) {
+                                  return Align(
+                                    alignment: Alignment.centerRight,
+                                    child: AnimatedArrow(
+                                      onTap: () {
+                                        pageController.animateToPage(
+                                          1,
+                                          duration: const Duration(milliseconds: 500),
+                                          curve: Curves.easeInOut,
+                                        );
+                                      },
+                                      icon: Icons.keyboard_arrow_right_rounded,
+                                    ),
+                                  );
+                                } else if (title == AppText.sources.label) {
+                                  return Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: AnimatedArrow(
+                                      onTap: () {
+                                        pageController.animateToPage(
+                                          0,
+                                          duration: const Duration(milliseconds: 500),
+                                          curve: Curves.easeInOut,
+                                        );
+                                      },
+                                      icon: Icons.keyboard_arrow_left_rounded,
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      case ServerIsLoading():
+                        return const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 10,
+                          children: [
+                            Center(child: CircularProgressIndicator(padding: EdgeInsetsGeometry.all(20))),
+                            Text('Loading...', style: TextStyle(color: kTextShadow)),
+                          ],
+                        );
+
+                      default:
+                        return Center(
+                          child: Text(state.toString()),
+                        );
+                    }
+                  },
                 ),
               );
             },

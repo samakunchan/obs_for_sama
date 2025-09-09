@@ -4,6 +4,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/c
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/selectors/sources_selector.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
+import 'package:sizer/sizer.dart';
 
 class OBSListSources extends StatelessWidget {
   const OBSListSources({required this.currentSceneName, super.key});
@@ -19,15 +20,15 @@ class OBSListSources extends StatelessWidget {
             child: SourcesSelector(
               values: (List<SceneItemDetail> sources) {
                 return Wrap(
-                  spacing: 20,
-                  runSpacing: 10,
+                  spacing: 15.sp,
+                  runSpacing: 15.sp,
                   children: sources.isEmpty
                       ? List.generate(10, (int index) {
                           return RSIButton(
                             key: ValueKey<String>('Source button n°-$index'),
                             edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                            width: 150,
-                            height: 150,
+                            width: 40.sp,
+                            height: 40.sp,
                             onTap: () {},
                             color: Colors.grey.withValues(alpha: (index + 1) * .2),
                             text: 'SOURCE_NAME $index',
@@ -40,8 +41,8 @@ class OBSListSources extends StatelessWidget {
                               ? RSIButtonOutlined(
                                   key: ValueKey<String>('Source Button ‘${source.sourceName}‘ off'),
                                   edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                                  width: 150,
-                                  height: 150,
+                                  width: 40.sp,
+                                  height: 40.sp,
                                   onTap: () {
                                     context.read<CurrentSourceBloc>().add(
                                       CurrentSourceChanged(
@@ -56,8 +57,8 @@ class OBSListSources extends StatelessWidget {
                               : RSIButton(
                                   key: ValueKey<String>('Source Button ‘${source.sourceName}‘ on'),
                                   edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                                  width: 150,
-                                  height: 150,
+                                  width: 40.sp,
+                                  height: 40.sp,
                                   onTap: () {
                                     context.read<CurrentSourceBloc>().add(
                                       CurrentSourceChanged(

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/dto/cache_d_t_o.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/cache/models/o_b_s_model.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
+import 'package:obs_for_sama/core/exceptions/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String ip = 'ip';
@@ -22,23 +23,27 @@ class CacheRepository {
   // On ignore pour le moment
   // ignore: prefer_constructors_over_static_methods
   static CacheRepository get instance {
-    if (_instance == null) {
-      if (kDebugMode) {
-        print("CacheRepository Singleton: 'instance' getter creating DEFAULT (REAL) instance.");
-      }
-      _instance = CacheRepository._internal(
-        SharedPreferencesWithCache.create(
-          cacheOptions: const SharedPreferencesWithCacheOptions(
-            allowList: <String>{
-              ip,
-              port,
-              password,
-            },
+    try {
+      if (_instance == null) {
+        if (kDebugMode) {
+          print("CacheRepository Singleton: 'instance' getter creating DEFAULT (REAL) instance.");
+        }
+        _instance = CacheRepository._internal(
+          SharedPreferencesWithCache.create(
+            cacheOptions: const SharedPreferencesWithCacheOptions(
+              allowList: <String>{
+                ip,
+                port,
+                password,
+              },
+            ),
           ),
-        ),
-      );
+        );
+      }
+      return _instance!;
+    } on Exception {
+      throw CacheException('CACHE_INSTANCE_FAIL');
     }
-    return _instance!;
   }
 
   Future<SharedPreferencesWithCache> get prefsWithCache => _prefsWithCacheFuture;
@@ -58,35 +63,47 @@ class CacheRepository {
   }
 
   Future<OBSModel> get obsModel async {
-    final SharedPreferencesWithCache cache = await prefsWithCache;
+    try {
+      final SharedPreferencesWithCache cache = await prefsWithCache;
 
-    final String? localIp = cache.getString(ip);
-    final String? localPort = cache.getString(port);
-    final String? localPassword = cache.getString(password);
-    final OBSModel obsModel = OBSModel(
-      localIp: localIp,
-      localPort: localPort,
-      localPassword: localPassword,
-    );
+      final String? localIp = cache.getString(ip);
+      final String? localPort = cache.getString(port);
+      final String? localPassword = cache.getString(password);
+      final OBSModel obsModel = OBSModel(
+        localIp: localIp,
+        localPort: localPort,
+        localPassword: localPassword,
+      );
 
-    return obsModel;
+      return obsModel;
+    } on Exception {
+      throw CacheException('CACHE_EMPTY');
+    }
   }
 
   Future<bool> setToCache({required CacheDTO cacheDTO}) async {
-    final SharedPreferencesWithCache cache = await prefsWithCache;
+    try {
+      final SharedPreferencesWithCache cache = await prefsWithCache;
 
-    await cache.setString(ip, cacheDTO.localIp ?? '');
-    await cache.setString(port, cacheDTO.localPort ?? '');
-    await cache.setString(password, cacheDTO.localPassword ?? '');
+      await cache.setString(ip, cacheDTO.localIp ?? '');
+      await cache.setString(port, cacheDTO.localPort ?? '');
+      await cache.setString(password, cacheDTO.localPassword ?? '');
 
-    return true;
+      return true;
+    } on Exception {
+      throw CacheException('CACHE_ERROR_SETTING');
+    }
   }
 
   Future<bool> clearCache() async {
-    final SharedPreferencesWithCache cache = await prefsWithCache;
-    await cache.clear();
-    _instance = null;
-    OBSSingleton().clearObsInstance();
-    return true;
+    try {
+      final SharedPreferencesWithCache cache = await prefsWithCache;
+      await cache.clear();
+      _instance = null;
+      OBSSingleton().clearObsInstance();
+      return true;
+    } on Exception {
+      throw CacheException('CACHE_CLEAR_ERROR');
+    }
   }
 }

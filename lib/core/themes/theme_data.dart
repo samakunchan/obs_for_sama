@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:sizer/sizer.dart';
 
 final ThemeData kThemeData = ThemeData(
   appBarTheme: kAppBarTheme,
@@ -15,6 +16,15 @@ final ThemeData kThemeData = ThemeData(
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: kTextShadow,
   ),
-  iconTheme: const IconThemeData(color: kTextShadow, size: 20),
-  drawerTheme: const DrawerThemeData(backgroundColor: kPrimaryColor, elevation: 20),
+  iconTheme: IconThemeData(color: kTextShadow, size: 20.sp),
+  drawerTheme: DrawerThemeData(backgroundColor: kPrimaryColor, elevation: 40.sp),
+  listTileTheme: ListTileThemeData(
+    horizontalTitleGap: 20,
+    contentPadding: Device.screenType == ScreenType.mobile
+        ? null
+        : EdgeInsets.symmetric(
+            vertical: 12.sp,
+            horizontal: 16.sp,
+          ),
+  ),
 );

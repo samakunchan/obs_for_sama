@@ -5,6 +5,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/go_to_set
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_sound_button.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_toogle_stream_button.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:sizer/sizer.dart';
 
 class OBSActionButtonsMobile extends StatelessWidget {
   const OBSActionButtonsMobile({super.key});
@@ -37,11 +38,13 @@ class OBSActionButtonsMobile extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
+                                  flex: 6,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: SizedBox(
                                       width: 30,
                                       child: RSIButtonOutlined(
+                                        height: 25.sp,
                                         onTap: Scaffold.of(context).openDrawer,
                                         edgeClipper: const RSIEdgeClipper(
                                           edgeRightTop: true,
@@ -51,7 +54,7 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                         ),
                                         child: Icon(
                                           Icons.menu,
-                                          size: 40,
+                                          // size: 40,
                                           color: Theme.of(context).colorScheme.outline,
                                         ),
                                       ),
@@ -59,8 +62,11 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                   ),
                                 ),
 
+                                const Expanded(flex: 4, child: SizedBox()),
+
                                 /// SOUND
                                 const Expanded(
+                                  flex: 6,
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: SizedBox(
