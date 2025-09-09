@@ -5,6 +5,7 @@ import 'package:obs_for_sama/core/themes/color_scheme.dart';
 import 'package:obs_for_sama/core/themes/text_theme.dart';
 import 'package:obs_for_sama/core/widgets/r_s_i_outlined_body.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sizer/sizer.dart';
 
 class OBSDrawer extends StatelessWidget {
   const OBSDrawer({super.key});
@@ -13,7 +14,7 @@ class OBSDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return RSIOutlinedBody(
       height: double.infinity,
-      width: MediaQuery.of(context).size.width * .8,
+      width: 65.sp,
       edgeClipper: const RSIEdgeClipper(
         edgeRightTop: true,
         edgeRightBottom: true,
@@ -24,6 +25,8 @@ class OBSDrawer extends StatelessWidget {
             children: [
               Expanded(
                 child: DrawerHeader(
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
                   child: Image.asset('assets/icon-ios-obs-manager-x1.png'),
                 ),
               ),
@@ -31,6 +34,7 @@ class OBSDrawer extends StatelessWidget {
                 flex: 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
+                  // spacing: Device.screenType == ScreenType.mobile ? 4.sp : 15.sp,
                   children: <Widget>[
                     ListTile(
                       title: Text('MENU_INFOS_VERSION', style: ktitle2),
@@ -74,8 +78,8 @@ class OBSDrawer extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsetsGeometry.symmetric(vertical: 16),
                       child: Text(
-                        'OBSM v${snapshot.data?.version}',
-                        style: kbodyLarge.copyWith(color: kTextShadow),
+                        'OBSM. v${snapshot.data?.version}',
+                        style: kbodyLarge.copyWith(color: kTextShadow, letterSpacing: 9.sp),
                       ),
                     );
                   }

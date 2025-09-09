@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/form_q_r_code.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/form_regular.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:sizer/sizer.dart';
 
 class SettingLayoutDefault extends StatefulWidget {
   const SettingLayoutDefault({super.key});
@@ -34,7 +35,7 @@ class _SettingLayoutDefaultState extends State<SettingLayoutDefault> with Ticker
             RSIButton(
               key: const ValueKey<String>('Back button'),
               edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-              width: 80,
+              width: 40.sp,
               onTap: Navigator.of(context).pop,
               child: const Icon(
                 Icons.arrow_back,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:sizer/sizer.dart';
 
 class OBSToogleStreamButton extends StatelessWidget {
   const OBSToogleStreamButton({super.key});
@@ -40,6 +41,7 @@ class OBSToogleStreamButton extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8),
           child: RSIButtonOutlined(
+            height: 25.sp,
             color: color ?? kTextColor,
             onTap: () {
               if (onTapped != null) {

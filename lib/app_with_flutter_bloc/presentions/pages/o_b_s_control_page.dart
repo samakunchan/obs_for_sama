@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
+import 'package:obs_for_sama/app_with_flutter_bloc/presentions/layouts/o_b_s_layout_default.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/layouts/o_b_s_layout_mobile.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/life_cycle_wrapper.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/presentions/widgets/o_b_s_drawer.dart';
-import 'package:obs_for_sama/app_with_get_x/layout/o_b_s_layout_default.dart';
 import 'package:obs_for_sama/core/index.dart';
 
 class OBSControlPage extends StatelessWidget {

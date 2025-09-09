@@ -5,6 +5,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/selecto
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/selectors/scenes_selector.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
+import 'package:sizer/sizer.dart';
 
 class OBSListScenes extends StatelessWidget {
   const OBSListScenes({super.key});
@@ -19,15 +20,15 @@ class OBSListScenes extends StatelessWidget {
             child: ScenesSelector(
               values: (List<Scene> scenes) {
                 return Wrap(
-                  spacing: 20,
-                  runSpacing: 10,
+                  spacing: 15.sp,
+                  runSpacing: 15.sp,
                   children: scenes.isEmpty
                       ? List.generate(3, (int index) {
                           return RSIButton(
                             key: ValueKey<String>('Scene button n°-$index'),
                             edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                            width: 150,
-                            height: 150,
+                            width: 40.sp,
+                            height: 40.sp,
                             onTap: () {},
                             color: Colors.grey.withValues(alpha: (index + 1) * .3),
                             text: 'SCENE_NAME $index',
@@ -40,8 +41,8 @@ class OBSListScenes extends StatelessWidget {
                             value: (String currentScene) => RSIButton(
                               key: ValueKey<String>('Scene button n°$index : ${scene.sceneName}'),
                               edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
-                              width: 150,
-                              height: 150,
+                              width: 40.sp,
+                              height: 40.sp,
                               onTap: () {
                                 context.read<CurrentSceneBloc>().add(
                                   CurrentSceneChanged(sceneName: scene.sceneName),
