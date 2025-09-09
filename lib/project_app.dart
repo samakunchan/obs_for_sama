@@ -12,6 +12,7 @@ import 'package:obs_for_sama/app_with_flutter_bloc/features/server/bloc/server_b
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/title/bloc/title_bloc.dart';
 import 'package:obs_for_sama/core/index.dart';
+import 'package:sizer/sizer.dart';
 
 class ProjectApp extends StatelessWidget {
   const ProjectApp({super.key});
@@ -31,12 +32,16 @@ class ProjectApp extends StatelessWidget {
         BlocProvider<OBSSourcesBloc>(create: (_) => OBSSourcesBloc()),
         BlocProvider<TitleBloc>(create: (_) => TitleBloc()),
       ],
-      child: MaterialApp(
-        key: const ValueKey<String>('Material Flutter Bloc'),
-        theme: kThemeData,
-        locale: const Locale('en', 'US'),
-        initialRoute: '/',
-        onGenerateRoute: Routes.generateRoute,
+      child: Sizer(
+        builder: (_, _, _) {
+          return MaterialApp(
+            key: const ValueKey<String>('Material Flutter Bloc'),
+            theme: kThemeData,
+            locale: const Locale('en', 'US'),
+            initialRoute: '/',
+            onGenerateRoute: Routes.generateRoute,
+          );
+        },
       ),
     );
   }

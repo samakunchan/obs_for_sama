@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/repositories/scenes_repository.dart';
+import 'package:obs_for_sama/core/failures/failures.dart';
+import 'package:obs_for_sama/core/services/client_service.dart';
 
 part 'current_scene_event.dart';
 part 'current_scene_state.dart';
@@ -20,9 +23,15 @@ class CurrentSceneBloc extends Bloc<CurrentSceneEvent, CurrentSceneState> {
       print('J‘initialise la scene en cours.');
     }
     emit(CurrentSceneIsLoading());
-    final String? response = await ScenesRepository.getCurrentScene();
-    if (response != null) {
-      emit(CurrentSceneWithValue(currentScene: response));
+    final Either<Failure, String?> response = await ClientService.baseRequest<String?>(
+      getConcrete: ScenesRepository.getCurrentScene,
+    );
+
+    switch (response) {
+      case Right():
+        if (response.value != null) {
+          emit(CurrentSceneWithValue(currentScene: response.value!));
+        }
     }
   }
 
@@ -31,7 +40,13 @@ class CurrentSceneBloc extends Bloc<CurrentSceneEvent, CurrentSceneState> {
       print('J‘effectue un changement de scene vers "${event.sceneName.toUpperCase()}"');
     }
     emit(CurrentSceneIsLoading());
-    final String response = await ScenesRepository.onChangeScene(sceneName: event.sceneName);
-    emit(CurrentSceneWithValue(currentScene: response));
+    final Either<Failure, String> response = await ClientService.baseRequest<String>(
+      getConcrete: () => ScenesRepository.onChangeScene(sceneName: event.sceneName),
+    );
+
+    switch (response) {
+      case Right():
+        emit(CurrentSceneWithValue(currentScene: response.value));
+    }
   }
 }
