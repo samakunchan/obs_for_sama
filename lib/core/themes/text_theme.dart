@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:obs_for_sama/core/themes/color_scheme.dart';
 import 'package:sizer/sizer.dart';
 
+// TextStyle kBodyLarge = TextStyle(
+//   fontFamily: poppins,
+//   fontSize: 18.sp,
+//   color: kNightBlueBackground,
+// );
+
 /// H1
-TextStyle kheadlineLarge = GoogleFonts.unicaOne(
+// TextStyle kheadlineLarge = GoogleFonts.unicaOne(
+//   fontWeight: FontWeight.w600,
+//   fontSize: 25.sp,
+//   letterSpacing: 4,
+//   color: kTextColorWhite,
+// );
+
+TextStyle kheadlineLarge = TextStyle(
+  fontFamily: 'UnicaOne',
   fontWeight: FontWeight.w600,
   fontSize: 25.sp,
   letterSpacing: 4,
@@ -12,7 +25,8 @@ TextStyle kheadlineLarge = GoogleFonts.unicaOne(
 );
 
 /// H2
-TextStyle kheadlineMedium = GoogleFonts.unicaOne(
+TextStyle kheadlineMedium = TextStyle(
+  fontFamily: 'UnicaOne',
   fontWeight: FontWeight.w600,
   fontSize: 16.sp,
   letterSpacing: 3.2,
@@ -20,7 +34,8 @@ TextStyle kheadlineMedium = GoogleFonts.unicaOne(
 );
 
 /// H3
-TextStyle ktitle1 = GoogleFonts.unicaOne(
+TextStyle ktitle1 = TextStyle(
+  fontFamily: 'UnicaOne',
   fontWeight: FontWeight.w600,
   fontSize: 28.sp,
   letterSpacing: 2.4,
@@ -28,7 +43,8 @@ TextStyle ktitle1 = GoogleFonts.unicaOne(
 );
 
 /// Titre Default
-TextStyle ktitle2 = GoogleFonts.roboto(
+TextStyle ktitle2 = TextStyle(
+  fontFamily: 'Roboto',
   fontWeight: FontWeight.bold,
   fontSize: 15.sp,
   letterSpacing: 1.2.sp,
@@ -36,7 +52,8 @@ TextStyle ktitle2 = GoogleFonts.roboto(
 );
 
 /// Text Default
-TextStyle kbodyLarge = GoogleFonts.roboto(
+TextStyle kbodyLarge = TextStyle(
+  fontFamily: 'Roboto',
   fontSize: 16.sp,
   letterSpacing: 1.6.sp,
   color: kBodyTextColor,

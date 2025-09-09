@@ -71,12 +71,20 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  fonts:
+    - family: UnicaOne
+      fonts:
+        - asset: fonts/unica_one/UnicaOne-Regular.ttf
+          weight: 600
+    - family: Roboto
+      fonts:
+        - asset: fonts/roboto/Roboto-VariableFont_wdth,wght.ttf
+        - asset: fonts/roboto/Roboto_Condensed-SemiBold.ttf
+          weight: 700
+  assets:
+    - assets/
 #  flavors:
 #    dev:
 #      app_name: "OBSManager(Debug)"
 #    prod:
 #      app_name: "OBS Manager"
-
-  assets:
-    - assets/
-
