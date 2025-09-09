@@ -1,17 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/messages/enums/messages_enum.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_scenes/bloc/current_scene_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_sources/bloc/o_b_s_sources_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/bloc/o_b_s_status_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/o_b_s_status/repositories/o_b_s_status_repository.dart';
-import 'package:obs_for_sama/app_with_flutter_bloc/features/server/exceptions/server_exception.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/server/singleton/o_b_s_singleton.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/bloc/sound_bloc.dart';
 import 'package:obs_for_sama/app_with_flutter_bloc/features/sound/repositories/sound_repository.dart';
+import 'package:obs_for_sama/core/exceptions/exceptions.dart';
 import 'package:obs_for_sama/core/index.dart';
 import 'package:obs_websocket/obs_websocket.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -41,10 +38,8 @@ class ServerRepository {
         return StatusStream.started;
       }
       throw Exception(StatusStream.stopped.name);
-    } on SocketException catch (e) {
-      throw ServerException(e.message);
     } on Exception catch (e) {
-      throw ServerException(e.toString());
+      throw OBSServerException(e.toString());
     }
   }
 
@@ -55,7 +50,7 @@ class ServerRepository {
       final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
       await obsWebSocket?.close();
     } on Exception {
-      throw ServerException('SERVER_CANNOT_DISCONNECTED');
+      throw OBSServerException('SERVER_CANNOT_DISCONNECTED');
     }
   }
 
@@ -71,7 +66,7 @@ class ServerRepository {
     try {
       await obsWebSocket?.subscribe(EventSubscription.all);
     } on Exception catch (e) {
-      throw ServerException(e.toString());
+      throw OBSServerException(e.toString());
     }
   }
 
