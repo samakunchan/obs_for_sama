@@ -36,9 +36,7 @@ class _SettingLayoutDefaultState extends State<SettingLayoutDefault> with Ticker
               key: const ValueKey<String>('Back button'),
               edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
               width: 80,
-              onTap: () {
-                Get.back<void>();
-              },
+              onTap: Get.back<void>,
               child: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,

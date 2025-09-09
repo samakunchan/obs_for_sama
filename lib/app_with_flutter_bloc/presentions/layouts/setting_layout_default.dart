@@ -37,10 +37,7 @@ class _SettingLayoutDefaultState extends State<SettingLayoutDefault> with Ticker
               edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
               width: 40.sp,
               onTap: Navigator.of(context).pop,
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
+              child: const Icon(Icons.arrow_back, color: Colors.white),
             ),
           ],
         ),

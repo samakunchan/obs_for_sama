@@ -35,7 +35,7 @@ enum StatusStream {
 }
 
 enum RouteName {
-  home(label: 'home', path: '/'),
+  home(label: 'home', path: '/home'),
   settings(label: 'settings', path: '/settings');
 
   const RouteName({required this.label, required this.path});

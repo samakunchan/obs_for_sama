@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:obs_for_sama/app_with_get_x/widgets/form_q_r_code.dart';
 import 'package:obs_for_sama/app_with_get_x/widgets/form_regular.dart';
 import 'package:obs_for_sama/core/index.dart';
-import 'package:obs_for_sama/core/widgets/r_s_i_button.dart';
 
 class SettingLayoutMobile extends StatefulWidget {
   const SettingLayoutMobile({super.key});
@@ -35,10 +34,9 @@ class _SettingLayoutMobileState extends State<SettingLayoutMobile> with TickerPr
           children: [
             RSIButton(
               key: const ValueKey<String>('Back button'),
+              edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
               width: 80,
-              onTap: () {
-                Get.back<void>();
-              },
+              onTap: Get.back<void>,
               child: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
