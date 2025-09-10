@@ -1,3 +1,20 @@
+## 🚀 0.19.0 - 10/09/2025
+### Added
+
+- No addes.
+
+### Changed
+
+- Project created with flutter is migrated into a package and can be installed.
+- Project created with getx is migrated into a package and can be installed.
+- Updated priority app name for debug mode only.
+- Removed all folders from main project.
+
+### Fixed
+
+- `AndroidManifest.xml` trolled me because it rolled back.
+
+
 ## 🚀 0.18.0 - 09/09/2025 [REFACTORING MAIN FEATURES MOBILE OK]
 ### Added
 
@@ -13,7 +30,7 @@
 - Update all repositories files in the same way.
 - Refactoring QR code form with flutter bloc.
 - Update responsive design
-- Deleted deprecated file : exceptions and enums..
+- Deleted deprecated file : exceptions and enums.
 
 ### Fixed
 
