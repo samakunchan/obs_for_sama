@@ -17,7 +17,6 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.example.obs_for_sama"
     compileSdk = flutter.compileSdkVersion
-//    ndkVersion = flutter.ndkVersion
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -30,12 +29,8 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.obs_for_sama"
+        applicationId = "com.papangue_soft.obsManager"
         resValue("string", "app_name", "OBS Manager")
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-//        minSdk = flutter.minSdkVersion
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -53,13 +48,36 @@ android {
     buildTypes {
         debug {
             signingConfig = signingConfigs.getByName("debug")
-            resValue("string", "app_name", "OBS Manager(Debug)")
+            // Le code ci-dessous est désactivé afin de donner la priorité au titre des flavors.
+            // resValue("string", "app_name", "OBS Manager(Debug)")
         }
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("release")
+            // On laisse dans tout les cas le titre pour la release
             resValue("string", "app_name", "OBS Manager")
+        }
+    }
+    flavorDimensions += "default"
+    productFlavors {
+        create("getx") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "obsm_getx",
+                value = "Flavors with getx")
+            applicationIdSuffix = ".getx"
+            versionNameSuffix = "-getx"
+            resValue("string", "app_name", "OBSM. GetX")
+        }
+        create("bloc") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "obsm_bloc",
+                value = "Flavors with flutter bloc")
+            applicationIdSuffix = ".bloc"
+            versionNameSuffix = "-bloc"
+            resValue("string", "app_name", "OBSM. Bloc")
         }
     }
     androidComponents {
@@ -76,3 +94,4 @@ android {
 flutter {
     source = "../.."
 }
+

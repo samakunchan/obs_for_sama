@@ -47,6 +47,7 @@ app.*.map.json
 
 load_splash_screen.sh
 load_icon_launcher.sh
+bake.sh
 clean.sh
 cook.sh
 refresh.sh
