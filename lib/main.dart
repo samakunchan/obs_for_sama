@@ -25,7 +25,7 @@ void main() {
           ..minSize = minSize
           ..size = launcherSize
           ..alignment = Alignment.center
-          ..title = 'OBS Manager - v0.18.0'
+          ..title = 'OBS Manager - v0.19.0'
           ..show();
       });
     }
@@ -42,7 +42,7 @@ void main() {
           ..minSize = minSize
           ..size = launcherSize
           ..alignment = Alignment.center
-          ..title = 'OBS Manager - v0.18.0'
+          ..title = 'OBS Manager - v0.19.0'
           ..show();
       });
     }
@@ -59,7 +59,7 @@ void main() {
           ..minSize = minSize
           ..size = launcherSize
           ..alignment = Alignment.center
-          ..title = 'OBS Manager - v0.18.0'
+          ..title = 'OBS Manager - v0.19.0'
           ..show();
       });
     }
