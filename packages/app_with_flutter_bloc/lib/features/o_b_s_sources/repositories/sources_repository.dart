@@ -29,8 +29,20 @@ class SourcesRepository {
     try {
       final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
 
-      final List<SceneItemDetail> details = await obsWebSocket?.sceneItems.getSceneItemList(currentSceneName) ?? [];
-      return details.reversed.toList();
+      final RequestResponse? response = await obsWebSocket?.sendRequest(
+        Request('GetSceneItemList', requestData: {'sceneName': currentSceneName}),
+      );
+
+      if (response != null && response.responseData != null) {
+        final sceneItemListResponse = SceneItemListResponse.fromJson(
+          response.responseData!,
+        );
+        final List<SceneItemDetail> details = sceneItemListResponse.sceneItems;
+        return details.reversed.toList();
+      }
+
+      // final List<SceneItemDetail> details = await obsWebSocket?.sceneItems.getSceneItemList(currentSceneName) ?? [];
+      return [];
     } on Exception {
       throw OBSSourcesException('SOURCES_LIST_ERROR');
     }
