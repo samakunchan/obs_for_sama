@@ -30,9 +30,6 @@ dependencies:
   # State manager
   get: ^4.6.6
 
-  # Pour windows (demande spécial)
-  bitsdojo_window: ^0.1.6
-
   # Logo and splash_master
   flutter_native_splash: ^2.4.6
   flutter_launcher_icons: ^0.14.4
