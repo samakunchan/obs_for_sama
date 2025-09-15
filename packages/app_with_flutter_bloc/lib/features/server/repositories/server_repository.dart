@@ -30,10 +30,9 @@ class ServerRepository {
       if (kDebugMode) {
         print('ServerRepository - Lors de la connexion $obsWebSocket');
       }
-      await listenAllStatesFromOBS();
+      await listenAllStatesFromOBS(obsWebSocket);
 
       /// Detection si OBS est actif
-      // final ProfileListResponse defaultProfile = await obsWebSocket.config.getProfileList();
       final RequestResponse? response = await obsWebSocket.sendRequest(Request('GetProfileList'));
 
       if (response != null) {
@@ -55,6 +54,7 @@ class ServerRepository {
     try {
       final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
       await obsWebSocket?.close();
+      OBSSingleton().clearObsInstance();
     } on Exception {
       throw OBSServerException('SERVER_CANNOT_DISCONNECTED');
     }
@@ -67,9 +67,9 @@ class ServerRepository {
   }
 
   /// Subscription to listen all states.
-  Future<void> listenAllStatesFromOBS() async {
-    final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
+  Future<void> listenAllStatesFromOBS(ObsWebSocket? obsWebSocket) async {
     try {
+      print('La gueule de l‘instance : $obsWebSocket');
       await obsWebSocket?.subscribe(EventSubscription.all);
     } on Exception catch (e) {
       throw OBSServerException(e.toString());
