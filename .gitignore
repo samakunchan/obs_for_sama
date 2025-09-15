@@ -44,6 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+/lib/firebase_options.dart
 
 load_splash_screen.sh
 load_icon_launcher.sh

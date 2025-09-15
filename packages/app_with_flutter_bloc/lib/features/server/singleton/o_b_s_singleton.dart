@@ -16,8 +16,8 @@ class OBSSingleton {
   ObsWebSocket? _obs;
 
   Future<ObsWebSocket?> get obs async {
+    final OBSModel obsModel = await CacheRepository.instance.obsModel;
     if (_obs == null) {
-      final OBSModel obsModel = await CacheRepository.instance.obsModel;
       if (kDebugMode) {
         print('LE MODEL ${obsModel.toJson()}');
       }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_with_flutter_bloc/core/failures/failures.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +15,7 @@ class ErrorBloc extends Bloc<ErrorEvent, ErrorState> {
 
   Future<void> _onEmitError(ErrorEmitted event, Emitter<ErrorState> emit) async {
     emit(ErrorLoading());
-    emit(ErrorMessageDisplayed(message: event.message));
+    emit(ErrorMessageDisplayed(errorInstance: SocketFailure(event.message)));
   }
 
   Future<void> _onResetError(ErrorReseted event, Emitter<ErrorState> emit) async {
