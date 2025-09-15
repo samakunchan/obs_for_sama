@@ -51,3 +51,13 @@ final class ServerIsReloaded extends ServerState {
   @override
   List<Object> get props => [];
 }
+
+final class ServerIsDisConnected extends ServerState {
+  @override
+  String toString() {
+    return 'ServerIsDisConnected';
+  }
+
+  @override
+  List<Object> get props => [];
+}

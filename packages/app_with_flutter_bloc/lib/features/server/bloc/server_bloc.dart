@@ -16,6 +16,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
   ServerBloc() : super(ServerInitial()) {
     on<ServerConnected>(_onConnectToServer);
     on<ServerReloaded>(_onResetServer);
+    on<ServerDisConnected>(_onDisConnectToServer);
   }
 
   Future<void> _onConnectToServer(ServerConnected event, Emitter<ServerState> emit) async {
@@ -30,7 +31,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     switch (response) {
       case Left():
         if (kDebugMode) {
-          print('Server Bloc Error - ${response.value}');
+          print('Server Bloc Error - ${response.value}- ${response.value.message}');
         }
         emit(ServerHasError(message: response.value.message));
       case Right():
@@ -58,6 +59,23 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
           print(response.value);
         }
         emit(ServerIsReloaded());
+    }
+  }
+
+  Future<void> _onDisConnectToServer(ServerDisConnected event, Emitter<ServerState> emit) async {
+    if (kDebugMode) {
+      print('Réinitialisation du serveur');
+    }
+    emit(ServerIsLoading());
+
+    final Either<Failure, void> response = await ClientService.baseRequest<void>(
+      getConcrete: ServerRepository().logoutToOBS,
+    );
+    switch (response) {
+      case Left():
+        emit(ServerHasError(message: response.value.message));
+      case Right():
+        emit(ServerIsDisConnected());
     }
   }
 }
