@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:obs_websocket/obs_websocket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/exceptions/exceptions.dart';
@@ -101,6 +102,10 @@ class CacheRepository {
       final SharedPreferencesWithCache cache = await prefsWithCache;
       await cache.clear();
       _instance = null;
+      final ObsWebSocket? obsWebSocket = await OBSSingleton().obs;
+      if (obsWebSocket != null) {
+        await obsWebSocket.close();
+      }
       OBSSingleton().clearObsInstance();
       return true;
     } on Exception {
