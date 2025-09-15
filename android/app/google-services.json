@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "511406078723",
+    "project_id": "obs-manager-451704",
+    "storage_bucket": "obs-manager-451704.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511406078723:android:d30c0d2cd497b3e5c24736",
+        "android_client_info": {
+          "package_name": "com.papangue_soft.obsManager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsOZiDn3eBHAx88t_QdrhOZYLQp62coYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511406078723:android:4f2c69554a739c7ec24736",
+        "android_client_info": {
+          "package_name": "com.papanguesoft.obsmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsOZiDn3eBHAx88t_QdrhOZYLQp62coYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

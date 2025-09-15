@@ -92,7 +92,7 @@ BEGIN
             VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "obs_for_sama" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "com.papangue_soft.obsManager" "\0"
+            VALUE "InternalName", "com.papanguesoft.obsmanager" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "obs_for_sama.exe" "\0"
             VALUE "ProductName", "obs_for_sama" "\0"
