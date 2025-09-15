@@ -20,14 +20,14 @@ final class ErrorLoading extends ErrorState {
 }
 
 final class ErrorMessageDisplayed extends ErrorState {
-  const ErrorMessageDisplayed({required this.message});
-  final String message;
+  const ErrorMessageDisplayed({required this.errorInstance});
+  final Failure errorInstance;
 
   @override
   String toString() {
-    return 'ErrorMessageDisplayed - $message';
+    return 'ErrorMessageDisplayed - $errorInstance';
   }
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [errorInstance];
 }

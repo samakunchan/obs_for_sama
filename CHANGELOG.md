@@ -1,3 +1,28 @@
+## 🚀 0.20.0 - 10/09/2025
+### Added
+
+- Added firebase.
+- Added crashlytics.
+- Added configuration for plateforms.
+- Added google-services.json file for firebase.
+- Added GoogleService-info.plist file for firebase.
+- Ignored firebase_options.dart file.
+- Added error wrapper widget for flutter bloc project.
+
+### Changed
+
+- Update layout with error wrapper widget.
+- Update linters for GetX and bloc project.
+
+### Fixed
+
+- Fix path for image.
+- Fixed black screen redirection after qr code validation.
+- Fix remove instance after cache clear to prevent duplicated instances
+- Removed repository effect (just display error bloc).
+- Used failure class instead of string
+
+
 ## 🚀 0.19.0 - 10/09/2025
 ### Added
 

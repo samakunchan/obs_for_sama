@@ -36,7 +36,7 @@ class Routes {
           },
         );
       default:
-        return PageRouteBuilder<OBSSettingsPage>(
+        return PageRouteBuilder<dynamic>(
           settings: settings,
           pageBuilder: (_, _, _) => const Scaffold(
             body: Center(

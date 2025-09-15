@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/index.dart';
 import '../features/error/bloc/error_bloc.dart';
-import '../features/server/bloc/server_bloc.dart';
 
 class LifeCycleWrapper extends StatefulWidget {
   const LifeCycleWrapper({required this.child, required this.context, super.key});
@@ -46,7 +45,6 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
         if (kDebugMode) {
           print('CONNEXION WI-FI DÉTECTÉE');
         }
-        widget.context.read<ServerBloc>().add(ServerConnected());
         widget.context.read<ErrorBloc>().add(ErrorReseted());
         return;
       } else {
@@ -63,16 +61,31 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     subscription?.cancel();
+    if (kDebugMode) {
+      print('Je suis lancer dans le dispose');
+    }
+
     super.dispose();
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       if (kDebugMode) {
         print('Retour de la mise en veille, on vérifie la connectivité.');
       }
-      checkConnectivity();
+
+      await checkConnectivity();
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      if (kDebugMode) {
+        print('L‘instance est cleared.');
+      }
+    }
+
+    if (kDebugMode) {
+      print('LIFE STATE APP $state');
     }
   }
 

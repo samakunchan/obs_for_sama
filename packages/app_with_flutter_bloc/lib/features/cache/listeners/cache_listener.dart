@@ -31,7 +31,7 @@ class CacheListener extends StatelessWidget {
             context.read<ServerBloc>().add(ServerConnected());
             context.read<ErrorBloc>().add(ErrorReseted());
             if (contextPage != null) {
-              Navigator.of(contextPage!).pop();
+              Navigator.of(contextPage!).popAndPushNamed('/');
             }
         }
       },

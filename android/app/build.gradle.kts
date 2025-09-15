@@ -3,6 +3,10 @@ import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    // END: FlutterFire Configuration
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
@@ -29,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.papangue_soft.obsManager"
+        applicationId = "com.papanguesoft.obsmanager"
         resValue("string", "app_name", "OBS Manager")
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
@@ -65,7 +69,7 @@ android {
                 type = "string",
                 name = "obsm_getx",
                 value = "Flavors with getx")
-            applicationIdSuffix = ".getx"
+//            applicationIdSuffix = ".getx"
             versionNameSuffix = "-getx"
             resValue("string", "app_name", "OBSM. GetX")
         }
@@ -75,7 +79,7 @@ android {
                 type = "string",
                 name = "obsm_bloc",
                 value = "Flavors with flutter bloc")
-            applicationIdSuffix = ".bloc"
+//            applicationIdSuffix = ".bloc"
             versionNameSuffix = "-bloc"
             resValue("string", "app_name", "OBSM. Bloc")
         }
