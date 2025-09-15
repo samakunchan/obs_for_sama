@@ -1,0 +1,60 @@
+#include: package:very_good_analysis/analysis_options.yaml
+##include: package:flutter_lints/flutter.yaml
+analyzer:
+#  strong-mode:
+  exclude:
+    - lib/*.g.dart
+    - lib/**/*.g.dart
+    - lib/**/**/*.g.dart
+    - packages/**/lib/**/**/*.g.dart
+    - lib/gen/assets.gen.dart
+    - test/**/*.mocks.dart
+    - generated_plugin_registrant.dart
+    - lib/generated_plugin_registrant.dart
+  plugins:
+    - dart_code_metrics
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 10
+    number-of-parameters: 10
+    source-lines-of-code: 150
+  metrics-exclude:
+    - test/**
+    - lib/*.g.dart
+    - lib/**/*.g.dart
+    - lib/**/**/*.g.dart
+    - generated_plugin_registrant.dart
+    - lib/generated_plugin_registrant.dart
+  rules-exclude:
+    - test/**
+    - lib/*.g.dart
+    - lib/**/*.g.dart
+    - lib/**/**/*.g.dart
+    - lib/generated_plugin_registrant.dart
+  rules:
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - no-equal-then-else
+    - flutter_style_todos
+linter:
+  rules:
+#    implicit-dynamic: false
+    library_private_types_in_public_api: false
+    lines_longer_than_80_chars: false
+    omit_local_variable_types: false
+    one_member_abstracts: false
+    public_member_api_docs: false
+    sort_pub_dependencies: false
+formatter:
+  page_width: 120
+  trailing_commas: preserve
+
+## Additional information about this file can be found at
+## https://dart.dev/guides/language/analysis-options
