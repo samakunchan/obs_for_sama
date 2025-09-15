@@ -25,7 +25,7 @@ class OBSDrawer extends StatelessWidget {
                 child: DrawerHeader(
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
-                  child: Image.asset('assets/icon-ios-obs-manager-x1.png'),
+                  child: Image.asset('packages/app_with_flutter_bloc/assets/logo-obs-manager-x1.png'),
                 ),
               ),
               Expanded(
