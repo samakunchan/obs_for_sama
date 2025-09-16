@@ -33,7 +33,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
         if (kDebugMode) {
           print('Server Bloc Error - ${response.value}- ${response.value.message}');
         }
-        emit(ServerHasError(message: response.value.message));
+        emit(ServerHasError(errorInstance: response.value));
       case Right():
         if (kDebugMode) {
           print('Server Bloc - ${response.value}');
@@ -53,7 +53,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     );
     switch (response) {
       case Left():
-        emit(ServerHasError(message: response.value.message));
+        emit(ServerHasError(errorInstance: response.value));
       case Right():
         if (kDebugMode) {
           print(response.value);
@@ -73,7 +73,7 @@ class ServerBloc extends Bloc<ServerEvent, ServerState> {
     );
     switch (response) {
       case Left():
-        emit(ServerHasError(message: response.value.message));
+        emit(ServerHasError(errorInstance: response.value));
       case Right():
         emit(ServerIsDisConnected());
     }

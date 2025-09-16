@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_with_flutter_bloc/features/server/repositories/server_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
         if (kDebugMode) {
           print('AUCUNE CONNEXION WI-FI');
         }
-        widget.context.read<ErrorBloc>().add(ErrorEmitted(message: AppMessagesEnum.wifiError.key));
+        widget.context.read<ErrorBloc>().add(ErrorEmitted(errorInstance: SocketFailure(AppMessagesEnum.wifiError.key)));
       }
       return;
     });
@@ -74,14 +75,13 @@ class _LifeCycleWrapperState extends State<LifeCycleWrapper> with WidgetsBinding
       if (kDebugMode) {
         print('Retour de la mise en veille, on vérifie la connectivité.');
       }
+      ServerRepository()
+        ..connectToOBS()
+        ..logoutToOBS();
 
       await checkConnectivity();
-    }
-
-    if (state == AppLifecycleState.inactive) {
-      if (kDebugMode) {
-        print('L‘instance est cleared.');
-      }
+    } else {
+      ServerRepository().connectToOBS();
     }
 
     if (kDebugMode) {

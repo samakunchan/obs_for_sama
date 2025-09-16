@@ -18,9 +18,9 @@ class CacheListener extends StatelessWidget {
         switch (state) {
           case CacheHasError():
             if (kDebugMode) {
-              print('Serveur à une érreur : ${state.message}');
+              print('Serveur à une érreur : ${state.errorInstance}');
             }
-            context.read<ErrorBloc>().add(ErrorEmitted(message: state.message));
+            context.read<ErrorBloc>().add(ErrorEmitted(errorInstance: state.errorInstance));
           case CacheIsCleared():
             context.read<ServerBloc>().add(ServerConnected());
             context.read<ErrorBloc>().add(ErrorReseted());

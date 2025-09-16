@@ -14,6 +14,7 @@ import '../../features/server/singleton/o_b_s_singleton.dart';
 import '../../features/title/bloc/title_bloc.dart';
 import '../../features/title/selectors/title_selector.dart';
 import '../widgets/animated_arrow.dart';
+import '../widgets/go_to_setting_page_button.dart';
 import '../widgets/o_b_s_action_buttons_mobile.dart';
 import '../widgets/o_b_s_list_scenes.dart';
 import '../widgets/o_b_s_list_sources.dart';
@@ -167,9 +168,31 @@ class OBSLayoutMobile extends StatelessWidget {
                         ],
                       );
 
+                    case ServerHasError():
+                      return Column(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                'OBS \nDisconnected...',
+                                style: kheadlineLarge,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+
+                          const Padding(
+                            padding: EdgeInsetsGeometry.symmetric(vertical: 30),
+                            child: GoToSettingPageButton(),
+                          ),
+                        ],
+                      );
                     default:
                       return Center(
-                        child: Text(state.toString()),
+                        child: Text(
+                          state.toString(),
+                          style: kbodyLarge.copyWith(color: kTextShadow),
+                        ),
                       );
                   }
                 },

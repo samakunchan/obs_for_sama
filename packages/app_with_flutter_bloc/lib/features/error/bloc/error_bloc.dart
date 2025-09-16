@@ -15,7 +15,7 @@ class ErrorBloc extends Bloc<ErrorEvent, ErrorState> {
 
   Future<void> _onEmitError(ErrorEmitted event, Emitter<ErrorState> emit) async {
     emit(ErrorLoading());
-    emit(ErrorMessageDisplayed(errorInstance: SocketFailure(event.message)));
+    emit(ErrorMessageDisplayed(errorInstance: event.errorInstance));
   }
 
   Future<void> _onResetError(ErrorReseted event, Emitter<ErrorState> emit) async {
