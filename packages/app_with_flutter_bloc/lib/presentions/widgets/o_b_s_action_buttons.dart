@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../core/index.dart';
 import '../../features/server/bloc/server_bloc.dart';
@@ -44,7 +43,6 @@ class OBSActionButtons extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8),
                                 child: RSIButtonOutlined(
-                                  height: 25.sp,
                                   onTap: Scaffold.of(context).openDrawer,
                                   edgeClipper: const RSIEdgeClipper(
                                     // edgeRightTop: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../index.dart';
 
@@ -10,7 +11,7 @@ class RSIButtonOutlined extends StatelessWidget {
     this.edgeClipper = RSIEdgeClipper.init,
     this.color = kTextColor,
     this.width = 180,
-    this.height = 50,
+    this.height,
     this.icon,
     super.key,
   });
@@ -19,7 +20,7 @@ class RSIButtonOutlined extends StatelessWidget {
   final RSIEdgeClipper edgeClipper;
   final Color color;
   final double width;
-  final double height;
+  final double? height;
   final Icon? icon;
   final Widget? child;
 
@@ -39,7 +40,7 @@ class RSIButtonOutlined extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               width: width,
-              height: height,
+              height: height ?? 26.sp,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8),

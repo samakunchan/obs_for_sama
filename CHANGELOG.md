@@ -1,3 +1,18 @@
+## 🚀 0.20.2 - 16/09/2025
+### Added
+
+- No addes.
+
+### Changed
+
+- No changes
+
+### Fixed
+
+- Fix size outlined button.
+- Fix firebase ios.
+
+
 ## 🚀 0.20.1 - 16/09/2025
 ### Added
 

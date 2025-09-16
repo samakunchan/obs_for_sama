@@ -76,15 +76,12 @@ class OBSDrawer extends StatelessWidget {
                       padding: const EdgeInsetsGeometry.symmetric(vertical: 16),
                       child: Text(
                         'OBSM. v${snapshot.data?.version}',
-                        style: kbodyLarge.copyWith(color: kTextShadow, letterSpacing: 9.sp),
+                        style: kbodyLarge.copyWith(color: kTextShadow),
                       ),
                     );
                   }
                   if (snapshot.hasError) {
-                    return Text(
-                      '${snapshot.error}',
-                      style: kbodyLarge,
-                    );
+                    return Text('${snapshot.error}', style: kbodyLarge.copyWith(color: kTextShadow));
                   }
                   return const SizedBox();
                 },
