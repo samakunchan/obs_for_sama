@@ -1,4 +1,19 @@
-## 🚀 0.20.0 - 10/09/2025
+## 🚀 0.20.1 - 16/09/2025
+### Added
+
+- No addes.
+
+### Changed
+
+- Added failure for all error.
+- Added view for first error.
+
+### Fixed
+
+- Fix lifecycle.
+
+
+## 🚀 0.20.0 - 15/09/2025
 ### Added
 
 - Added firebase.
