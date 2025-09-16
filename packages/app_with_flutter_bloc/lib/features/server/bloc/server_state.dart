@@ -20,16 +20,16 @@ final class ServerIsLoading extends ServerState {
 }
 
 final class ServerHasError extends ServerState {
-  const ServerHasError({required this.message});
-  final String message;
+  const ServerHasError({required this.errorInstance});
+  final Failure errorInstance;
 
   @override
   String toString() {
-    return 'ServerHasError - $message';
+    return 'ServerHasError - $errorInstance';
   }
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [errorInstance];
 }
 
 final class ServerIsConnected extends ServerState {

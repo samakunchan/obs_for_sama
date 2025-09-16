@@ -30,13 +30,13 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
 
     switch (response) {
       case Left():
-        emit(CacheHasError(message: response.value.message));
+        emit(CacheHasError(errorInstance: response.value));
       case Right():
         final bool testCacheValue = response.value.toJson().entries.every(
           (MapEntry<String, Object?> test) => test.value != null,
         );
         if (!testCacheValue) {
-          emit(CacheHasError(message: AppMessagesEnum.cacheEmpty.key));
+          emit(CacheHasError(errorInstance: CacheFailure(AppMessagesEnum.cacheEmpty.key)));
         } else {
           emit(CacheFoundDatas(obsModel: response.value));
         }
@@ -54,7 +54,7 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
 
     switch (response) {
       case Left():
-        emit(CacheHasError(message: response.value.message));
+        emit(CacheHasError(errorInstance: response.value));
       case Right():
         emit(CacheIsUpdated());
     }
@@ -67,7 +67,7 @@ class CacheBloc extends Bloc<CacheEvent, CacheState> {
 
     switch (response) {
       case Left():
-        emit(CacheHasError(message: response.value.message));
+        emit(CacheHasError(errorInstance: response.value));
       case Right():
         emit(CacheIsCleared());
     }

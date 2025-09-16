@@ -19,7 +19,9 @@ class ErrorWrapper extends StatelessWidget {
           if (kDebugMode) {
             print('MESSAGE ${state.errorInstance}');
           }
-          if (state.errorInstance is SocketFailure) {
+          if (state.errorInstance is SocketFailure ||
+              state.errorInstance is OBSServerFailure ||
+              state.errorInstance is CacheFailure) {
             if (state.errorInstance.message.contains(AppMessagesEnum.wifiError.key)) {
               errorMessage = state.errorInstance.message;
             }
