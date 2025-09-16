@@ -38,6 +38,10 @@ class OBSLayoutMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
+    final mediaQuery = MediaQuery.of(context);
+    final safeAreaPadding = mediaQuery.padding;
+    final screenHeight = mediaQuery.size.height;
+    final availableHeight = screenHeight - safeAreaPadding.top - safeAreaPadding.bottom;
 
     return ServerListener(
       child: CacheListener(
@@ -59,7 +63,7 @@ class OBSLayoutMobile extends StatelessWidget {
                       return Stack(
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * .6,
+                            height: availableHeight - 350,
                             child: PageView.custom(
                               controller: pageController,
                               onPageChanged: (pageIndex) {

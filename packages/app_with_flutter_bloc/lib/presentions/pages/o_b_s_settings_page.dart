@@ -29,7 +29,11 @@ class _SettingsPageState extends State<OBSSettingsPage> with TickerProviderState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppText.mainSettingsTitle.label)),
+      appBar: AppBar(
+        title: Text(AppText.mainSettingsTitle.label),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth < 600) {

@@ -15,7 +15,6 @@ class GoToSettingPageButton extends StatelessWidget {
       edgeClipper: const RSIEdgeClipper(edgeRightTop: true, edgeLeftBottom: true),
       child: Icon(
         Icons.settings,
-        size: 40,
         color: Theme.of(context).colorScheme.outline,
       ),
     );

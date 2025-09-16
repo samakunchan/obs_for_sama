@@ -18,7 +18,11 @@ class OBSControlPage extends StatelessWidget {
       context: context,
       child: Material(
         child: Scaffold(
-          appBar: AppBar(centerTitle: true, title: Text(AppText.mainTitle.label)),
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(AppText.mainTitle.label),
+            automaticallyImplyLeading: false,
+          ),
           drawer: const OBSDrawer(),
           body: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
