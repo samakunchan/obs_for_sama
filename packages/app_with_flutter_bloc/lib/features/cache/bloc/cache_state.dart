@@ -15,16 +15,16 @@ final class CacheIsLoading extends CacheState {
 }
 
 final class CacheHasError extends CacheState {
-  const CacheHasError({required this.message});
-  final String message;
+  const CacheHasError({required this.errorInstance});
+  final Failure errorInstance;
 
   @override
   String toString() {
-    return 'CacheHasError - $message';
+    return 'CacheHasError - $errorInstance';
   }
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [errorInstance];
 }
 
 final class CacheFoundDatas extends CacheState {

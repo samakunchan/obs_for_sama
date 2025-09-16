@@ -16,9 +16,9 @@ class ServerListener extends StatelessWidget {
         switch (state) {
           case ServerHasError():
             if (kDebugMode) {
-              print('Serveur à une érreur : ${state.message}');
+              print('Serveur à une érreur : ${state.errorInstance}');
             }
-            context.read<ErrorBloc>().add(ErrorEmitted(message: state.message));
+            context.read<ErrorBloc>().add(ErrorEmitted(errorInstance: state.errorInstance));
         }
       },
       child: child,
