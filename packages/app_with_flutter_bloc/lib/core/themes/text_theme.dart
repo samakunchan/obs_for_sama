@@ -20,7 +20,7 @@ import '../index.dart';
 TextStyle kheadlineLarge = TextStyle(
   fontFamily: 'UnicaOne',
   fontWeight: FontWeight.w600,
-  fontSize: 25.sp,
+  fontSize: 24.sp,
   letterSpacing: 4,
   color: kTextColorWhite,
 );
