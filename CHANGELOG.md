@@ -1,3 +1,17 @@
+## 🚀 0.20.3 - 16/09/2025
+### Added
+
+- No addes.
+
+### Changed
+
+- No changes
+
+### Fixed
+
+- Fix size icons and title center.
+
+
 ## 🚀 0.20.2 - 16/09/2025
 ### Added
 
