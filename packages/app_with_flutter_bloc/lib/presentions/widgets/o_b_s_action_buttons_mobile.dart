@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../core/index.dart';
 import '../../features/server/bloc/server_bloc.dart';
@@ -43,7 +42,6 @@ class OBSActionButtonsMobile extends StatelessWidget {
                                     child: SizedBox(
                                       width: 30,
                                       child: RSIButtonOutlined(
-                                        height: 25.sp,
                                         onTap: Scaffold.of(context).openDrawer,
                                         edgeClipper: const RSIEdgeClipper(
                                           edgeRightTop: true,
